@@ -1,11 +1,3 @@
-//
-//  GottaDoTests.swift
-//  GottaDoTests
-//
-//  Created by Erik Vorkink on 4/15/19.
-//  Copyright © 2019 Erik Vorkink. All rights reserved.
-//
-
 import XCTest
 @testable import GottaDo
 

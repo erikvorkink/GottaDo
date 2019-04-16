@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */; };
 		B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781B222654D5800EA4D55 /* AppDelegate.swift */; };
 		B5D781B722654D5800EA4D55 /* BacklogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781B622654D5800EA4D55 /* BacklogViewController.swift */; };
 		B5D781BA22654D5800EA4D55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D781B822654D5800EA4D55 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GottaDo.xcdatamodel; sourceTree = "<group>"; };
 		B5D781AF22654D5800EA4D55 /* GottaDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GottaDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D781B222654D5800EA4D55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D781B622654D5800EA4D55 /* BacklogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacklogViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				B5D781BB22654D5A00EA4D55 /* Assets.xcassets */,
 				B5D781BD22654D5A00EA4D55 /* LaunchScreen.storyboard */,
 				B5D781C022654D5A00EA4D55 /* Info.plist */,
+				B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */,
 			);
 			path = GottaDo;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			files = (
 				B5D781B722654D5800EA4D55 /* BacklogViewController.swift in Sources */,
 				B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */,
+				B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */,
 				B5D781EB226550EA00EA4D55 /* TodayTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,6 +588,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */,
+			);
+			currentVersion = B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */;
+			path = GottaDo.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B5D781A722654D5800EA4D55 /* Project object */;
 }

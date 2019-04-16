@@ -67,9 +67,9 @@ class BacklogViewController: UIViewController {
         
         let task = NSManagedObject(entity: entity, insertInto: managedContext)
         task.setValue(name, forKeyPath: "name")
-//        task.setValue(xxxxxxx, forKeyPath: "createdDate")
-//        task.setValue(false, forKeypath: "completed")
-//        task.setValue(false, forKeypath: "deleted")
+        task.setValue(Date(), forKeyPath: "createdDate")
+        task.setValue(false, forKeyPath: "completed")
+        task.setValue(false, forKeyPath: "removed")
         
         do {
             try managedContext.save()
@@ -90,7 +90,22 @@ extension BacklogViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = tasks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = task.value(forKeyPath: "name") as? String
+        let name = task.value(forKeyPath: "name") as? String
+        let createdDateFormatted = getTaskCreatedDateFormatted(task)
+        cell.textLabel?.text = "\(name!) - \(createdDateFormatted)"
         return cell
+    }
+    
+    func getTaskCreatedDateFormatted(_ task: NSManagedObject) -> String {
+        var createdDateFormatted = ""
+        let createdDate = task.value(forKeyPath: "createdDate") as? Date
+        if let createdDate = createdDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .short
+            dateFormatter.locale = Locale(identifier: "en_US")
+            createdDateFormatted = dateFormatter.string(from: createdDate)
+        }
+        return createdDateFormatted
     }
 }

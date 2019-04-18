@@ -10,6 +10,7 @@ class BacklogViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Backlog"
+        tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
     
@@ -29,7 +30,6 @@ class BacklogViewController: UIViewController {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
-
 
     @IBAction func addTask(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "New Task",
@@ -107,5 +107,21 @@ extension BacklogViewController: UITableViewDataSource {
             createdDateFormatted = dateFormatter.string(from: createdDate)
         }
         return createdDateFormatted
+    }
+}
+
+// MARK: - UITableViewDelegate
+extension BacklogViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let task = tasks[indexPath.row] as? Task {
+            self.performSegue(withIdentifier: "taskDetailSegue", sender: task)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let viewController = segue.destination as? TaskDetailViewController, let taskToSend = sender as? Task {
+            viewController.task = taskToSend
+        }
     }
 }

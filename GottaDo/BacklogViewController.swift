@@ -17,6 +17,8 @@ class BacklogViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        tableView.reloadData()
+        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
@@ -75,7 +77,7 @@ class BacklogViewController: UIViewController {
             try managedContext.save()
             tasks.append(task)
         } catch let error as NSError {
-            print("Could not save. \(error), \(error.userInfo)")
+            print("Could not create task. \(error), \(error.userInfo)")
         }
     }
 }

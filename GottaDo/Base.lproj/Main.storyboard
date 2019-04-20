@@ -76,6 +76,7 @@
                                             <action selector="addTask:" destination="8rJ-Kc-sve" id="Tln-Z6-Fd3"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Clear" id="J9U-lm-N4o"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -130,12 +131,30 @@
                                     <action selector="save:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="aVf-dH-nUd"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ATh-WU-BO6">
+                                <rect key="frame" x="160" y="458" width="67" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Complete"/>
+                                <connections>
+                                    <action selector="complete:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="IrC-fZ-utL"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAq-XQ-MG7">
+                                <rect key="frame" x="148" y="531" width="91" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Un-complete"/>
+                                <connections>
+                                    <action selector="uncomplete:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="1Ar-g3-pvN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="gNa-gE-mZ6"/>
                     </view>
                     <connections>
+                        <outlet property="completeButton" destination="ATh-WU-BO6" id="oAA-5F-HqA"/>
                         <outlet property="editName" destination="BWm-65-EA7" id="vwx-qQ-6qc"/>
+                        <outlet property="uncompleteButton" destination="uAq-XQ-MG7" id="ynu-KP-qz3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zB7-Vg-txH" userLabel="First Responder" sceneMemberID="firstResponder"/>

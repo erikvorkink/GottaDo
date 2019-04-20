@@ -25,6 +25,7 @@ class BacklogViewController: UIViewController {
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
+        fetchRequest.predicate = NSPredicate(format: "removed != %@", NSNumber(value: true))
         
         do {
             tasks = try managedContext.fetch(fetchRequest)
@@ -92,9 +93,20 @@ extension BacklogViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = tasks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+//        if let completed = task.value(forKeyPath: "completed") as? Bool {
+//            cell.accessoryType = completed ? .checkmark : .none
+//        }
         let name = task.value(forKeyPath: "name") as? String
         let createdDateFormatted = getTaskCreatedDateFormatted(task)
-        cell.textLabel?.text = "\(name!) - \(createdDateFormatted)"
+        
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(name!) - \(createdDateFormatted)")
+        if let completed = task.value(forKeyPath: "completed") as? Bool {
+            if completed {
+                attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+            }
+        }
+        cell.textLabel?.attributedText = attributeString;
+        
         return cell
     }
     

@@ -16,8 +16,12 @@ class BacklogViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadFilteredData()
+    }
+    
+    func loadFilteredData() {
+        tasks.removeAll()
         
-        tableView.reloadData()
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -32,6 +36,8 @@ class BacklogViewController: UIViewController {
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
+        
+        tableView.reloadData()
     }
 
     @IBAction func addTask(_ sender: UIBarButtonItem) {
@@ -48,7 +54,7 @@ class BacklogViewController: UIViewController {
             }
             
             self.createTask(name: newTaskName)
-            self.tableView.reloadData()
+            self.loadFilteredData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -79,6 +85,38 @@ class BacklogViewController: UIViewController {
             tasks.append(task)
         } catch let error as NSError {
             print("Could not create task. \(error), \(error.userInfo)")
+        }
+    }
+    
+    @IBAction func clear(_ sender: Any) {
+        removeCompleted()
+        loadFilteredData()
+    }
+    
+    func removeCompleted() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
+        fetchRequest.predicate = NSPredicate(format: "completed == %@ AND removed != %@", NSNumber(value: true), NSNumber(value: true))
+        
+        do {
+            let tasksToRemove = try managedContext.fetch(fetchRequest)
+            for task in tasksToRemove as! [Task] {
+                task.setValue(true, forKeyPath: "removed")
+                task.setValue(Date(), forKeyPath: "removedDate")
+                
+                do {
+                    try managedContext.save()
+                } catch let error as NSError {
+                    print("Could not create task. \(error), \(error.userInfo)")
+                }
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
 }

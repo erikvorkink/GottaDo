@@ -76,7 +76,11 @@
                                             <action selector="addTask:" destination="8rJ-Kc-sve" id="Tln-Z6-Fd3"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Clear" id="J9U-lm-N4o"/>
+                                    <barButtonItem title="Clear" id="J9U-lm-N4o">
+                                        <connections>
+                                            <action selector="clear:" destination="8rJ-Kc-sve" id="77W-h7-ji9"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>

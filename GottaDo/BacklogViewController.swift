@@ -88,6 +88,25 @@ class BacklogViewController: UIViewController {
         }
     }
     
+    func completeTask(_ task: Task) {
+        
+        print(task)
+        task.setValue(true, forKey: "completed")
+        task.setValue(Date(), forKey: "completedDate")
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not update task. \(error), \(error.userInfo)")
+        }
+    }
+    
     @IBAction func clear(_ sender: Any) {
         removeCompleted()
         loadFilteredData()
@@ -175,5 +194,22 @@ extension BacklogViewController: UITableViewDelegate {
         if let viewController = segue.destination as? TaskDetailViewController, let taskToSend = sender as? Task {
             viewController.task = taskToSend
         }
+    }
+    
+    func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if let task = self.tasks[indexPath.row] as? Task {
+            if !task.completed {
+                let completeAction = UIContextualAction(style: .destructive, title: "✔") { (action, view, handler) in
+                    self.completeTask(task)
+                    self.loadFilteredData()
+                }
+                completeAction.backgroundColor = .green
+                let configuration = UISwipeActionsConfiguration(actions: [completeAction])
+                configuration.performsFirstActionWithFullSwipe = true
+                return configuration
+            }
+        }
+        
+        return UISwipeActionsConfiguration()
     }
 }

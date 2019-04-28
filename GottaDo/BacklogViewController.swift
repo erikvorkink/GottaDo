@@ -12,6 +12,9 @@ class BacklogViewController: UIViewController {
         title = "Backlog"
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
+        self.view.addGestureRecognizer(longPressRecognizer)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +41,19 @@ class BacklogViewController: UIViewController {
         }
         
         tableView.reloadData()
+    }
+    
+    @objc
+    func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
+            let touchPoint = longPressGestureRecognizer.location(in: self.view)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                if let task = tasks[indexPath.row] as? Task {
+                    toggleTaskFlagged(task)
+                    loadFilteredData()
+                }
+            }
+        }
     }
 
     @IBAction func addTask(_ sender: UIBarButtonItem) {
@@ -87,10 +103,27 @@ class BacklogViewController: UIViewController {
             print("Could not create task. \(error), \(error.userInfo)")
         }
     }
+        
+    func toggleTaskFlagged(_ task: Task) {
+        print("toggling:")
+        print(task.value(forKey: "name"))
+        
+        task.setValue(!task.flagged, forKey: "flagged")
+
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not update task. \(error), \(error.userInfo)")
+        }
+    }
     
     func completeTask(_ task: Task) {
-        
-        print(task)
         task.setValue(true, forKey: "completed")
         task.setValue(Date(), forKey: "completedDate")
         
@@ -150,9 +183,7 @@ extension BacklogViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = tasks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-//        if let completed = task.value(forKeyPath: "completed") as? Bool {
-//            cell.accessoryType = completed ? .checkmark : .none
-//        }
+
         let name = task.value(forKeyPath: "name") as? String
         let createdDateFormatted = getTaskCreatedDateFormatted(task)
         
@@ -163,6 +194,13 @@ extension BacklogViewController: UITableViewDataSource {
             }
         }
         cell.textLabel?.attributedText = attributeString;
+        
+        let flagged = task.value(forKeyPath: "flagged") as? Bool ?? false
+        if flagged {
+            cell.accessoryView = UIImageView(image: UIImage(named:"flagged"))
+        } else {
+            cell.accessoryView = .none
+        }
         
         return cell
     }

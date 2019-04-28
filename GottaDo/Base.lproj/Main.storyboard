@@ -151,6 +151,14 @@
                                     <action selector="uncomplete:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="1Ar-g3-pvN"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nNA-I6-idQ">
+                                <rect key="frame" x="166" y="353" width="55" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Remove"/>
+                                <connections>
+                                    <action selector="remove:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="C6g-i4-456"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="gNa-gE-mZ6"/>

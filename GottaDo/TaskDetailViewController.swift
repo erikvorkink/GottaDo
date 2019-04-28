@@ -79,6 +79,25 @@ class TaskDetailViewController: UIViewController {
         }
     }
     
+    func remove() {
+        if let task = task as Task? {
+            task.setValue(true, forKey: "removed")
+            task.setValue(Date(), forKey: "removedDate")
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            
+            let managedContext = appDelegate.persistentContainer.viewContext
+            
+            do {
+                try managedContext.save()
+            } catch let error as NSError {
+                print("Could not update task. \(error), \(error.userInfo)")
+            }
+        }
+    }
+    
     func close() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -99,6 +118,11 @@ class TaskDetailViewController: UIViewController {
 
     @IBAction func uncomplete(_ sender: Any) {
         uncomplete()
+        close()
+    }
+    
+    @IBAction func remove(_ sender: Any) {
+        remove()
         close()
     }
 }

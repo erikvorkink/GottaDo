@@ -1,6 +1,11 @@
 import UIKit
 import CoreData
 
+@objc public enum TaskList: Int16 {
+    case Today    = 1
+    case Backlog  = 2
+}
+
 class BacklogViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
@@ -25,14 +30,13 @@ class BacklogViewController: UIViewController {
     func loadFilteredData() {
         tasks.removeAll()
         
-        
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
-        fetchRequest.predicate = NSPredicate(format: "removed != %@", NSNumber(value: true))
+        fetchRequest.predicate = NSPredicate(format: "taskList = %@ AND removed != %@", NSNumber(value: TaskList.Backlog.rawValue), NSNumber(value: true))
         
         do {
             tasks = try managedContext.fetch(fetchRequest)
@@ -91,6 +95,7 @@ class BacklogViewController: UIViewController {
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
         
         let task = NSManagedObject(entity: entity, insertInto: managedContext)
+        task.setValue(TaskList.Backlog.rawValue, forKeyPath: "taskList")
         task.setValue(name, forKeyPath: "name")
         task.setValue(Date(), forKeyPath: "createdDate")
         task.setValue(false, forKeyPath: "completed")
@@ -105,10 +110,30 @@ class BacklogViewController: UIViewController {
     }
         
     func toggleTaskFlagged(_ task: Task) {
-        print("toggling:")
-        print(task.value(forKey: "name"))
+//        print("toggling:")
+//        print(task.value(forKey: "name"))
         
-        task.setValue(!task.flagged, forKey: "flagged")
+        let flagged = task.value(forKey: "flagged") as? Bool ?? false
+        task.setValue(!flagged, forKey: "flagged")
+
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+
+        let managedContext = appDelegate.persistentContainer.viewContext
+
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not update task. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func moveTask(_ task: Task) {
+        let currentTaskList = task.value(forKey: "taskList") as! Int16
+        let moveToTaskList = currentTaskList == TaskList.Backlog.rawValue ? TaskList.Today : TaskList.Backlog
+        
+        task.setValue(moveToTaskList.rawValue, forKey: "taskList")
 
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -195,7 +220,7 @@ extension BacklogViewController: UITableViewDataSource {
         }
         cell.textLabel?.attributedText = attributeString;
         
-        let flagged = task.value(forKeyPath: "flagged") as? Bool ?? false
+        let flagged = task.value(forKey: "flagged") as? Bool ?? false
         if flagged {
             cell.accessoryView = UIImageView(image: UIImage(named:"flagged"))
         } else {
@@ -246,6 +271,21 @@ extension BacklogViewController: UITableViewDelegate {
                 configuration.performsFirstActionWithFullSwipe = true
                 return configuration
             }
+        }
+        
+        return UISwipeActionsConfiguration()
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if let task = self.tasks[indexPath.row] as? Task {
+            let moveTaskAction = UIContextualAction(style: .destructive, title: "Move") { (action, view, handler) in
+                self.moveTask(task)
+                self.loadFilteredData()
+            }
+            moveTaskAction.backgroundColor = .purple
+            let configuration = UISwipeActionsConfiguration(actions: [moveTaskAction])
+            configuration.performsFirstActionWithFullSwipe = true
+            return configuration
         }
         
         return UISwipeActionsConfiguration()

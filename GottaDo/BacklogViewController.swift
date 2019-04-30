@@ -24,7 +24,12 @@ class BacklogViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        reload()
+    }
+    
+    func reload() {
         loadFilteredData()
+        updateBadgeNumber()
     }
     
     func loadFilteredData() {
@@ -47,6 +52,32 @@ class BacklogViewController: UIViewController {
         tableView.reloadData()
     }
     
+    func updateBadgeNumber() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        appDelegate.setBadgeNumber(to: getNumberOfTodayTasks())
+    }
+    
+    func getNumberOfTodayTasks() -> Int {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return 0
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        
+        fetchRequest.predicate = NSPredicate(format: "taskList = %@ AND completed != %@", NSNumber(value: TaskList.Today.rawValue), NSNumber(value: true))
+        
+        do {
+            let count = try managedContext.count(for: fetchRequest)
+            return count
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+            return 0
+        }
+    }
+    
     @objc
     func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
@@ -54,7 +85,7 @@ class BacklogViewController: UIViewController {
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 if let task = tasks[indexPath.row] as? Task {
                     toggleTaskFlagged(task)
-                    loadFilteredData()
+                    reload()
                 }
             }
         }
@@ -74,7 +105,7 @@ class BacklogViewController: UIViewController {
             }
             
             self.createTask(name: newTaskName)
-            self.loadFilteredData()
+            self.reload()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -264,7 +295,7 @@ extension BacklogViewController: UITableViewDelegate {
             if !task.completed {
                 let completeAction = UIContextualAction(style: .destructive, title: "✔") { (action, view, handler) in
                     self.completeTask(task)
-                    self.loadFilteredData()
+                    self.reload()
                 }
                 completeAction.backgroundColor = .green
                 let configuration = UISwipeActionsConfiguration(actions: [completeAction])
@@ -280,7 +311,7 @@ extension BacklogViewController: UITableViewDelegate {
         if let task = self.tasks[indexPath.row] as? Task {
             let moveTaskAction = UIContextualAction(style: .destructive, title: "Move") { (action, view, handler) in
                 self.moveTask(task)
-                self.loadFilteredData()
+                self.reload()
             }
             moveTaskAction.backgroundColor = .purple
             let configuration = UISwipeActionsConfiguration(actions: [moveTaskAction])

@@ -1,15 +1,29 @@
 import UIKit
 import CoreData
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var hasBadgeAuthorization = false
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        requestBadgeAuthorization()
         return true
+    }
+    
+    func requestBadgeAuthorization() {
+        UNUserNotificationCenter.current().requestAuthorization(options: .badge) { (granted, error) in
+            self.hasBadgeAuthorization = granted
+        }
+    }
+    
+    func setBadgeNumber(to number: Int) {
+        if hasBadgeAuthorization {
+            UIApplication.shared.applicationIconBadgeNumber = number
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

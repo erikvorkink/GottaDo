@@ -20,8 +20,8 @@ extension Task {
         self.setValue(name, forKey: "name")
     }
     
-    func setTaskListId(_ taskListId: Int16) {
-        self.setValue(taskListId, forKey: "taskListId")
+    func setTaskListId(_ taskListId: TaskListIds) {
+        self.setValue(taskListId.rawValue, forKey: "taskListId")
     }
     
     func setFlagged(_ flagged: Bool) {

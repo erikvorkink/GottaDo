@@ -36,23 +36,18 @@ class TaskListViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         tasks.removeAll()
-        let managedContext = appDelegate.getManagedContext()
-        tasks = managedContext.getTasks(in: currentTaskListId)
+        tasks = appDelegate.getManagedContext().getVisibleTasks(in: currentTaskListId)
         tableView.reloadData()
     }
     
     func refreshBadge() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-
-        let count = getOutstandingTodayTaskCount()
-        appDelegate.setBadgeNumber(count)
+        appDelegate.setBadgeNumber(getOutstandingTodayTaskCount())
     }
     
     func getOutstandingTodayTaskCount() -> Int {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return 0 }
-        
-        let managedContext = appDelegate.getManagedContext()
-        return managedContext.getOutstandingTaskCount(in: TaskListIds.Today)
+        return appDelegate.getManagedContext().getOutstandingTaskCount(in: TaskListIds.Today)
     }
     
     @objc
@@ -122,7 +117,7 @@ class TaskListViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let moveToTaskListId = currentTaskListId.rawValue == TaskListIds.Backlog.rawValue ? TaskListIds.Today : TaskListIds.Backlog
-        task.setTaskListId(moveToTaskListId.rawValue)
+        task.setTaskListId(moveToTaskListId)
         appDelegate.saveContext()
     }
     
@@ -141,19 +136,11 @@ class TaskListViewController: UIViewController {
     func removeCompleted() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.getManagedContext()
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
-        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed == %@ AND removed != %@", NSNumber(value: currentTaskListId.rawValue), NSNumber(value: true), NSNumber(value: true))
-        
-        do {
-            let tasksToRemove = try managedContext.fetch(fetchRequest)
-            for task in tasksToRemove as! [Task] {
-                task.remove()
-                appDelegate.saveContext()
-            }
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+        let tasksToRemove = appDelegate.getManagedContext().getCompletedVisibleTasks(in: currentTaskListId)
+        for task in tasksToRemove as! [Task] {
+            task.remove()
         }
+        appDelegate.saveContext()
     }
 }
 

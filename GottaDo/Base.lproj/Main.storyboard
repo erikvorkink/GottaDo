@@ -171,7 +171,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9wK-sh-T3g">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hLy-CZ-w9a">
@@ -218,6 +218,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="9wK-sh-T3g" id="UuK-nc-T4s"/>
+                        <segue destination="kYB-3D-ZtB" kind="presentation" identifier="taskDetailSegue" id="sS1-qs-cqn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u7f-ly-tEB" sceneMemberID="firstResponder"/>
@@ -225,4 +226,7 @@
             <point key="canvasLocation" x="750" y="-357"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="sS1-qs-cqn"/>
+    </inferredMetricsTieBreakers>
 </document>

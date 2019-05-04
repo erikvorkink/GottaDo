@@ -51,7 +51,7 @@ class TaskDetailViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let task = task as Task? else { return }
         
-        task.setName(editName.text as NSString? ?? "")
+        task.setName(editName.text as String? ?? "")
         appDelegate.saveContext()
     }
     

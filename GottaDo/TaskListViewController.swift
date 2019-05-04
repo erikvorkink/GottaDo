@@ -27,29 +27,6 @@ class TaskListViewController: UIViewController {
         refresh()
     }
     
-    func refresh() {
-        refreshTasks()
-        refreshBadge()
-    }
-    
-    func refreshTasks() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        tasks.removeAll()
-        tasks = appDelegate.getManagedContext().getVisibleTasks(in: currentTaskListId)
-        tableView.reloadData()
-    }
-    
-    func refreshBadge() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        appDelegate.setBadgeNumber(getOutstandingTodayTaskCount())
-    }
-    
-    func getOutstandingTodayTaskCount() -> Int {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return 0 }
-        return appDelegate.getManagedContext().getOutstandingTaskCount(in: TaskListIds.Today)
-    }
-    
     @objc
     func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
@@ -89,21 +66,43 @@ class TaskListViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    @IBAction func clear(_ sender: Any) {
+        removeCompleted()
+        refreshTasks()
+    }
+    
+    func refresh() {
+        refreshTasks()
+        refreshBadge()
+    }
+    
+    func refreshTasks() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        tasks.removeAll()
+        tasks = appDelegate.getManagedContext().getVisibleTasks(in: currentTaskListId)
+        tableView.reloadData()
+    }
+    
+    func refreshBadge() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.setBadgeNumber(getOutstandingTodayTaskCount())
+    }
+    
+    func getOutstandingTodayTaskCount() -> Int {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return 0 }
+        return appDelegate.getManagedContext().getOutstandingTaskCount(in: TaskListIds.Today)
+    }
+    
     func createTask(name: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let managedContext = appDelegate.getManagedContext()
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
-        
-        let task = NSManagedObject(entity: entity, insertInto: managedContext)
-        task.setValue(currentTaskListId.rawValue, forKey: "taskListId")
-        task.setValue(name, forKey: "name")
-        task.setValue(Date(), forKey: "createdDate")
-        task.setValue(false, forKey: "completed")
-        task.setValue(false, forKey: "removed")
-        appDelegate.saveContext()
+        if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
+            task.setNewRecordValues(taskListId: currentTaskListId, name: name)
+            appDelegate.saveContext()
+        }
     }
     
     func toggleTaskFlagged(_ task: Task) {
@@ -126,11 +125,6 @@ class TaskListViewController: UIViewController {
 
         task.complete()
         appDelegate.saveContext()
-    }
-    
-    @IBAction func clear(_ sender: Any) {
-        removeCompleted()
-        refreshTasks()
     }
     
     func removeCompleted() {

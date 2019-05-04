@@ -10,14 +10,7 @@ class TaskDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let task = task as Task? {
-            editName.text = task.name
-            
-            if let completed = task.value(forKey: "completed") as? Bool {
-                completeButton.isHidden = completed
-                uncompleteButton.isHidden = !completed
-            }
-        }
+        initEditor()
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -44,11 +37,21 @@ class TaskDetailViewController: UIViewController {
         close()
     }
     
+    func initEditor() {
+        guard let task = task as Task? else { return }
+        
+        editName.text = task.name
+        if let completed = task.value(forKey: "completed") as? Bool {
+            completeButton.isHidden = completed
+            uncompleteButton.isHidden = !completed
+        }
+    }
+    
     func updateTaskDetails() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let task = task as Task? else { return }
         
-        task.setValue(editName.text, forKey: "name")
+        task.setName(editName.text as NSString? ?? "")
         appDelegate.saveContext()
     }
     
@@ -56,8 +59,7 @@ class TaskDetailViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let task = task as Task? else { return }
         
-        task.setValue(true, forKey: "completed")
-        task.setValue(Date(), forKey: "completedDate")
+        task.complete()
         appDelegate.saveContext()
     }
     
@@ -65,8 +67,7 @@ class TaskDetailViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let task = task as Task? else { return }
         
-        task.setValue(false, forKey: "completed")
-        task.setValue(nil, forKey: "completedDate")
+        task.uncomplete()
         appDelegate.saveContext()
     }
     
@@ -74,8 +75,7 @@ class TaskDetailViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let task = task as Task? else { return }
         
-        task.setValue(true, forKey: "removed")
-        task.setValue(Date(), forKey: "removedDate")
+        task.remove()
         appDelegate.saveContext()
     }
     

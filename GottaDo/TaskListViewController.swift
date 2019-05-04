@@ -137,8 +137,7 @@ class TaskListViewController: UIViewController {
     func toggleTaskFlagged(_ task: Task) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let flagged = task.value(forKey: "flagged") as? Bool ?? false
-        task.setValue(!flagged, forKey: "flagged")
+        task.toggleFlagged()
         appDelegate.saveContext()
     }
     
@@ -146,15 +145,14 @@ class TaskListViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let moveToTaskListId = currentTaskListId.rawValue == TaskListIds.Backlog.rawValue ? TaskListIds.Today : TaskListIds.Backlog
-        task.setValue(moveToTaskListId.rawValue, forKey: "taskListId")
+        task.setTaskListId(moveToTaskListId.rawValue)
         appDelegate.saveContext()
     }
     
     func completeTask(_ task: Task) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 
-        task.setValue(true, forKey: "completed")
-        task.setValue(Date(), forKey: "completedDate")
+        task.complete()
         appDelegate.saveContext()
     }
     
@@ -173,8 +171,7 @@ class TaskListViewController: UIViewController {
         do {
             let tasksToRemove = try managedContext.fetch(fetchRequest)
             for task in tasksToRemove as! [Task] {
-                task.setValue(true, forKey: "removed")
-                task.setValue(Date(), forKey: "removedDate")
+                task.remove()
                 appDelegate.saveContext()
             }
         } catch let error as NSError {

@@ -54,9 +54,24 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nrS-Zg-sdf">
+                                <rect key="frame" x="16" y="30" width="72" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Backlog">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="20" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="highlightedColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="rpI-M9-HJi" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="top" constant="60" id="FXE-Ih-vWV"/>
                             <constraint firstItem="O1u-W8-tvY" firstAttribute="bottom" secondItem="rpI-M9-HJi" secondAttribute="bottom" id="kYj-zP-6Hp"/>
                             <constraint firstItem="O1u-W8-tvY" firstAttribute="trailing" secondItem="rpI-M9-HJi" secondAttribute="trailing" id="mad-fH-Shy"/>
                             <constraint firstItem="rpI-M9-HJi" firstAttribute="leading" secondItem="O1u-W8-tvY" secondAttribute="leading" id="p1h-PL-GoV"/>
@@ -73,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="749.60000000000002" y="359.37031484257875"/>
+            <point key="canvasLocation" x="750" y="360"/>
         </scene>
         <!--Task Detail View Controller-->
         <scene sceneID="7Ln-5G-B1r">
@@ -203,11 +218,26 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M1-sV-UDr">
+                                <rect key="frame" x="16" y="30" width="54" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Today">
+                                        <attributes>
+                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            <font key="NSFont" size="20" name="Helvetica"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <color key="highlightedColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="C2X-tp-nhg" firstAttribute="bottom" secondItem="9wK-sh-T3g" secondAttribute="bottom" id="Jfz-2d-rCa"/>
                             <constraint firstItem="C2X-tp-nhg" firstAttribute="top" secondItem="9wK-sh-T3g" secondAttribute="top" constant="20" id="Sp2-di-B51"/>
+                            <constraint firstItem="9wK-sh-T3g" firstAttribute="top" secondItem="m1A-mG-3tL" secondAttribute="top" constant="60" id="bNt-2o-0gj"/>
                             <constraint firstItem="C2X-tp-nhg" firstAttribute="trailing" secondItem="9wK-sh-T3g" secondAttribute="trailing" id="fq5-8L-KC8"/>
                             <constraint firstItem="9wK-sh-T3g" firstAttribute="leading" secondItem="C2X-tp-nhg" secondAttribute="leading" id="v43-BS-acf"/>
                         </constraints>
@@ -227,6 +257,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sS1-qs-cqn"/>
+        <segue reference="5l0-Rv-k49"/>
     </inferredMetricsTieBreakers>
 </document>

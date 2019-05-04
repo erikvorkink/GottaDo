@@ -13,7 +13,7 @@ class TaskDetailViewController: UIViewController {
         if let task = task as Task? {
             editName.text = task.name
             
-            if let completed = task.value(forKeyPath: "completed") as? Bool {
+            if let completed = task.value(forKey: "completed") as? Bool {
                 completeButton.isHidden = completed
                 uncompleteButton.isHidden = !completed
             } else { // TODO: remove this once the data always has this field

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */; };
+		B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597C01D227AA41E00E2C86F /* TaskListViewController.swift */; };
+		B597C020227AA57D00E2C86F /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597C01F227AA57D00E2C86F /* TodayViewController.swift */; };
 		B5987D9422683230003044E1 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5987D9322683230003044E1 /* TaskDetailViewController.swift */; };
 		B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781B222654D5800EA4D55 /* AppDelegate.swift */; };
 		B5D781B722654D5800EA4D55 /* BacklogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781B622654D5800EA4D55 /* BacklogViewController.swift */; };
@@ -16,7 +18,6 @@
 		B5D781BF22654D5A00EA4D55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D781BD22654D5A00EA4D55 /* LaunchScreen.storyboard */; };
 		B5D781CA22654D5A00EA4D55 /* GottaDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781C922654D5A00EA4D55 /* GottaDoTests.swift */; };
 		B5D781D522654D5A00EA4D55 /* GottaDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781D422654D5A00EA4D55 /* GottaDoUITests.swift */; };
-		B5D781EB226550EA00EA4D55 /* TodayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781EA226550EA00EA4D55 /* TodayTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GottaDo.xcdatamodel; sourceTree = "<group>"; };
+		B597C01D227AA41E00E2C86F /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
+		B597C01F227AA57D00E2C86F /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		B5987D9322683230003044E1 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
 		B5D781AF22654D5800EA4D55 /* GottaDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GottaDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D781B222654D5800EA4D55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,7 +55,6 @@
 		B5D781D022654D5A00EA4D55 /* GottaDoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GottaDoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D781D422654D5A00EA4D55 /* GottaDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GottaDoUITests.swift; sourceTree = "<group>"; };
 		B5D781D622654D5A00EA4D55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B5D781EA226550EA00EA4D55 /* TodayTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,8 +106,9 @@
 			isa = PBXGroup;
 			children = (
 				B5D781B222654D5800EA4D55 /* AppDelegate.swift */,
-				B5D781EA226550EA00EA4D55 /* TodayTableViewController.swift */,
+				B597C01F227AA57D00E2C86F /* TodayViewController.swift */,
 				B5D781B622654D5800EA4D55 /* BacklogViewController.swift */,
+				B597C01D227AA41E00E2C86F /* TaskListViewController.swift */,
 				B5987D9322683230003044E1 /* TaskDetailViewController.swift */,
 				B5D781B822654D5800EA4D55 /* Main.storyboard */,
 				B5D781BB22654D5A00EA4D55 /* Assets.xcassets */,
@@ -267,9 +270,10 @@
 			files = (
 				B5987D9422683230003044E1 /* TaskDetailViewController.swift in Sources */,
 				B5D781B722654D5800EA4D55 /* BacklogViewController.swift in Sources */,
+				B597C020227AA57D00E2C86F /* TodayViewController.swift in Sources */,
 				B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */,
 				B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */,
-				B5D781EB226550EA00EA4D55 /* TodayTableViewController.swift in Sources */,
+				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

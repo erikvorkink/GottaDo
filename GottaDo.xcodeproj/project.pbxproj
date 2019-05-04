@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B50A1D40227DFCA0009D9D65 /* TaskExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */; };
+		B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */; };
 		B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */; };
 		B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597C01D227AA41E00E2C86F /* TaskListViewController.swift */; };
 		B597C020227AA57D00E2C86F /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597C01F227AA57D00E2C86F /* TodayViewController.swift */; };
@@ -40,6 +41,7 @@
 
 /* Begin PBXFileReference section */
 		B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExtension.swift; sourceTree = "<group>"; };
+		B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedContextExtension.swift; sourceTree = "<group>"; };
 		B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GottaDo.xcdatamodel; sourceTree = "<group>"; };
 		B597C01D227AA41E00E2C86F /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		B597C01F227AA57D00E2C86F /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				B597C01D227AA41E00E2C86F /* TaskListViewController.swift */,
 				B5987D9322683230003044E1 /* TaskDetailViewController.swift */,
 				B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */,
+				B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */,
 				B5D781B822654D5800EA4D55 /* Main.storyboard */,
 				B5D781BB22654D5A00EA4D55 /* Assets.xcassets */,
 				B5D781BD22654D5A00EA4D55 /* LaunchScreen.storyboard */,
@@ -278,6 +281,7 @@
 				B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */,
 				B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */,
 				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
+				B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func setBadgeNumber(to number: Int) {
+    func setBadgeNumber(_ number: Int) {
         if hasBadgeAuthorization {
             UIApplication.shared.applicationIconBadgeNumber = number
         }
@@ -51,6 +51,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Core Data stack
+    
+    func getManagedContext() -> NSManagedObjectContext {
+        return self.persistentContainer.viewContext
+    }
     
     lazy var persistentContainer: NSPersistentContainer = {
         /*

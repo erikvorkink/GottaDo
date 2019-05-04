@@ -24,58 +24,35 @@ class TaskListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reload()
+        refresh()
     }
     
-    func reload() {
-        loadFilteredData()
-        updateBadgeNumber()
+    func refresh() {
+        refreshTasks()
+        refreshBadge()
     }
     
-    func loadFilteredData() {
+    func refreshTasks() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
         tasks.removeAll()
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
-        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND removed != %@", NSNumber(value: currentTaskListId.rawValue), NSNumber(value: true))
-        
-        do {
-            tasks = try managedContext.fetch(fetchRequest)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-        
+        let managedContext = appDelegate.getManagedContext()
+        tasks = managedContext.getTasks(in: currentTaskListId)
         tableView.reloadData()
     }
     
-    func updateBadgeNumber() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return
-        }
-        appDelegate.setBadgeNumber(to: getNumberOfTodayTasks())
+    func refreshBadge() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+
+        let count = getOutstandingTodayTaskCount()
+        appDelegate.setBadgeNumber(count)
     }
     
-    func getNumberOfTodayTasks() -> Int {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            return 0
-        }
+    func getOutstandingTodayTaskCount() -> Int {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return 0 }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
-        
-        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed != %@", NSNumber(value: currentTaskListId.rawValue), NSNumber(value: true))
-        
-        do {
-            let count = try managedContext.count(for: fetchRequest)
-            return count
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-            return 0
-        }
+        let managedContext = appDelegate.getManagedContext()
+        return managedContext.getOutstandingTaskCount(in: TaskListIds.Today)
     }
     
     @objc
@@ -85,7 +62,7 @@ class TaskListViewController: UIViewController {
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 if let task = tasks[indexPath.row] as? Task {
                     toggleTaskFlagged(task)
-                    reload()
+                    refresh()
                 }
             }
         }
@@ -105,7 +82,7 @@ class TaskListViewController: UIViewController {
             }
             
             self.createTask(name: newTaskName)
-            self.reload()
+            self.refresh()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -122,7 +99,7 @@ class TaskListViewController: UIViewController {
             return
         }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = appDelegate.getManagedContext()
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
         
         let task = NSManagedObject(entity: entity, insertInto: managedContext)
@@ -158,13 +135,13 @@ class TaskListViewController: UIViewController {
     
     @IBAction func clear(_ sender: Any) {
         removeCompleted()
-        loadFilteredData()
+        refreshTasks()
     }
     
     func removeCompleted() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let managedContext = appDelegate.persistentContainer.viewContext
+        let managedContext = appDelegate.getManagedContext()
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
         fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed == %@ AND removed != %@", NSNumber(value: currentTaskListId.rawValue), NSNumber(value: true), NSNumber(value: true))
         
@@ -246,7 +223,7 @@ extension TaskListViewController: UITableViewDelegate {
             if !task.completed {
                 let completeAction = UIContextualAction(style: .destructive, title: "✔") { (action, view, handler) in
                     self.completeTask(task)
-                    self.reload()
+                    self.refresh()
                 }
                 completeAction.backgroundColor = .green
                 let configuration = UISwipeActionsConfiguration(actions: [completeAction])
@@ -262,7 +239,7 @@ extension TaskListViewController: UITableViewDelegate {
         if let task = self.tasks[indexPath.row] as? Task {
             let moveTaskAction = UIContextualAction(style: .destructive, title: "Move") { (action, view, handler) in
                 self.moveTask(task)
-                self.reload()
+                self.refresh()
             }
             moveTaskAction.backgroundColor = .purple
             let configuration = UISwipeActionsConfiguration(actions: [moveTaskAction])

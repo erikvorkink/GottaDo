@@ -27,6 +27,10 @@ class TaskListViewController: UIViewController {
         refresh()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        stopReorder()
+    }
+    
     @objc
     func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
@@ -69,6 +73,14 @@ class TaskListViewController: UIViewController {
     @IBAction func clear(_ sender: Any) {
         removeCompleted()
         refreshTasks()
+    }
+    
+    @IBAction func toggleReorder(_ sender: Any) {
+        if tableView.isEditing {
+            stopReorder()
+        } else {
+            startReorder()
+        }
     }
     
     func refresh() {
@@ -136,6 +148,14 @@ class TaskListViewController: UIViewController {
         }
         appDelegate.saveContext()
     }
+    
+    func startReorder() {
+        tableView.isEditing = true
+    }
+    
+    func stopReorder() {
+        tableView.isEditing = false
+    }
 }
 
 // MARK: - UITableViewDataSource
@@ -181,6 +201,27 @@ extension TaskListViewController: UITableViewDataSource {
             createdDateFormatted = dateFormatter.string(from: createdDate)
         }
         return createdDateFormatted
+    }
+    
+    // No delete icon when reordering
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return UITableViewCell.EditingStyle.none;
+    }
+    
+    // No indent when reordering
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    
+    // All rows can be reordered
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let taskToReorder = tasks[sourceIndexPath.row]
+        // TODO: reorder the task
+        print(taskToReorder)
     }
 }
 

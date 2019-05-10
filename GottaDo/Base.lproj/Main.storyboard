@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="T67-De-4rx">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BacklogTaskCell" id="T67-De-4rx">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T67-De-4rx" id="L4a-DI-9ar">
@@ -42,6 +42,11 @@
                                 <rect key="frame" x="0.0" y="574" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
+                                    <barButtonItem title="Reorder" id="4rj-2u-HA3">
+                                        <connections>
+                                            <action selector="toggleReorder:" destination="8rJ-Kc-sve" id="Xe5-aW-roP"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem systemItem="add" id="UND-de-ukY">
                                         <connections>
                                             <action selector="addTask:" destination="8rJ-Kc-sve" id="Tln-Z6-Fd3"/>
@@ -189,7 +194,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hLy-CZ-w9a">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodayTaskCell" id="hLy-CZ-w9a">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hLy-CZ-w9a" id="fJJ-QW-ve1">
@@ -206,6 +211,11 @@
                                 <rect key="frame" x="0.0" y="574" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
+                                    <barButtonItem title="Reorder" id="WMf-Dc-JRb">
+                                        <connections>
+                                            <action selector="toggleReorder:" destination="yPV-io-gKH" id="a9W-WP-9k8"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem systemItem="add" id="8Sy-BY-otd">
                                         <connections>
                                             <action selector="addTask:" destination="yPV-io-gKH" id="oE3-Qm-4aP"/>
@@ -257,6 +267,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5l0-Rv-k49"/>
+        <segue reference="sS1-qs-cqn"/>
     </inferredMetricsTieBreakers>
 </document>

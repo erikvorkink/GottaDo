@@ -7,11 +7,12 @@
         <attribute name="details" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="flagged" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="position" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="removed" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="removedDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="taskListId" attributeType="Integer 16" minValueString="1" defaultValueString="1" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Task" positionX="-54" positionY="-9" width="128" height="180"/>
+        <element name="Task" positionX="-54" positionY="-9" width="128" height="195"/>
     </elements>
 </model>

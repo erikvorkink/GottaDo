@@ -112,9 +112,18 @@ class TaskListViewController: UIViewController {
         let managedContext = appDelegate.getManagedContext()
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
         if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
-            task.setNewRecordValues(taskListId: currentTaskListId, name: name)
+            task.setNewRecordValues(taskListId: currentTaskListId, position: getNewTaskPosition(), name: name)
             appDelegate.saveContext()
         }
+    }
+    
+    func getNewTaskPosition() -> Int {
+        if let lastTask = tasks.last as? Task {
+            if let lastTaskPosition = lastTask.value(forKey: "position") as? Int {
+                return 1 + lastTaskPosition
+            }
+        }
+        return 1
     }
     
     func toggleTaskFlagged(_ task: Task) {
@@ -171,8 +180,9 @@ extension TaskListViewController: UITableViewDataSource {
         
         let name = task.value(forKey: "name") as? String
         let createdDateFormatted = getTaskCreatedDateFormatted(task)
+        let position = task.value(forKey: "position") as? Int
         
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(name!) - \(createdDateFormatted)")
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "[\(position!)] \(name!) - \(createdDateFormatted)")
         if let completed = task.value(forKey: "completed") as? Bool {
             if completed {
                 attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))

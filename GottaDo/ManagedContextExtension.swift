@@ -6,6 +6,7 @@ extension NSManagedObjectContext {
         var tasks: [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
         fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND removed != %@", NSNumber(value: taskListId.rawValue), NSNumber(value: true))
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "position", ascending: true)]
         
         do {
             tasks = try self.fetch(fetchRequest)

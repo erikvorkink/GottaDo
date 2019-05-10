@@ -1,8 +1,9 @@
 import Foundation
 
 extension Task {
-    func setNewRecordValues(taskListId: TaskListIds, name: String) {
+    func setNewRecordValues(taskListId: TaskListIds, position: Int, name: String) {
         self.setTaskListId(taskListId)
+        self.setPosition(position)
         self.setName(name)
         self.setValue(Date(), forKey: "createdDate")
         self.setValue(false, forKey: "completed")
@@ -30,6 +31,10 @@ extension Task {
     
     func setTaskListId(_ taskListId: TaskListIds) {
         self.setValue(taskListId.rawValue, forKey: "taskListId")
+    }
+    
+    func setPosition(_ position: Int) {
+        self.setValue(position, forKey: "position")
     }
     
     func setFlagged(_ flagged: Bool) {

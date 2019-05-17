@@ -170,10 +170,12 @@ class TaskListViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension TaskListViewController: UITableViewDataSource {
     
+    // Row for each task
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tasks.count
     }
     
+    // Render task row
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = tasks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
@@ -200,6 +202,7 @@ extension TaskListViewController: UITableViewDataSource {
         return cell
     }
     
+    // Date format helper
     func getTaskCreatedDateFormatted(_ task: NSManagedObject) -> String {
         var createdDateFormatted = ""
         let createdDate = task.value(forKey: "createdDate") as? Date
@@ -228,10 +231,25 @@ extension TaskListViewController: UITableViewDataSource {
         return true
     }
     
+    // Persist a reordered task
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
         let taskToReorder = tasks[sourceIndexPath.row]
-        // TODO: reorder the task
-        print(taskToReorder)
+        tasks.remove(at: sourceIndexPath.row)
+        tasks.insert(taskToReorder, at: destinationIndexPath.row)
+        
+        syncTaskPositionsToOrderInArray()
+        appDelegate.saveContext()
+    }
+    
+    // Set the position value of each task so that it matches the current position in the tasks array
+    func syncTaskPositionsToOrderInArray() {
+        var nextPosition = 1
+        for task in tasks as! [Task] {
+            task.setPosition(nextPosition)
+            nextPosition += 1
+        }
     }
 }
 

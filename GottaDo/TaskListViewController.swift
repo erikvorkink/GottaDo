@@ -22,19 +22,22 @@ class TaskListViewController: UIViewController {
         self.view.addGestureRecognizer(longPressRecognizer)
     }
     
+    // Load/refresh data
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refresh()
     }
     
+    // Get out of reorder mode when switching away
     override func viewWillDisappear(_ animated: Bool) {
         stopReorder()
     }
     
+    // Flag/unflag task upon long press
     @objc
     func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
-            let touchPoint = longPressGestureRecognizer.location(in: self.view)
+            let touchPoint = longPressGestureRecognizer.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 if let task = tasks[indexPath.row] as? Task {
                     toggleTaskFlagged(task)
@@ -44,6 +47,7 @@ class TaskListViewController: UIViewController {
         }
     }
     
+    // New task
     @IBAction func addTask(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "New Task",
                                       message: "Add a new task",
@@ -70,11 +74,13 @@ class TaskListViewController: UIViewController {
         present(alert, animated: true)
     }
     
+    // Remove completed tasks from list
     @IBAction func clear(_ sender: Any) {
         removeCompleted()
         refreshTasks()
     }
     
+    // Toggle reorder mode
     @IBAction func toggleReorder(_ sender: Any) {
         if tableView.isEditing {
             stopReorder()
@@ -117,6 +123,7 @@ class TaskListViewController: UIViewController {
         }
     }
     
+    // Determine the position value a new task should get?
     func getNewTaskPosition() -> Int {
         if let lastTask = tasks.last as? Task {
             if let lastTaskPosition = lastTask.value(forKey: "position") as? Int {
@@ -133,6 +140,7 @@ class TaskListViewController: UIViewController {
         appDelegate.saveContext()
     }
     
+    // Move from Today <--> Backlog
     func moveTask(_ task: Task) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         

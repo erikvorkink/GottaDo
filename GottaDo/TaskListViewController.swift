@@ -96,6 +96,12 @@ class TaskListViewController: UIViewController {
         tasks.removeAll()
         tasks = appDelegate.getManagedContext().getVisibleTasks(in: currentTaskListId)
         tableView.reloadData()
+        
+        if tasks.count == 0 {
+            showBlankState("Nothing to do")
+        } else {
+            hideBlankState()
+        }
     }
     
     func refreshBadge() {
@@ -243,6 +249,29 @@ extension TaskListViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension TaskListViewController: UITableViewDelegate {
+    
+    func showBlankState(_ message: String) {
+        let emptyView = UIView(frame: CGRect(x: tableView.center.x, y: tableView.center.y, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        let messageLabel = UILabel()
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.textColor = UIColor.lightGray
+        messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 18)
+        emptyView.addSubview(messageLabel)
+        messageLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
+        messageLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true
+        messageLabel.leftAnchor.constraint(equalTo: emptyView.leftAnchor, constant: 20).isActive = true
+        messageLabel.rightAnchor.constraint(equalTo: emptyView.rightAnchor, constant: -20).isActive = true
+        messageLabel.text = message
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        tableView.backgroundView = emptyView
+        tableView.separatorStyle = .none
+    }
+    
+    func hideBlankState() {
+        tableView.backgroundView = nil
+        tableView.separatorStyle = .singleLine
+    }
     
     // Selecting task opens up the detail view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -2,6 +2,11 @@ import UIKit
 import CoreData
 import UserNotifications
 
+@objc public enum TaskListIds: Int16 {
+    case Today    = 1
+    case Backlog  = 2
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

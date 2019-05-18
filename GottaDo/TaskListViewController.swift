@@ -1,11 +1,6 @@
 import UIKit
 import CoreData
 
-@objc public enum TaskListIds: Int16 {
-    case Today    = 1
-    case Backlog  = 2
-}
-
 class TaskListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
@@ -190,47 +185,23 @@ extension TaskListViewController: UITableViewDataSource {
     
     // Render task row
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let task = tasks[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
-        
-        cell.textLabel?.font = UIFont.init(name: "Helvetica", size: 20)
-        cell.textLabel?.textColor = UIColor(white: 0.2, alpha: 1.0)
-        
-        let name = task.value(forKey: "name") as? String
-//        let createdDateFormatted = getTaskCreatedDateFormatted(task)
-//        let position = task.value(forKey: "position") as? Int
-        
-//        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "[\(position!)] \(name!) - \(createdDateFormatted)")
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(name!)")
-        if let completed = task.value(forKey: "completed") as? Bool {
-            if completed {
-                attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-            }
+        if let task = tasks[indexPath.row] as? Task {
+            cell.textLabel?.font = UIFont.init(name: "Helvetica", size: 20)
+            cell.textLabel?.textColor = UIColor(white: 0.2, alpha: 1.0)
+            cell.textLabel?.attributedText = getCellAttributedText(task);
+            cell.accessoryView = (task.flagged) ?UIImageView(image: UIImage(named:"flagged")) : .none
         }
-        cell.textLabel?.attributedText = attributeString;
-        
-        let flagged = task.value(forKey: "flagged") as? Bool ?? false
-        if flagged {
-            cell.accessoryView = UIImageView(image: UIImage(named:"flagged"))
-        } else {
-            cell.accessoryView = .none
-        }
-        
         return cell
     }
     
-    // Date format helper
-    func getTaskCreatedDateFormatted(_ task: NSManagedObject) -> String {
-        var createdDateFormatted = ""
-        let createdDate = task.value(forKey: "createdDate") as? Date
-        if let createdDate = createdDate {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
-            dateFormatter.locale = Locale(identifier: "en_US")
-            createdDateFormatted = dateFormatter.string(from: createdDate)
+    func getCellAttributedText(_ task: Task) -> NSMutableAttributedString {
+        let name = task.name ?? ""
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: name)
+        if task.completed {
+            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
         }
-        return createdDateFormatted
+        return attributeString
     }
     
     // No delete icon when reordering
@@ -300,7 +271,6 @@ extension TaskListViewController: UITableViewDelegate {
             configuration.performsFirstActionWithFullSwipe = true
             return configuration
         }
-        
         return UISwipeActionsConfiguration()
     }
     
@@ -317,7 +287,6 @@ extension TaskListViewController: UITableViewDelegate {
             configuration.performsFirstActionWithFullSwipe = true
             return configuration
         }
-        
         return UISwipeActionsConfiguration()
     }
 }

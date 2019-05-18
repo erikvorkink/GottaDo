@@ -44,7 +44,7 @@ class TaskListViewController: UIViewController {
     }
     
     // New task
-    @IBAction func addTask(_ sender: UIBarButtonItem) {
+    @IBAction func addTask(_ sender: UIButton) {
         let alert = UIAlertController(title: "New Task",
                                       message: "Add a new task",
                                       preferredStyle: .alert)
@@ -255,7 +255,7 @@ extension TaskListViewController: UITableViewDelegate {
         let messageLabel = UILabel()
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.textColor = UIColor.lightGray
-        messageLabel.font = UIFont(name: "HelveticaNeue-Regular", size: 18)
+        messageLabel.font = UIFont(name: "Helvetica", size: 20)
         emptyView.addSubview(messageLabel)
         messageLabel.centerYAnchor.constraint(equalTo: emptyView.centerYAnchor).isActive = true
         messageLabel.centerXAnchor.constraint(equalTo: emptyView.centerXAnchor).isActive = true

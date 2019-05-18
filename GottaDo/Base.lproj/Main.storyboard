@@ -209,29 +209,8 @@
                                     <outlet property="dataSource" destination="yPV-io-gKH" id="ba7-aI-XOe"/>
                                 </connections>
                             </tableView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hJS-12-QZ8">
-                                <rect key="frame" x="0.0" y="574" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem title="Reorder" id="WMf-Dc-JRb">
-                                        <connections>
-                                            <action selector="toggleReorder:" destination="yPV-io-gKH" id="a9W-WP-9k8"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="add" id="8Sy-BY-otd">
-                                        <connections>
-                                            <action selector="addTask:" destination="yPV-io-gKH" id="oE3-Qm-4aP"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem title="Clear" id="QZ0-84-1lp">
-                                        <connections>
-                                            <action selector="clear:" destination="yPV-io-gKH" id="3xQ-De-ZPo"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M1-sV-UDr">
-                                <rect key="frame" x="16" y="30" width="68" height="29"/>
+                                <rect key="frame" x="16" y="35" width="68" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Today">
@@ -244,18 +223,53 @@
                                 </attributedString>
                                 <color key="highlightedColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background-color" translatesAutoresizingMaskIntoConstraints="NO" id="wkb-Um-0DN">
-                                <rect key="frame" x="0.0" y="30" width="240" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="exV-wZ-zP0">
+                                <rect key="frame" x="300" y="30" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Qnw-QB-T7s"/>
+                                    <constraint firstAttribute="width" constant="40" id="Sr3-7W-xgm"/>
+                                </constraints>
+                                <state key="normal" title="Clear" image="clear"/>
+                                <connections>
+                                    <action selector="clear:" destination="yPV-io-gKH" eventType="touchUpInside" id="3SH-yG-sAF"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rJk-ng-OGZ">
+                                <rect key="frame" x="335" y="30" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="6xL-mT-dQf"/>
+                                    <constraint firstAttribute="width" constant="40" id="AVt-hX-dsl"/>
+                                </constraints>
+                                <state key="normal" title="Reorder" image="reorder"/>
+                                <connections>
+                                    <action selector="toggleReorder:" destination="yPV-io-gKH" eventType="touchUpInside" id="7dQ-rF-kQE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zI3-re-7aX">
+                                <rect key="frame" x="162.5" y="514" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="9Kp-7e-L8d"/>
+                                    <constraint firstAttribute="height" constant="60" id="CJH-1Y-t2k"/>
+                                </constraints>
+                                <state key="normal" title="Add" image="add"/>
+                                <connections>
+                                    <action selector="addTask:" destination="yPV-io-gKH" eventType="touchUpInside" id="1FI-K6-rxX"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="C2X-tp-nhg" firstAttribute="bottom" secondItem="9wK-sh-T3g" secondAttribute="bottom" id="Jfz-2d-rCa"/>
+                            <constraint firstItem="C2X-tp-nhg" firstAttribute="trailing" secondItem="rJk-ng-OGZ" secondAttribute="trailing" constant="10" id="KcX-YW-qIj"/>
+                            <constraint firstItem="C2X-tp-nhg" firstAttribute="trailing" secondItem="exV-wZ-zP0" secondAttribute="trailing" constant="55" id="OOw-Kg-ExF"/>
                             <constraint firstItem="C2X-tp-nhg" firstAttribute="top" secondItem="9wK-sh-T3g" secondAttribute="top" constant="20" id="Sp2-di-B51"/>
-                            <constraint firstItem="9wK-sh-T3g" firstAttribute="top" secondItem="m1A-mG-3tL" secondAttribute="top" constant="60" id="bNt-2o-0gj"/>
+                            <constraint firstItem="zI3-re-7aX" firstAttribute="centerX" secondItem="m1A-mG-3tL" secondAttribute="centerX" id="Yop-bW-XhT"/>
+                            <constraint firstItem="9wK-sh-T3g" firstAttribute="top" secondItem="m1A-mG-3tL" secondAttribute="top" constant="65" id="bNt-2o-0gj"/>
                             <constraint firstItem="C2X-tp-nhg" firstAttribute="trailing" secondItem="9wK-sh-T3g" secondAttribute="trailing" id="fq5-8L-KC8"/>
+                            <constraint firstItem="rJk-ng-OGZ" firstAttribute="top" secondItem="m1A-mG-3tL" secondAttribute="top" constant="26" id="krz-yP-JkI"/>
+                            <constraint firstItem="exV-wZ-zP0" firstAttribute="top" secondItem="m1A-mG-3tL" secondAttribute="top" constant="26" id="tfk-N1-rfp"/>
                             <constraint firstItem="9wK-sh-T3g" firstAttribute="leading" secondItem="C2X-tp-nhg" secondAttribute="leading" id="v43-BS-acf"/>
+                            <constraint firstItem="C2X-tp-nhg" firstAttribute="bottom" secondItem="zI3-re-7aX" secondAttribute="bottom" constant="10" id="vz9-RC-Iil"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C2X-tp-nhg"/>
                     </view>
@@ -269,12 +283,15 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u7f-ly-tEB" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="-357"/>
+            <point key="canvasLocation" x="749.60000000000002" y="-357.57121439280365"/>
         </scene>
     </scenes>
     <resources>
+        <image name="add" width="60" height="60"/>
         <image name="archive" width="24" height="24"/>
         <image name="calendar" width="24" height="24"/>
+        <image name="clear" width="60" height="60"/>
+        <image name="reorder" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="sS1-qs-cqn"/>

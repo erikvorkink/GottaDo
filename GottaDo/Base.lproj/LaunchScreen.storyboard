@@ -19,11 +19,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="fig-Pg-Sdp">
-                                <rect key="frame" x="122" y="283" width="170" height="170"/>
+                                <rect key="frame" x="137" y="298" width="140" height="140"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="170" id="EjE-y5-lgP"/>
+                                    <constraint firstAttribute="width" constant="140" id="EjE-y5-lgP"/>
                                     <constraint firstAttribute="width" secondItem="fig-Pg-Sdp" secondAttribute="height" multiplier="1:1" id="Y2v-xa-7OZ"/>
-                                    <constraint firstAttribute="height" constant="170" id="oVN-7l-TjN"/>
+                                    <constraint firstAttribute="height" constant="140" id="oVN-7l-TjN"/>
                                 </constraints>
                             </imageView>
                         </subviews>

@@ -60,13 +60,13 @@
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nrS-Zg-sdf">
-                                <rect key="frame" x="16" y="30" width="72" height="23"/>
+                                <rect key="frame" x="16" y="30" width="86" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Backlog">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="20" name="Helvetica"/>
+                                            <font key="NSFont" size="24" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
@@ -84,7 +84,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="Backlog" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Backlog" image="archive" id="cPa-gy-q4n"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -172,6 +172,8 @@
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.32357996700000002" green="0.19425898790000001" blue="0.38077011700000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.89402025938034058" green="0.89417368173599243" blue="0.89401060342788696" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="yPV-io-gKH" kind="relationship" relationship="viewControllers" id="8Vu-Vr-Be2"/>
@@ -229,19 +231,23 @@
                                 </items>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7M1-sV-UDr">
-                                <rect key="frame" x="16" y="30" width="54" height="23"/>
+                                <rect key="frame" x="16" y="30" width="65" height="28"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Today">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <font key="NSFont" size="20" name="Helvetica"/>
+                                            <font key="NSFont" size="24" name="Helvetica"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <color key="highlightedColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="background-color" translatesAutoresizingMaskIntoConstraints="NO" id="wkb-Um-0DN">
+                                <rect key="frame" x="0.0" y="30" width="240" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -253,7 +259,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C2X-tp-nhg"/>
                     </view>
-                    <tabBarItem key="tabBarItem" tag="1" title="Today" id="wag-jP-cHp"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="Today" image="calendar" id="wag-jP-cHp"/>
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -266,7 +272,12 @@
             <point key="canvasLocation" x="750" y="-357"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="archive" width="24" height="24"/>
+        <image name="background-color" width="16" height="16"/>
+        <image name="calendar" width="24" height="24"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sS1-qs-cqn"/>
+        <segue reference="5l0-Rv-k49"/>
     </inferredMetricsTieBreakers>
 </document>

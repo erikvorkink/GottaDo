@@ -16,7 +16,8 @@ class TaskListViewController: UIViewController {
         super.viewDidLoad()
         
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TaskCell")
+        tableView.rowHeight = 50.0
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
         self.view.addGestureRecognizer(longPressRecognizer)
@@ -186,13 +187,17 @@ extension TaskListViewController: UITableViewDataSource {
     // Render task row
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let task = tasks[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
+        
+        cell.textLabel?.font = UIFont.init(name: "Helvetica", size: 20)
+        cell.textLabel?.textColor = UIColor(white: 0.2, alpha: 1.0)
         
         let name = task.value(forKey: "name") as? String
-        let createdDateFormatted = getTaskCreatedDateFormatted(task)
-        let position = task.value(forKey: "position") as? Int
+//        let createdDateFormatted = getTaskCreatedDateFormatted(task)
+//        let position = task.value(forKey: "position") as? Int
         
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "[\(position!)] \(name!) - \(createdDateFormatted)")
+//        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "[\(position!)] \(name!) - \(createdDateFormatted)")
+        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: "\(name!)")
         if let completed = task.value(forKey: "completed") as? Bool {
             if completed {
                 attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
@@ -295,7 +300,8 @@ extension TaskListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if let task = self.tasks[indexPath.row] as? Task {
-            let moveTaskAction = UIContextualAction(style: .destructive, title: "Move") { (action, view, handler) in
+            let title = (currentTaskListId == TaskListIds.Today) ? "Backlog" : "Today"
+            let moveTaskAction = UIContextualAction(style: .destructive, title: title) { (action, view, handler) in
                 self.moveTask(task)
                 self.refresh()
             }

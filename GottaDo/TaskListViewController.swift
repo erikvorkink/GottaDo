@@ -134,13 +134,6 @@ class TaskListViewController: UIViewController {
         return 1
     }
     
-    func toggleTaskFlagged(_ task: Task) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        task.toggleFlagged()
-        appDelegate.saveContext()
-    }
-    
     // Move from Today <--> Backlog
     func moveTask(_ task: Task) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
@@ -150,10 +143,21 @@ class TaskListViewController: UIViewController {
         appDelegate.saveContext()
     }
     
-    func completeTask(_ task: Task) {
+    func toggleTaskFlagged(_ task: Task) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        task.toggleFlagged()
+        appDelegate.saveContext()
+    }
+    
+    func toggleTaskComplete(_ task: Task) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
 
-        task.complete()
+        if task.completed {
+            task.uncomplete()
+        } else {
+            task.complete()
+        }
         appDelegate.saveContext()
     }
     
@@ -269,43 +273,46 @@ extension TaskListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension TaskListViewController: UITableViewDelegate {
     
+    // Selecting task opens up the detail view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let task = tasks[indexPath.row] as? Task {
             self.performSegue(withIdentifier: "taskDetailSegue", sender: task)
         }
     }
     
+    // Send task to the detail view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let viewController = segue.destination as? TaskDetailViewController, let taskToSend = sender as? Task {
             viewController.task = taskToSend
         }
     }
     
+    // Swipe right to complete/uncomplete
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if let task = self.tasks[indexPath.row] as? Task {
-            if !task.completed {
-                let completeAction = UIContextualAction(style: .destructive, title: "✔") { (action, view, handler) in
-                    self.completeTask(task)
-                    self.refresh()
-                }
-                completeAction.backgroundColor = .green
-                let configuration = UISwipeActionsConfiguration(actions: [completeAction])
-                configuration.performsFirstActionWithFullSwipe = true
-                return configuration
+            let title = (task.completed) ? "Restore" : "Complete"
+            let action = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
+                self.toggleTaskComplete(task)
+                self.refresh()
             }
+            action.backgroundColor = UIColor(red: 0.25, green: 0.38, blue: 0.25, alpha: 1.0)
+            let configuration = UISwipeActionsConfiguration(actions: [action])
+            configuration.performsFirstActionWithFullSwipe = true
+            return configuration
         }
         
         return UISwipeActionsConfiguration()
     }
     
+    // Swipe left to move between Today and Backlog
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if let task = self.tasks[indexPath.row] as? Task {
             let title = (currentTaskListId == TaskListIds.Today) ? "Backlog" : "Today"
-            let moveTaskAction = UIContextualAction(style: .destructive, title: title) { (action, view, handler) in
+            let moveTaskAction = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
                 self.moveTask(task)
                 self.refresh()
             }
-            moveTaskAction.backgroundColor = .purple
+            moveTaskAction.backgroundColor = UIColor(red: 0.33, green: 0.19, blue: 0.38, alpha: 1.0)
             let configuration = UISwipeActionsConfiguration(actions: [moveTaskAction])
             configuration.performsFirstActionWithFullSwipe = true
             return configuration

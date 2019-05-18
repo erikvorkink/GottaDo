@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,24 +15,34 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="GottaDo" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8hr-DR-EOa">
-                                <rect key="frame" x="159" y="433" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="fig-Pg-Sdp">
+                                <rect key="frame" x="122" y="283" width="170" height="170"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="170" id="EjE-y5-lgP"/>
+                                    <constraint firstAttribute="width" secondItem="fig-Pg-Sdp" secondAttribute="height" multiplier="1:1" id="Y2v-xa-7OZ"/>
+                                    <constraint firstAttribute="height" constant="170" id="oVN-7l-TjN"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.32357996702194214" green="0.19425898790359497" blue="0.38077011704444885" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="fig-Pg-Sdp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="5Lx-16-Hvk"/>
+                            <constraint firstItem="fig-Pg-Sdp" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="JBT-6B-Yrx"/>
+                            <constraint firstItem="fig-Pg-Sdp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="SQI-lO-hMZ"/>
+                            <constraint firstItem="fig-Pg-Sdp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="ulo-QT-eDD"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.5" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="logo" width="512" height="512"/>
+    </resources>
 </document>

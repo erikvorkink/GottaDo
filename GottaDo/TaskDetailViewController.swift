@@ -18,7 +18,12 @@ class TaskDetailViewController: UIViewController {
     }
     
     @IBAction func save(_ sender: Any) {
-        updateTaskDetails()
+        saveNameAndClose()
+    }
+    
+    @objc
+    func saveNameAndClose() {
+        saveName()
         close()
     }
     
@@ -40,14 +45,25 @@ class TaskDetailViewController: UIViewController {
     func initEditor() {
         guard let task = task as Task? else { return }
         
+        editName.attributedPlaceholder = NSAttributedString(string: "Do something...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         editName.text = task.name
-        if let completed = task.value(forKey: "completed") as? Bool {
-            completeButton.isHidden = completed
-            uncompleteButton.isHidden = !completed
-        }
+        
+        // Extra padding since the field goes to the edges
+        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
+        editName.leftView = paddingView
+        editName.leftViewMode = .always
+        
+        // Open keyboard right away
+        editName.becomeFirstResponder()
+        editName.selectedTextRange = editName.textRange(from: editName.endOfDocument, to: editName.endOfDocument)
+        
+        editName.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
+
+        completeButton.isHidden = task.completed
+        uncompleteButton.isHidden = !task.completed
     }
     
-    func updateTaskDetails() {
+    func saveName() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let task = task as Task? else { return }
         

@@ -108,7 +108,7 @@ class TaskListViewController: UIViewController {
     
     func handlePopulatedTaskList() {
         hideBlankState()
-        clearButton.isHidden = false
+        clearButton.isHidden = !listContainsCompletedTasks()
         reorderButton.isHidden = false
     }
     
@@ -116,6 +116,15 @@ class TaskListViewController: UIViewController {
         showBlankState("Nothing to do")
         clearButton.isHidden = true
         reorderButton.isHidden = true
+    }
+    
+    func listContainsCompletedTasks() -> Bool {
+        for task in tasks as! [Task] {
+            if task.completed {
+                return true
+            }
+        }
+        return false
     }
     
     func refreshBadge() {

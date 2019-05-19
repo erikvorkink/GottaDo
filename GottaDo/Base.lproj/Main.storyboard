@@ -229,67 +229,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="22" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7">
-                                <rect key="frame" x="0.0" y="65" width="375" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.39557057619094849" green="0.27706223726272583" blue="0.44796305894851685" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes" keyboardType="alphabet" smartDashesType="yes"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bof-2q-sjG">
-                                <rect key="frame" x="163" y="160" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancel:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="9vN-YG-Z0C"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u6t-WF-ZAN">
-                                <rect key="frame" x="170" y="232" width="34" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Save"/>
-                                <connections>
-                                    <action selector="save:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="aVf-dH-nUd"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ATh-WU-BO6">
-                                <rect key="frame" x="160" y="458" width="67" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Complete"/>
-                                <connections>
-                                    <action selector="complete:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="IrC-fZ-utL"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uAq-XQ-MG7">
-                                <rect key="frame" x="148" y="531" width="91" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Un-complete"/>
-                                <connections>
-                                    <action selector="uncomplete:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="1Ar-g3-pvN"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nNA-I6-idQ">
-                                <rect key="frame" x="166" y="353" width="55" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Remove"/>
-                                <connections>
-                                    <action selector="remove:" destination="kYB-3D-ZtB" eventType="touchUpInside" id="C6g-i4-456"/>
-                                </connections>
-                            </button>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OHG-ra-WcV">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <navigationItem id="ng1-yi-HcR">
+                                        <barButtonItem key="leftBarButtonItem" title="Close" id="4W0-vH-cyG">
+                                            <connections>
+                                                <action selector="close:" destination="kYB-3D-ZtB" id="0Lf-dg-rrk"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="trash" id="FtM-zJ-gx1">
+                                            <connections>
+                                                <action selector="remove:" destination="kYB-3D-ZtB" id="JaI-PL-WKf"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3Q-Wt-l4f" userLabel="White">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Task name..." textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7">
+                                        <rect key="frame" x="0.0" y="100" width="375" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="62p-HF-Xjd"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes" keyboardType="alphabet" returnKeyType="done" smartDashesType="yes"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="BWm-65-EA7" firstAttribute="top" secondItem="z3Q-Wt-l4f" secondAttribute="top" constant="100" id="4BE-Xg-2ZE"/>
+                                    <constraint firstItem="BWm-65-EA7" firstAttribute="leading" secondItem="z3Q-Wt-l4f" secondAttribute="leading" id="4ZT-wS-dGF"/>
+                                    <constraint firstAttribute="trailing" secondItem="BWm-65-EA7" secondAttribute="trailing" id="srN-yJ-j8v"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="z3Q-Wt-l4f" firstAttribute="trailing" secondItem="gNa-gE-mZ6" secondAttribute="trailing" id="9Qu-1s-ihe"/>
+                            <constraint firstItem="z3Q-Wt-l4f" firstAttribute="top" secondItem="OHG-ra-WcV" secondAttribute="bottom" id="QFN-3P-dbc"/>
+                            <constraint firstItem="OHG-ra-WcV" firstAttribute="leading" secondItem="gNa-gE-mZ6" secondAttribute="leading" id="VON-Kj-2Qa"/>
+                            <constraint firstItem="OHG-ra-WcV" firstAttribute="trailing" secondItem="gNa-gE-mZ6" secondAttribute="trailing" id="Xtf-a0-R5O"/>
+                            <constraint firstItem="z3Q-Wt-l4f" firstAttribute="leading" secondItem="ObV-IE-RYh" secondAttribute="leading" id="kZ0-ej-KBJ"/>
+                            <constraint firstItem="OHG-ra-WcV" firstAttribute="top" secondItem="gNa-gE-mZ6" secondAttribute="top" id="qmr-sj-vg9"/>
+                            <constraint firstItem="z3Q-Wt-l4f" firstAttribute="bottom" secondItem="gNa-gE-mZ6" secondAttribute="bottom" id="sh5-iH-BKv"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="gNa-gE-mZ6"/>
                     </view>
                     <connections>
-                        <outlet property="completeButton" destination="ATh-WU-BO6" id="oAA-5F-HqA"/>
                         <outlet property="editName" destination="BWm-65-EA7" id="vwx-qQ-6qc"/>
-                        <outlet property="uncompleteButton" destination="uAq-XQ-MG7" id="ynu-KP-qz3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zB7-Vg-txH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1532" y="0.0"/>
+            <point key="canvasLocation" x="1532" y="-0.44977511244377816"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -320,6 +318,6 @@
         <image name="reorder" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sS1-qs-cqn"/>
+        <segue reference="5l0-Rv-k49"/>
     </inferredMetricsTieBreakers>
 </document>

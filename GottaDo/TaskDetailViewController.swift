@@ -3,21 +3,14 @@ import UIKit
 class TaskDetailViewController: UIViewController {
 
     var task: Task?
-    
     @IBOutlet weak var editName: UITextField!
-    @IBOutlet weak var completeButton: UIButton!
-    @IBOutlet weak var uncompleteButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initEditor()
     }
     
-    @IBAction func cancel(_ sender: Any) {
-        close()
-    }
-    
-    @IBAction func save(_ sender: Any) {
+    @IBAction func close(_ sender: Any) {
         saveNameAndClose()
     }
     
@@ -27,25 +20,26 @@ class TaskDetailViewController: UIViewController {
         close()
     }
     
-    @IBAction func complete(_ sender: Any) {
-        completeTask()
-        close()
-    }
-
-    @IBAction func uncomplete(_ sender: Any) {
-        uncompleteTask()
-        close()
-    }
-    
     @IBAction func remove(_ sender: Any) {
-        removeTask()
-        close()
+        let dialogMessage = UIAlertController(title: "Delete Task", message: "This cannot be undone.", preferredStyle: .alert)
+        
+        let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
+            self.remove()
+            self.close()
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
+            // well this is awkward...
+        }
+        dialogMessage.addAction(delete)
+        dialogMessage.addAction(cancel)
+
+        self.present(dialogMessage, animated: true, completion: nil)
     }
     
     func initEditor() {
         guard let task = task as Task? else { return }
-        
-        editName.attributedPlaceholder = NSAttributedString(string: "Do something...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+
+        editName.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         editName.text = task.name
         
         // Extra padding since the field goes to the edges
@@ -58,9 +52,6 @@ class TaskDetailViewController: UIViewController {
         editName.selectedTextRange = editName.textRange(from: editName.endOfDocument, to: editName.endOfDocument)
         
         editName.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
-
-        completeButton.isHidden = task.completed
-        uncompleteButton.isHidden = !task.completed
     }
     
     func saveName() {
@@ -70,24 +61,8 @@ class TaskDetailViewController: UIViewController {
         task.setName(editName.text as String? ?? "")
         appDelegate.saveContext()
     }
-    
-    func completeTask() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        guard let task = task as Task? else { return }
-        
-        task.complete()
-        appDelegate.saveContext()
-    }
-    
-    func uncompleteTask() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        guard let task = task as Task? else { return }
-        
-        task.uncomplete()
-        appDelegate.saveContext()
-    }
-    
-    func removeTask() {
+
+    func remove() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         guard let task = task as Task? else { return }
         

@@ -3,6 +3,8 @@ import CoreData
 
 class TaskListViewController: UIViewController {
     
+    @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var reorderButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
     var currentTaskListId = TaskListIds.Today
     var tasks: [NSManagedObject] = []
@@ -97,11 +99,23 @@ class TaskListViewController: UIViewController {
         tasks = appDelegate.getManagedContext().getVisibleTasks(in: currentTaskListId)
         tableView.reloadData()
         
-        if tasks.count == 0 {
-            showBlankState("Nothing to do")
+        if tasks.count > 0 {
+            handlePopulatedTaskList()
         } else {
-            hideBlankState()
+            handleEmptyTaskList()
         }
+    }
+    
+    func handlePopulatedTaskList() {
+        hideBlankState()
+        clearButton.isHidden = false
+        reorderButton.isHidden = false
+    }
+    
+    func handleEmptyTaskList() {
+        showBlankState("Nothing to do")
+        clearButton.isHidden = true
+        reorderButton.isHidden = true
     }
     
     func refreshBadge() {

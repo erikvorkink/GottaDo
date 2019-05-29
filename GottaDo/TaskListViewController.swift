@@ -55,8 +55,12 @@ class TaskListViewController: UIViewController {
             [unowned self] action in
             
             guard let textField = alert.textFields?.first,
-                let newTaskName = textField.text else {
-                    return
+            var newTaskName = textField.text else {
+                return
+            }
+            newTaskName = newTaskName.trimmingCharacters(in: .whitespaces)
+            if newTaskName.count == 0 {
+                return
             }
             
             self.createTask(name: newTaskName)

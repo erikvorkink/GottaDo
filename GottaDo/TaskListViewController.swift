@@ -134,7 +134,7 @@ class TaskListViewController: UIViewController {
     
     func getOutstandingTodayTaskCount() -> Int {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return 0 }
-        return appDelegate.getManagedContext().getOutstandingTaskCount(in: TaskListIds.Today)
+        return appDelegate.getManagedContext().getOutstandingVisibleTaskCount(in: TaskListIds.Today)
     }
     
     func createTask(name: String) {

@@ -5,7 +5,7 @@ extension NSManagedObjectContext {
     func getVisibleTasks(in taskListId: TaskListIds) -> Array<NSManagedObject> {
         var tasks: [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
-        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND removed != %@", NSNumber(value: taskListId.rawValue), NSNumber(value: true))
+        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND removed = %@", NSNumber(value: taskListId.rawValue), NSNumber(value: false))
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "position", ascending: true)]
         
         do {
@@ -19,7 +19,7 @@ extension NSManagedObjectContext {
     func getCompletedVisibleTasks(in taskListId: TaskListIds) -> Array<NSManagedObject> {
         var tasks: [NSManagedObject] = []
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
-        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed == %@ AND removed != %@", NSNumber(value: taskListId.rawValue), NSNumber(value: true), NSNumber(value: true))
+        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed = %@ AND removed = %@", NSNumber(value: taskListId.rawValue), NSNumber(value: true), NSNumber(value: false))
         
         do {
             tasks = try self.fetch(fetchRequest)
@@ -29,9 +29,9 @@ extension NSManagedObjectContext {
         return tasks
     }
     
-    func getOutstandingTaskCount(in taskListId: TaskListIds) -> Int {
+    func getOutstandingVisibleTaskCount(in taskListId: TaskListIds) -> Int {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
-        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed != %@", NSNumber(value: taskListId.rawValue), NSNumber(value: true))
+        fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed = %@ AND removed = %@", NSNumber(value: taskListId.rawValue), NSNumber(value: false), NSNumber(value: false))
         
         do {
             return try self.count(for: fetchRequest)

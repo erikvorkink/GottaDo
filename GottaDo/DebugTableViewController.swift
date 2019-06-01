@@ -1,4 +1,5 @@
 import UIKit
+import CoreData
 
 class DebugTableViewController: UITableViewController {
 
@@ -20,7 +21,53 @@ class DebugTableViewController: UITableViewController {
     }
     
     func copyTasksToClipboard() {
-        print("copyTasksToClipboard")
+        let formattedTaskList = getFormattedTaskList()
+        if formattedTaskList.count == 0 {
+            let alert = UIAlertController(title: "Unable to Copy Tasks", message: "", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        UIPasteboard.general.string = formattedTaskList
+        
+        let alert = UIAlertController(title: "Copy Tasks", message: "Tasks have been copied to the clipboard.", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    /*
+     [Today]
+     - first
+     - second
+     
+     [Backlog]
+     - third
+     - fourth
+     
+     [Completed]
+     - fifth
+     - sixth
+     */
+    func getFormattedTaskList() -> String {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return "" }
+        let managedContext = appDelegate.getManagedContext()
+
+        let todayTasks = managedContext.getOustandingVisibleTasks(in: TaskListIds.Today)
+        let backlogTasks = managedContext.getOustandingVisibleTasks(in: TaskListIds.Backlog)
+        let completedTasks = managedContext.getCompletedTasks()
+
+        let todayList = tasksToFormattedList(todayTasks)
+        let backlogList = tasksToFormattedList(backlogTasks)
+        let completedList = tasksToFormattedList(completedTasks)
+        
+        let formatted = "[Today]\(todayList)\n\n[Backlog]\(backlogList)\n\n[Completed]\(completedList)"
+//        print(formatted)
+        return formatted
+    }
+    
+    func tasksToFormattedList(_ tasks: Array<NSManagedObject>) -> String {
+        return tasks.map { "\n- \($0.value(forKey: "name") ?? "")" }.joined()
     }
     
     func deleteTasks() {

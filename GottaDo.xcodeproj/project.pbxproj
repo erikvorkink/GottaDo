@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		033B5888229E1FEC00A249EC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B5887229E1FEC00A249EC /* TabBarController.swift */; };
 		033B588A229E245500A249EC /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B5889229E245500A249EC /* DebugViewController.swift */; };
+		033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B588B22A305F300A249EC /* DebugTableViewController.swift */; };
 		B50A1D40227DFCA0009D9D65 /* TaskExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */; };
 		B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */; };
 		B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		033B5887229E1FEC00A249EC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		033B5889229E245500A249EC /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
+		033B588B22A305F300A249EC /* DebugTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTableViewController.swift; sourceTree = "<group>"; };
 		B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExtension.swift; sourceTree = "<group>"; };
 		B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedContextExtension.swift; sourceTree = "<group>"; };
 		B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GottaDo.xcdatamodel; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				B597C01D227AA41E00E2C86F /* TaskListViewController.swift */,
 				B5987D9322683230003044E1 /* TaskDetailViewController.swift */,
 				033B5889229E245500A249EC /* DebugViewController.swift */,
+				033B588B22A305F300A249EC /* DebugTableViewController.swift */,
 				B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */,
 				B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */,
 				B5D781BB22654D5A00EA4D55 /* Assets.xcassets */,
@@ -287,6 +290,7 @@
 				B597C020227AA57D00E2C86F /* TodayViewController.swift in Sources */,
 				B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */,
 				B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */,
+				033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */,
 				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
 				B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */,
 				033B588A229E245500A249EC /* DebugViewController.swift in Sources */,

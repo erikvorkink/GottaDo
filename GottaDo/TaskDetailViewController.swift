@@ -27,9 +27,7 @@ class TaskDetailViewController: UIViewController {
             self.remove()
             self.close()
         })
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in
-            // well this is awkward...
-        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in }
         dialogMessage.addAction(delete)
         dialogMessage.addAction(cancel)
 

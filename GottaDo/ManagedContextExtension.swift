@@ -41,4 +41,15 @@ extension NSManagedObjectContext {
         }
     }
     
+    func deleteAllTasks() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try self.execute(deleteRequest)
+        } catch let error as NSError {
+            print("Could not delete. \(error), \(error.userInfo)")
+        }
+    }
+    
 }

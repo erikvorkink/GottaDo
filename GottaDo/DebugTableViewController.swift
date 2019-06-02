@@ -57,17 +57,34 @@ class DebugTableViewController: UITableViewController {
         let backlogTasks = managedContext.getOustandingVisibleTasks(in: TaskListIds.Backlog)
         let completedTasks = managedContext.getCompletedTasks()
 
-        let todayList = tasksToFormattedList(todayTasks)
-        let backlogList = tasksToFormattedList(backlogTasks)
-        let completedList = tasksToFormattedList(completedTasks)
+        let todayList = outstandingTasksToFormattedList(todayTasks)
+        let backlogList = outstandingTasksToFormattedList(backlogTasks)
+        let completedList = completedTasksToFormattedList(completedTasks)
         
         let formatted = "[Today]\(todayList)\n\n[Backlog]\(backlogList)\n\n[Completed]\(completedList)"
 //        print(formatted)
         return formatted
     }
     
-    func tasksToFormattedList(_ tasks: Array<NSManagedObject>) -> String {
+    func outstandingTasksToFormattedList(_ tasks: Array<NSManagedObject>) -> String {
         return tasks.map { "\n- \($0.value(forKey: "name") ?? "")" }.joined()
+    }
+    
+    func completedTasksToFormattedList(_ tasks: Array<NSManagedObject>) -> String {
+        return tasks.map { "\n- \($0.value(forKey: "name") ?? "") (\(taskCompletedDateFormatted($0)))" }.joined()
+    }
+    
+    func taskCompletedDateFormatted(_ task: NSManagedObject) -> String {
+        var completedDateFormatted = ""
+        let completedDate = task.value(forKeyPath: "completedDate") as? Date
+        if let completedDate = completedDate {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateStyle = .short
+            dateFormatter.timeStyle = .short
+            dateFormatter.locale = Locale(identifier: "en_US")
+            completedDateFormatted = dateFormatter.string(from: completedDate)
+        }
+        return completedDateFormatted
     }
     
     func deleteTasks() {

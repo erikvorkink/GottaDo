@@ -309,7 +309,7 @@ extension TaskListViewController: UITableViewDelegate {
     
     // Send task to the detail view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? TaskDetailViewController, let taskToSend = sender as? Task {
+        if let viewController = segue.destination as? TaskEditViewController, let taskToSend = sender as? Task {
             viewController.task = taskToSend
         }
     }

@@ -15,7 +15,7 @@
 		B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */; };
 		B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597C01D227AA41E00E2C86F /* TaskListViewController.swift */; };
 		B597C020227AA57D00E2C86F /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B597C01F227AA57D00E2C86F /* TodayViewController.swift */; };
-		B5987D9422683230003044E1 /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5987D9322683230003044E1 /* TaskDetailViewController.swift */; };
+		B5987D9422683230003044E1 /* TaskEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5987D9322683230003044E1 /* TaskEditViewController.swift */; };
 		B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781B222654D5800EA4D55 /* AppDelegate.swift */; };
 		B5D781B722654D5800EA4D55 /* BacklogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781B622654D5800EA4D55 /* BacklogViewController.swift */; };
 		B5D781BA22654D5800EA4D55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D781B822654D5800EA4D55 /* Main.storyboard */; };
@@ -51,7 +51,7 @@
 		B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GottaDo.xcdatamodel; sourceTree = "<group>"; };
 		B597C01D227AA41E00E2C86F /* TaskListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewController.swift; sourceTree = "<group>"; };
 		B597C01F227AA57D00E2C86F /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
-		B5987D9322683230003044E1 /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		B5987D9322683230003044E1 /* TaskEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditViewController.swift; sourceTree = "<group>"; };
 		B5D781AF22654D5800EA4D55 /* GottaDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GottaDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D781B222654D5800EA4D55 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B5D781B622654D5800EA4D55 /* BacklogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BacklogViewController.swift; sourceTree = "<group>"; };
@@ -92,6 +92,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03F72BFA22AC32CC00BEAB92 /* TaskList */ = {
+			isa = PBXGroup;
+			children = (
+				B597C01F227AA57D00E2C86F /* TodayViewController.swift */,
+				B5D781B622654D5800EA4D55 /* BacklogViewController.swift */,
+				B597C01D227AA41E00E2C86F /* TaskListViewController.swift */,
+			);
+			path = TaskList;
+			sourceTree = "<group>";
+		};
+		03F72BFB22AC32DB00BEAB92 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				033B5889229E245500A249EC /* DebugViewController.swift */,
+				033B588B22A305F300A249EC /* DebugTableViewController.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		03F72BFC22AC330500BEAB92 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */,
+				B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */,
+				B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		03F72BFD22AC343500BEAB92 /* TaskEdit */ = {
+			isa = PBXGroup;
+			children = (
+				B5987D9322683230003044E1 /* TaskEditViewController.swift */,
+			);
+			path = TaskEdit;
+			sourceTree = "<group>";
+		};
 		B5D781A622654D5800EA4D55 = {
 			isa = PBXGroup;
 			children = (
@@ -117,19 +154,14 @@
 			children = (
 				B5D781B222654D5800EA4D55 /* AppDelegate.swift */,
 				033B5887229E1FEC00A249EC /* TabBarController.swift */,
-				B597C01F227AA57D00E2C86F /* TodayViewController.swift */,
-				B5D781B622654D5800EA4D55 /* BacklogViewController.swift */,
-				B597C01D227AA41E00E2C86F /* TaskListViewController.swift */,
-				B5987D9322683230003044E1 /* TaskDetailViewController.swift */,
-				033B5889229E245500A249EC /* DebugViewController.swift */,
-				033B588B22A305F300A249EC /* DebugTableViewController.swift */,
-				B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */,
-				B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */,
+				03F72BFB22AC32DB00BEAB92 /* Debug */,
+				03F72BFA22AC32CC00BEAB92 /* TaskList */,
+				03F72BFD22AC343500BEAB92 /* TaskEdit */,
+				03F72BFC22AC330500BEAB92 /* CoreData */,
 				B5D781BB22654D5A00EA4D55 /* Assets.xcassets */,
 				B5D781B822654D5800EA4D55 /* Main.storyboard */,
 				B5D781BD22654D5A00EA4D55 /* LaunchScreen.storyboard */,
 				B5D781C022654D5A00EA4D55 /* Info.plist */,
-				B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */,
 			);
 			path = GottaDo;
 			sourceTree = "<group>";
@@ -285,7 +317,7 @@
 			files = (
 				033B5888229E1FEC00A249EC /* TabBarController.swift in Sources */,
 				B50A1D40227DFCA0009D9D65 /* TaskExtension.swift in Sources */,
-				B5987D9422683230003044E1 /* TaskDetailViewController.swift in Sources */,
+				B5987D9422683230003044E1 /* TaskEditViewController.swift in Sources */,
 				B5D781B722654D5800EA4D55 /* BacklogViewController.swift in Sources */,
 				B597C020227AA57D00E2C86F /* TodayViewController.swift in Sources */,
 				B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */,

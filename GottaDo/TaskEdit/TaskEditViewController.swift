@@ -1,6 +1,6 @@
 import UIKit
 
-class TaskDetailViewController: UIViewController {
+class TaskEditViewController: UIViewController {
 
     var task: Task?
     @IBOutlet weak var editName: UITextField!

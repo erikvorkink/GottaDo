@@ -113,7 +113,7 @@ class TaskListViewController: UIViewController {
     func handlePopulatedTaskList() {
         hideBlankState()
         clearButton.isHidden = !listContainsCompletedTasks()
-        reorderButton.isHidden = false
+        reorderButton.isHidden = tasks.count < 2
     }
     
     func handleEmptyTaskList() {

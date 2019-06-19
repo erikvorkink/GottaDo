@@ -79,7 +79,7 @@
                                 </constraints>
                                 <state key="normal" title="Add" image="add"/>
                                 <connections>
-                                    <action selector="addTask:" destination="yPV-io-gKH" eventType="touchUpInside" id="1FI-K6-rxX"/>
+                                    <segue destination="jbP-DV-Hph" kind="presentation" identifier="taskAddSegue" id="CGl-om-11o"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -106,12 +106,12 @@
                         <outlet property="clearButton" destination="exV-wZ-zP0" id="EGn-5P-Tq7"/>
                         <outlet property="reorderButton" destination="rJk-ng-OGZ" id="aun-IC-geb"/>
                         <outlet property="tableView" destination="9wK-sh-T3g" id="UuK-nc-T4s"/>
-                        <segue destination="kYB-3D-ZtB" kind="presentation" identifier="taskDetailSegue" id="sS1-qs-cqn"/>
+                        <segue destination="kYB-3D-ZtB" kind="presentation" identifier="taskEditSegue" id="sS1-qs-cqn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="u7f-ly-tEB" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="749.60000000000002" y="-357.57121439280365"/>
+            <point key="canvasLocation" x="750" y="-386"/>
         </scene>
         <!--Debug Table View Controller-->
         <scene sceneID="llT-uw-RmH">
@@ -240,7 +240,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="kYB-3D-ZtB" kind="presentation" identifier="taskDetailSegue" id="5l0-Rv-k49"/>
+                                            <segue destination="kYB-3D-ZtB" kind="presentation" identifier="taskEditSegue" id="5l0-Rv-k49"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -294,8 +294,7 @@
                                 </constraints>
                                 <state key="normal" title="Add" image="add"/>
                                 <connections>
-                                    <action selector="addTask:" destination="yPV-io-gKH" eventType="touchUpInside" id="Ahh-oq-Q1q"/>
-                                    <action selector="addTask:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="erL-sO-0Ea"/>
+                                    <segue destination="jbP-DV-Hph" kind="presentation" identifier="taskAddSegue" id="KgT-q7-GiF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -326,7 +325,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="360"/>
+            <point key="canvasLocation" x="750" y="413"/>
         </scene>
         <!--Task Edit View Controller-->
         <scene sceneID="7Ln-5G-B1r">
@@ -394,7 +393,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zB7-Vg-txH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1785" y="291"/>
+            <point key="canvasLocation" x="1884" y="412"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -417,6 +416,69 @@
             </objects>
             <point key="canvasLocation" x="0.0" y="0.0"/>
         </scene>
+        <!--Task Add View Controller-->
+        <scene sceneID="KTx-oy-Ktr">
+            <objects>
+                <viewController id="jbP-DV-Hph" customClass="TaskAddViewController" customModule="GottaDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sEY-X4-ImK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1SZ-dr-WNI">
+                                <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="barTintColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <items>
+                                    <navigationItem id="qmS-ly-oMY">
+                                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="IC5-2B-Hjg">
+                                            <connections>
+                                                <action selector="cancel:" destination="jbP-DV-Hph" id="TAx-k0-PGQ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI9-Vm-9OE" userLabel="White">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Task name..." textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="dd5-X1-pDI">
+                                        <rect key="frame" x="0.0" y="100" width="375" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="qwo-zH-kzS"/>
+                                        </constraints>
+                                        <color key="textColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes" keyboardType="alphabet" returnKeyType="done" smartDashesType="yes"/>
+                                    </textField>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="dd5-X1-pDI" firstAttribute="leading" secondItem="oI9-Vm-9OE" secondAttribute="leading" id="5mH-3e-4fG"/>
+                                    <constraint firstAttribute="trailing" secondItem="dd5-X1-pDI" secondAttribute="trailing" id="6tJ-EQ-6au"/>
+                                    <constraint firstItem="dd5-X1-pDI" firstAttribute="top" secondItem="oI9-Vm-9OE" secondAttribute="top" constant="100" id="K3i-uJ-nVd"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="leading" secondItem="iU1-d5-Kid" secondAttribute="leading" id="4WI-MZ-U4r"/>
+                            <constraint firstItem="oI9-Vm-9OE" firstAttribute="leading" secondItem="sEY-X4-ImK" secondAttribute="leading" id="8I2-lL-ADr"/>
+                            <constraint firstItem="oI9-Vm-9OE" firstAttribute="top" secondItem="1SZ-dr-WNI" secondAttribute="bottom" id="BsW-XD-MxT"/>
+                            <constraint firstItem="oI9-Vm-9OE" firstAttribute="bottom" secondItem="iU1-d5-Kid" secondAttribute="bottom" id="Usd-k8-t21"/>
+                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="trailing" secondItem="iU1-d5-Kid" secondAttribute="trailing" id="Xe7-de-IgD"/>
+                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="top" secondItem="iU1-d5-Kid" secondAttribute="top" id="eyz-dM-Ne5"/>
+                            <constraint firstItem="oI9-Vm-9OE" firstAttribute="trailing" secondItem="iU1-d5-Kid" secondAttribute="trailing" id="o4f-kJ-Ohu"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="iU1-d5-Kid"/>
+                    </view>
+                    <connections>
+                        <outlet property="nameField" destination="dd5-X1-pDI" id="Apm-So-BdM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SSe-B7-ua0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1884" y="-386"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add" width="60" height="60"/>
@@ -426,6 +488,7 @@
         <image name="reorder" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5l0-Rv-k49"/>
+        <segue reference="KgT-q7-GiF"/>
+        <segue reference="sS1-qs-cqn"/>
     </inferredMetricsTieBreakers>
 </document>

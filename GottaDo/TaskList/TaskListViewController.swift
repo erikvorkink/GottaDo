@@ -45,37 +45,6 @@ class TaskListViewController: UIViewController {
         }
     }
     
-    // New task
-    @IBAction func addTask(_ sender: UIButton) {
-        let alert = UIAlertController(title: "New Task",
-                                      message: "Add a new task",
-                                      preferredStyle: .alert)
-        
-        let saveAction = UIAlertAction(title: "Save", style: .default) {
-            [unowned self] action in
-            
-            guard let textField = alert.textFields?.first,
-            var newTaskName = textField.text else {
-                return
-            }
-            newTaskName = newTaskName.trimmingCharacters(in: .whitespaces)
-            if newTaskName.count == 0 {
-                return
-            }
-            
-            self.createTask(name: newTaskName)
-            self.refresh()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        alert.addTextField()
-        
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true)
-    }
-    
     // Remove completed tasks from list
     @IBAction func clear(_ sender: Any) {
         removeCompleted()
@@ -139,27 +108,6 @@ class TaskListViewController: UIViewController {
     func getOutstandingTodayTaskCount() -> Int {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return 0 }
         return appDelegate.getManagedContext().getOutstandingVisibleTaskCount(in: TaskListIds.Today)
-    }
-    
-    func createTask(name: String) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let managedContext = appDelegate.getManagedContext()
-        let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
-        if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
-            task.setNewRecordValues(taskListId: currentTaskListId, position: getNewTaskPosition(), name: name)
-            appDelegate.saveContext()
-        }
-    }
-    
-    // Determine the position value a new task should get?
-    func getNewTaskPosition() -> Int {
-        if let lastTask = tasks.last as? Task {
-            if let lastTaskPosition = lastTask.value(forKey: "position") as? Int {
-                return 1 + lastTaskPosition
-            }
-        }
-        return 1
     }
     
     // Move from Today <--> Backlog
@@ -272,6 +220,17 @@ extension TaskListViewController: UITableViewDataSource {
             nextPosition += 1
         }
     }
+    
+    // Determine the position value a new task should get
+    // TODO: change to get highest and have the +1 logic go into the add task class?
+    func getNewTaskPosition() -> Int {
+        if let lastTask = tasks.last as? Task {
+            if let lastTaskPosition = lastTask.value(forKey: "position") as? Int {
+                return 1 + lastTaskPosition
+            }
+        }
+        return 1
+    }
 }
 
 // MARK: - UITableViewDelegate
@@ -300,17 +259,10 @@ extension TaskListViewController: UITableViewDelegate {
         tableView.separatorStyle = .singleLine
     }
     
-    // Selecting task opens up the detail view
+    // Selecting task opens up the edit view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let task = tasks[indexPath.row] as? Task {
-            self.performSegue(withIdentifier: "taskDetailSegue", sender: task)
-        }
-    }
-    
-    // Send task to the detail view
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let viewController = segue.destination as? TaskEditViewController, let taskToSend = sender as? Task {
-            viewController.task = taskToSend
+            self.performSegue(withIdentifier: "taskEditSegue", sender: task)
         }
     }
     
@@ -344,5 +296,23 @@ extension TaskListViewController: UITableViewDelegate {
             return configuration
         }
         return UISwipeActionsConfiguration()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "taskAddSegue":
+            // Pass context needed by a new task
+            if let viewController = segue.destination as? TaskAddViewController {
+                viewController.newTaskTaskListId = currentTaskListId
+                viewController.newTaskPosition = getNewTaskPosition()
+            }
+        case "taskEditSegue":
+            // Pass the task to edit
+            if let viewController = segue.destination as? TaskEditViewController, let taskToSend = sender as? Task {
+                viewController.task = taskToSend
+            }
+        default:
+            break;
+        }
     }
 }

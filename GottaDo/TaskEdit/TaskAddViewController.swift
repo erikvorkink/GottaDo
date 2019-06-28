@@ -26,7 +26,7 @@ class TaskAddViewController: UIViewController {
     }
 
     func initEditor() {
-        nameField.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        nameField.attributedPlaceholder = NSAttributedString(string: "I've gotta...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
 
         // Extra padding since the field goes to the edges
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))

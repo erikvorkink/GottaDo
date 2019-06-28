@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodayTaskCell" id="hLy-CZ-w9a">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodayTaskCell" id="hLy-CZ-w9a">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hLy-CZ-w9a" id="fJJ-QW-ve1">
@@ -232,7 +232,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="574"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BacklogTaskCell" id="T67-De-4rx">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BacklogTaskCell" id="T67-De-4rx">
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T67-De-4rx" id="L4a-DI-9ar">
@@ -357,7 +357,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3Q-Wt-l4f" userLabel="White">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Task name..." textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7">
+                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7">
                                         <rect key="frame" x="0.0" y="100" width="375" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="62p-HF-Xjd"/>
@@ -441,7 +441,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI9-Vm-9OE" userLabel="White">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="Task name..." textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="dd5-X1-pDI">
+                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="dd5-X1-pDI">
                                         <rect key="frame" x="0.0" y="100" width="375" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="qwo-zH-kzS"/>

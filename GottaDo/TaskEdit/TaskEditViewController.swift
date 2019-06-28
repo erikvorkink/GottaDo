@@ -37,7 +37,7 @@ class TaskEditViewController: UIViewController {
     func initEditor() {
         guard let task = task as Task? else { return }
 
-        editName.attributedPlaceholder = NSAttributedString(string: "", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        editName.attributedPlaceholder = NSAttributedString(string: "Task name...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         editName.text = task.name
         
         // Extra padding since the field goes to the edges

@@ -26,16 +26,7 @@ class TaskAddViewController: UIViewController {
     }
 
     func initEditor() {
-        nameField.attributedPlaceholder = NSAttributedString(string: "I've gotta...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-
-        // Extra padding since the field goes to the edges
-        let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
-        nameField.leftView = paddingView
-        nameField.leftViewMode = .always
-
-        // Open keyboard right away
         nameField.becomeFirstResponder()
-
         nameField.addTarget(self, action: #selector(createTaskAndClose), for: .editingDidEndOnExit)
     }
     

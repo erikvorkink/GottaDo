@@ -10,6 +10,7 @@
 		033B5888229E1FEC00A249EC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B5887229E1FEC00A249EC /* TabBarController.swift */; };
 		033B588A229E245500A249EC /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B5889229E245500A249EC /* DebugViewController.swift */; };
 		033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B588B22A305F300A249EC /* DebugTableViewController.swift */; };
+		036BFEAD22C5C4BA001F73D2 /* TaskNameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BFEAC22C5C4BA001F73D2 /* TaskNameField.swift */; };
 		03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */; };
 		B50A1D40227DFCA0009D9D65 /* TaskExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */; };
 		B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */; };
@@ -47,6 +48,7 @@
 		033B5887229E1FEC00A249EC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		033B5889229E245500A249EC /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		033B588B22A305F300A249EC /* DebugTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTableViewController.swift; sourceTree = "<group>"; };
+		036BFEAC22C5C4BA001F73D2 /* TaskNameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNameField.swift; sourceTree = "<group>"; };
 		03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAddViewController.swift; sourceTree = "<group>"; };
 		B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExtension.swift; sourceTree = "<group>"; };
 		B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedContextExtension.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */,
 				B5987D9322683230003044E1 /* TaskEditViewController.swift */,
+				036BFEAC22C5C4BA001F73D2 /* TaskNameField.swift */,
 			);
 			path = TaskEdit;
 			sourceTree = "<group>";
@@ -326,6 +329,7 @@
 				B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */,
 				B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */,
 				033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */,
+				036BFEAD22C5C4BA001F73D2 /* TaskNameField.swift in Sources */,
 				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
 				03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */,
 				B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */,

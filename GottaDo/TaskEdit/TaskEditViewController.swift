@@ -3,7 +3,7 @@ import UIKit
 class TaskEditViewController: UIViewController {
 
     var task: Task?
-    @IBOutlet weak var editName: UITextField!
+    @IBOutlet weak var nameField: TaskNameField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,8 +16,17 @@ class TaskEditViewController: UIViewController {
     
     @objc
     func saveNameAndClose() {
-        saveName()
-        close()
+        if saveName() {
+            close()
+        } else {
+            notifyOfError()
+        }
+    }
+    
+    func notifyOfError() {
+        let alert = UIAlertController(title: "Unable to update task", message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func remove(_ sender: Any) {
@@ -37,17 +46,22 @@ class TaskEditViewController: UIViewController {
     func initEditor() {
         guard let task = task as Task? else { return }
 
-        editName.text = task.name
-        editName.becomeFirstResponder()
-        editName.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
+        nameField.text = task.name
+        nameField.becomeFirstResponder()
+        nameField.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
     }
     
-    func saveName() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        guard let task = task as Task? else { return }
+    func saveName() -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        guard let task = task as Task? else { return false }
         
-        task.setName(editName.text as String? ?? "")
+        if !nameField.isValidText() {
+            return false
+        }
+        
+        task.setName(nameField.getTrimmedText())
         appDelegate.saveContext()
+        return true
     }
 
     func remove() {

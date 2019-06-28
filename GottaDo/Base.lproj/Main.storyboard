@@ -388,7 +388,7 @@
                         <viewLayoutGuide key="safeArea" id="gNa-gE-mZ6"/>
                     </view>
                     <connections>
-                        <outlet property="editName" destination="BWm-65-EA7" id="vwx-qQ-6qc"/>
+                        <outlet property="nameField" destination="BWm-65-EA7" id="vwx-qQ-6qc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zB7-Vg-txH" userLabel="First Responder" sceneMemberID="firstResponder"/>

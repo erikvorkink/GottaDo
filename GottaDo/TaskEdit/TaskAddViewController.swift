@@ -6,7 +6,7 @@ class TaskAddViewController: UIViewController {
     var newTaskTaskListId: TaskListIds? // TODO: use a struct for these two?
     var newTaskPosition: Int?
     
-    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var nameField: TaskNameField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +21,15 @@ class TaskAddViewController: UIViewController {
     func createTaskAndClose() {
         if createTask() {
             close()
+        } else {
+            notifyOfError()
         }
-        // TODO: display error otherwise
+    }
+    
+    func notifyOfError() {
+        let alert = UIAlertController(title: "Unable to create task", message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 
     func initEditor() {
@@ -32,9 +39,7 @@ class TaskAddViewController: UIViewController {
     
     func createTask() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        
-        let newTaskName = nameField.text?.trimmingCharacters(in: .whitespaces) ?? ""
-        if !isValidTaskName(newTaskName) {
+        if !nameField.isValidText() {
             return false
         }
         
@@ -42,17 +47,12 @@ class TaskAddViewController: UIViewController {
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
         if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
             // TODO: verify that newTaskPosition has been set
-            task.setNewRecordValues(taskListId: newTaskTaskListId as! TaskListIds, position: newTaskPosition as! Int, name: newTaskName)
+            task.setNewRecordValues(taskListId: newTaskTaskListId as! TaskListIds, position: newTaskPosition as! Int, name: nameField.getTrimmedText())
             appDelegate.saveContext()
             return true
         }
         
         return false
-    }
-    
-    func isValidTaskName(_ name: String) -> Bool {
-        // TODO: move this into some shared validation place between this and task edit
-        return name.count > 0
     }
     
     func close() {

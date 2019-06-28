@@ -17,4 +17,12 @@ class TaskNameField: UITextField {
         self.leftView = paddingView
         self.leftViewMode = .always
     }
+    
+    func getTrimmedText() -> String {
+        return self.text?.trimmingCharacters(in: .whitespaces) ?? ""
+    }
+    
+    func isValidText() -> Bool {
+        return self.getTrimmedText().count > 0
+    }
 }

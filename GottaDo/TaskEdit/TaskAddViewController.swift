@@ -3,7 +3,7 @@ import CoreData
 
 class TaskAddViewController: UIViewController {
     
-    var newTaskTaskListId: TaskListIds? // TODO: use a struct for these two?
+    var newTaskTaskListId: TaskListIds?
     var newTaskPosition: Int?
     
     @IBOutlet weak var nameField: TaskNameField!
@@ -37,6 +37,10 @@ class TaskAddViewController: UIViewController {
     
     func createTask() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        if newTaskTaskListId == nil || newTaskPosition == nil {
+            self.alert("Missing context for new task")
+        }
+        
         if !nameField.isValidText() {
             self.alert("Invalid task name")
             return false
@@ -45,15 +49,17 @@ class TaskAddViewController: UIViewController {
         let managedContext = appDelegate.getManagedContext()
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
         if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
-            task.setNewRecordValues(taskListId: newTaskTaskListId as! TaskListIds, position: newTaskPosition as! Int, name: nameField.getTrimmedText())
+            task.setNewRecordValues(taskListId: newTaskTaskListId!, position: newTaskPosition!, name: nameField.getTrimmedText())
             do {
                 try appDelegate.saveContext()
             } catch {
-                self.alert("Unable to create task")
+                self.alert("Unable to save new task")
                 return false
             }
             return true
         }
+        
+        self.alert("Unable to create task")
         return false
     }
     

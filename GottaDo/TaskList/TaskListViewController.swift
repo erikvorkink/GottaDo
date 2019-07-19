@@ -100,6 +100,12 @@ class TaskListViewController: UIViewController {
         return false
     }
     
+    func alert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func refreshBadge() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.setBadgeNumber(getOutstandingTodayTaskCount())
@@ -111,40 +117,64 @@ class TaskListViewController: UIViewController {
     }
     
     // Move from Today <--> Backlog
-    func moveTask(_ task: Task) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func moveTask(_ task: Task) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         
         let moveToTaskListId = currentTaskListId.rawValue == TaskListIds.Backlog.rawValue ? TaskListIds.Today : TaskListIds.Backlog
         task.setTaskListId(moveToTaskListId)
-        appDelegate.saveContext()
+        do {
+            try appDelegate.saveContext()
+        } catch {
+            alert(title: "Unabled to move task", message: "")
+            return false
+        }
+        return true
     }
     
-    func toggleTaskFlagged(_ task: Task) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func toggleTaskFlagged(_ task: Task) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         
         task.toggleFlagged()
-        appDelegate.saveContext()
+        do {
+            try appDelegate.saveContext()
+        } catch {
+            alert(title: "Unabled to toggle flagged", message: "")
+            return false
+        }
+        return true
     }
     
-    func toggleTaskComplete(_ task: Task) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func toggleTaskComplete(_ task: Task) -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
 
         if task.completed {
             task.uncomplete()
         } else {
             task.complete()
         }
-        appDelegate.saveContext()
+        do {
+            try appDelegate.saveContext()
+        } catch {
+            alert(title: "Unabled to toggle completed", message: "")
+            return false
+        }
+        return true
     }
     
-    func removeCompleted() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+    func removeCompleted() -> Bool {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         
         let tasksToRemove = appDelegate.getManagedContext().getCompletedVisibleTasks(in: currentTaskListId)
         for task in tasksToRemove as! [Task] {
             task.remove()
         }
-        appDelegate.saveContext()
+        do {
+            try appDelegate.saveContext()
+        } catch {
+            alert(title: "Unabled to remove completed tasks", message: "")
+            return false
+        }
+        return true
     }
     
     func startReorder() {
@@ -209,7 +239,11 @@ extension TaskListViewController: UITableViewDataSource {
         tasks.insert(taskToReorder, at: destinationIndexPath.row)
         
         syncTaskPositionsToOrderInArray()
-        appDelegate.saveContext()
+        do {
+            try appDelegate.saveContext()
+        } catch {
+            alert(title: "Unable to save new order", message: "")
+        }
     }
     
     // Set the position value of each task so that it matches the current position in the tasks array
@@ -271,8 +305,9 @@ extension TaskListViewController: UITableViewDelegate {
         if let task = self.tasks[indexPath.row] as? Task {
             let title = (task.completed) ? "Restore" : "Complete"
             let action = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
-                self.toggleTaskComplete(task)
-                self.refresh()
+                if self.toggleTaskComplete(task) {
+                    self.refresh()
+                }
             }
             action.backgroundColor = UIColor(red: 0.25, green: 0.38, blue: 0.25, alpha: 1.0)
             let configuration = UISwipeActionsConfiguration(actions: [action])
@@ -287,8 +322,9 @@ extension TaskListViewController: UITableViewDelegate {
         if let task = self.tasks[indexPath.row] as? Task {
             let title = (currentTaskListId == TaskListIds.Today) ? "Backlog" : "Today"
             let moveTaskAction = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
-                self.moveTask(task)
-                self.refresh()
+                if self.moveTask(task) {
+                    self.refresh()
+                }
             }
             moveTaskAction.backgroundColor = UIColor(red: 0.33, green: 0.19, blue: 0.38, alpha: 1.0)
             let configuration = UISwipeActionsConfiguration(actions: [moveTaskAction])

@@ -21,13 +21,11 @@ class TaskAddViewController: UIViewController {
     func createTaskAndClose() {
         if createTask() {
             close()
-        } else {
-            notifyOfError()
         }
     }
     
-    func notifyOfError() {
-        let alert = UIAlertController(title: "Unable to create task", message: "", preferredStyle: UIAlertController.Style.alert)
+    func alert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
@@ -40,6 +38,7 @@ class TaskAddViewController: UIViewController {
     func createTask() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         if !nameField.isValidText() {
+            self.alert(title: "Invalid task name", message: "")
             return false
         }
         
@@ -48,10 +47,14 @@ class TaskAddViewController: UIViewController {
         if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
             // TODO: verify that newTaskPosition has been set
             task.setNewRecordValues(taskListId: newTaskTaskListId as! TaskListIds, position: newTaskPosition as! Int, name: nameField.getTrimmedText())
-            appDelegate.saveContext()
+            do {
+                try appDelegate.saveContext()
+            } catch {
+                alert(title: "Unable to create task", message: "")
+                return false
+            }
             return true
         }
-        
         return false
     }
     

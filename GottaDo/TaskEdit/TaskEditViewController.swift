@@ -10,6 +10,12 @@ class TaskEditViewController: UIViewController {
         initEditor()
     }
     
+    func alert(_ title: String) {
+        let alert = UIAlertController(title: title, message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func close(_ sender: Any) {
         saveNameAndClose()
     }
@@ -20,7 +26,6 @@ class TaskEditViewController: UIViewController {
             close()
         }
     }
-    
     
     @IBAction func remove(_ sender: Any) {
         let dialogMessage = UIAlertController(title: "Delete Task", message: "This cannot be undone.", preferredStyle: .alert)
@@ -45,17 +50,12 @@ class TaskEditViewController: UIViewController {
         nameField.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
     }
     
-    func alert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     func saveName() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         guard let task = task as Task? else { return false }
         
         if !nameField.isValidText() {
+            self.alert("Invalid task name")
             return false
         }
         
@@ -63,6 +63,7 @@ class TaskEditViewController: UIViewController {
         do {
             try appDelegate.saveContext()
         } catch {
+            self.alert("Unable to rename task")
             return false
         }
         return true
@@ -76,7 +77,7 @@ class TaskEditViewController: UIViewController {
         do {
             try appDelegate.saveContext()
         } catch {
-            alert(title: "Unabled to remove task", message: "")
+            alert("Unable to remove task")
             return false
         }
         return true

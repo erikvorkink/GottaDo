@@ -31,6 +31,12 @@ class TaskListViewController: UIViewController {
         stopReorder()
     }
     
+    func alert(_ title: String) {
+        let alert = UIAlertController(title: title, message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // Flag/unflag task upon long press
     @objc
     func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
@@ -38,8 +44,9 @@ class TaskListViewController: UIViewController {
             let touchPoint = longPressGestureRecognizer.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 if let task = tasks[indexPath.row] as? Task {
-                    toggleTaskFlagged(task)
-                    refresh()
+                    if toggleTaskFlagged(task) {
+                        refresh()
+                    }
                 }
             }
         }
@@ -47,8 +54,9 @@ class TaskListViewController: UIViewController {
     
     // Remove completed tasks from list
     @IBAction func clear(_ sender: Any) {
-        removeCompleted()
-        refreshTasks()
+        if removeCompleted() {
+            refreshTasks()
+        }
     }
     
     // Toggle reorder mode
@@ -100,12 +108,6 @@ class TaskListViewController: UIViewController {
         return false
     }
     
-    func alert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-    
     func refreshBadge() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.setBadgeNumber(getOutstandingTodayTaskCount())
@@ -125,7 +127,7 @@ class TaskListViewController: UIViewController {
         do {
             try appDelegate.saveContext()
         } catch {
-            alert(title: "Unabled to move task", message: "")
+            alert("Unable to move task")
             return false
         }
         return true
@@ -138,7 +140,7 @@ class TaskListViewController: UIViewController {
         do {
             try appDelegate.saveContext()
         } catch {
-            alert(title: "Unabled to toggle flagged", message: "")
+            alert("Unable to toggle flagged")
             return false
         }
         return true
@@ -155,7 +157,7 @@ class TaskListViewController: UIViewController {
         do {
             try appDelegate.saveContext()
         } catch {
-            alert(title: "Unabled to toggle completed", message: "")
+            alert("Unable to toggle completed")
             return false
         }
         return true
@@ -171,7 +173,7 @@ class TaskListViewController: UIViewController {
         do {
             try appDelegate.saveContext()
         } catch {
-            alert(title: "Unabled to remove completed tasks", message: "")
+            alert("Unable to remove completed tasks")
             return false
         }
         return true
@@ -242,7 +244,7 @@ extension TaskListViewController: UITableViewDataSource {
         do {
             try appDelegate.saveContext()
         } catch {
-            alert(title: "Unable to save new order", message: "")
+            alert("Unable to save new order")
         }
     }
     

@@ -13,6 +13,12 @@ class TaskAddViewController: UIViewController {
         initEditor()
     }
     
+    func alert(_ title: String) {
+        let alert = UIAlertController(title: title, message: "", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func cancel(_ sender: Any) {
         close()
     }
@@ -23,12 +29,6 @@ class TaskAddViewController: UIViewController {
             close()
         }
     }
-    
-    func alert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
 
     func initEditor() {
         nameField.becomeFirstResponder()
@@ -38,19 +38,18 @@ class TaskAddViewController: UIViewController {
     func createTask() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         if !nameField.isValidText() {
-            self.alert(title: "Invalid task name", message: "")
+            self.alert("Invalid task name")
             return false
         }
         
         let managedContext = appDelegate.getManagedContext()
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
         if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
-            // TODO: verify that newTaskPosition has been set
             task.setNewRecordValues(taskListId: newTaskTaskListId as! TaskListIds, position: newTaskPosition as! Int, name: nameField.getTrimmedText())
             do {
                 try appDelegate.saveContext()
             } catch {
-                alert(title: "Unable to create task", message: "")
+                self.alert("Unable to create task")
                 return false
             }
             return true

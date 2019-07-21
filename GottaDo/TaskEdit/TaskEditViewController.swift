@@ -23,12 +23,13 @@ class TaskEditViewController: UIViewController {
     @objc
     func saveNameAndClose() {
         if saveName() {
+            closeKeyboard()
             close()
         }
     }
     
     @IBAction func remove(_ sender: Any) {
-        let dialogMessage = UIAlertController(title: "Delete Task", message: "This cannot be undone.", preferredStyle: .alert)
+        let dialogMessage = UIAlertController(title: "Delete Task", message: "This can't be undone.", preferredStyle: .alert)
         
         let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
             if self.remove() {
@@ -39,7 +40,12 @@ class TaskEditViewController: UIViewController {
         dialogMessage.addAction(delete)
         dialogMessage.addAction(cancel)
 
+        self.closeKeyboard()
         self.present(dialogMessage, animated: true, completion: nil)
+    }
+    
+    func closeKeyboard() {
+        self.nameField.resignFirstResponder() // closes faster than it might by exiting the view
     }
     
     func initEditor() {

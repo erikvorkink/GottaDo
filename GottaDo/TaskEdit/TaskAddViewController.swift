@@ -23,6 +23,7 @@ class TaskAddViewController: UIViewController {
     }
     
     @IBAction func cancel(_ sender: Any) {
+        closeKeyboard()
         close()
     }
     
@@ -41,6 +42,10 @@ class TaskAddViewController: UIViewController {
         if createTask() {
             close()
         }
+    }
+    
+    func closeKeyboard() {
+        self.nameField.resignFirstResponder() // closes faster than it might by exiting the view
     }
 
     func initEditor() {

@@ -7,10 +7,13 @@ class TaskAddViewController: UIViewController {
     var newTaskPosition: Int?
     
     @IBOutlet weak var nameField: TaskNameField!
+    @IBOutlet weak var todayButton: UIButton!
+    @IBOutlet weak var backlogButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initEditor()
+        setStatesOfTaskListChoiceButtons()
     }
     
     func alert(_ title: String) {
@@ -23,6 +26,16 @@ class TaskAddViewController: UIViewController {
         close()
     }
     
+    @IBAction func chooseToday(_ sender: Any) {
+        self.newTaskTaskListId = TaskListIds.Today
+        setStatesOfTaskListChoiceButtons()
+    }
+    
+    @IBAction func chooseBacklog(_ sender: Any) {
+        self.newTaskTaskListId = TaskListIds.Backlog
+        setStatesOfTaskListChoiceButtons()
+    }
+    
     @objc
     func createTaskAndClose() {
         if createTask() {
@@ -33,6 +46,22 @@ class TaskAddViewController: UIViewController {
     func initEditor() {
         nameField.becomeFirstResponder()
         nameField.addTarget(self, action: #selector(createTaskAndClose), for: .editingDidEndOnExit)
+    }
+    
+    func setStatesOfTaskListChoiceButtons() {
+        var winningButton: UIButton?
+        var losingButton: UIButton?
+        
+        if self.newTaskTaskListId == TaskListIds.Today {
+            winningButton = self.todayButton
+            losingButton = self.backlogButton
+        } else {
+            winningButton = self.backlogButton
+            losingButton = self.todayButton
+        }
+        
+        winningButton!.isSelected = true
+        losingButton!.isSelected = false
     }
     
     func createTask() -> Bool {

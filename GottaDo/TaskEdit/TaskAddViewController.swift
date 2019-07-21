@@ -4,7 +4,6 @@ import CoreData
 class TaskAddViewController: UIViewController {
     
     var newTaskTaskListId: TaskListIds?
-    var newTaskPosition: Int?
     
     @IBOutlet weak var nameField: TaskNameField!
     @IBOutlet weak var todayButton: UIButton!
@@ -71,6 +70,7 @@ class TaskAddViewController: UIViewController {
     
     func createTask() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let newTaskPosition = getNewTaskPosition()
         if newTaskTaskListId == nil || newTaskPosition == nil {
             self.alert("Missing context for new task")
         }
@@ -95,6 +95,15 @@ class TaskAddViewController: UIViewController {
         
         self.alert("Unable to create task")
         return false
+    }
+    
+    func getNewTaskPosition() -> Int? {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        if (newTaskTaskListId == nil) {
+            return nil
+        }
+
+        return 1 + appDelegate.getManagedContext().getHighestVisibleTaskPosition(in: newTaskTaskListId!)
     }
     
     func close() {

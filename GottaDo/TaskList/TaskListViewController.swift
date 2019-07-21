@@ -256,16 +256,6 @@ extension TaskListViewController: UITableViewDataSource {
             nextPosition += 1
         }
     }
-    
-    // Get the highest position of the visible tasks
-    func getHighestTaskPosition() -> Int {
-        if let lastTask = tasks.last as? Task {
-            if let lastTaskPosition = lastTask.value(forKey: "position") as? Int {
-                return lastTaskPosition
-            }
-        }
-        return 0
-    }
 }
 
 // MARK: - UITableViewDelegate
@@ -341,7 +331,6 @@ extension TaskListViewController: UITableViewDelegate {
             // Pass context needed by a new task
             if let viewController = segue.destination as? TaskAddViewController {
                 viewController.newTaskTaskListId = currentTaskListId
-                viewController.newTaskPosition = getHighestTaskPosition() + 1
             }
         case "taskEditSegue":
             // Pass the task to edit

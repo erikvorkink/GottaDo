@@ -63,6 +63,15 @@ extension NSManagedObjectContext {
         }
     }
     
+    func getHighestVisibleTaskPosition(in taskListId: TaskListIds) -> Int {
+        let tasks = getVisibleTasks(in: taskListId)
+        if tasks.last != nil {
+            return tasks.last?.value(forKey: "position") as! Int
+        } else {
+            return 0
+        }
+    }
+    
     func deleteAllTasks() {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

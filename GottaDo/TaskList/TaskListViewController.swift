@@ -123,7 +123,18 @@ class TaskListViewController: UIViewController {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
         
         let moveToTaskListId = currentTaskListId.rawValue == TaskListIds.Backlog.rawValue ? TaskListIds.Today : TaskListIds.Backlog
-        task.setTaskListId(moveToTaskListId)
+        
+        if moveToTaskListId == TaskListIds.Today {
+            // Backlog -> Today = end of list
+            task.setPosition(1 + appDelegate.getManagedContext().getHighestVisibleTaskPosition(in: moveToTaskListId))
+        } else {
+            // Today -> Backlog = top of list
+            incrementPositionOfVisibleTasksInOtherList(moveToTaskListId)
+            task.setPosition(1)
+        }
+        
+        task.setTaskListId(moveToTaskListId) // wait until position has been determined
+        
         do {
             try appDelegate.saveContext()
         } catch {
@@ -131,6 +142,15 @@ class TaskListViewController: UIViewController {
             return false
         }
         return true
+    }
+    
+    func incrementPositionOfVisibleTasksInOtherList(_ taskListId: TaskListIds) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        
+        let tasks = appDelegate.getManagedContext().getVisibleTasks(in: taskListId)
+        for task in tasks as! [Task] {
+            task.setPosition(1 + Int(task.position))
+        }
     }
     
     func toggleTaskFlagged(_ task: Task) -> Bool {

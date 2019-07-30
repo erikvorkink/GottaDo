@@ -125,11 +125,11 @@ class TaskListViewController: UIViewController {
         let moveToTaskListId = currentTaskListId.rawValue == TaskListIds.Backlog.rawValue ? TaskListIds.Today : TaskListIds.Backlog
         
         if moveToTaskListId == TaskListIds.Today {
-            // Backlog -> Today = end of list
+            // Backlog -> Today = bottom of list
             task.setPosition(1 + appDelegate.getManagedContext().getHighestVisibleTaskPosition(in: moveToTaskListId))
         } else {
             // Today -> Backlog = top of list
-            incrementPositionOfVisibleTasksInOtherList(moveToTaskListId)
+            incrementPositionOfVisibleTasksInGivenList(moveToTaskListId)
             task.setPosition(1)
         }
         
@@ -144,7 +144,8 @@ class TaskListViewController: UIViewController {
         return true
     }
     
-    func incrementPositionOfVisibleTasksInOtherList(_ taskListId: TaskListIds) {
+    // Used to insert a Today -> Backlog task at the top of the list
+    func incrementPositionOfVisibleTasksInGivenList(_ taskListId: TaskListIds) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
         let tasks = appDelegate.getManagedContext().getVisibleTasks(in: taskListId)

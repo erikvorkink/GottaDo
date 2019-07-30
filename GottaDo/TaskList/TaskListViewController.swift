@@ -222,9 +222,15 @@ extension TaskListViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
         if let task = tasks[indexPath.row] as? Task {
             cell.textLabel?.font = UIFont.init(name: "Helvetica", size: 20)
-            cell.textLabel?.textColor = UIColor(white: 0.2, alpha: 1.0)
+            cell.textLabel?.textColor = UIColor(white: task.completed ? 0.7 : 0.2, alpha: 1.0) // lighter gray once completed
             cell.textLabel?.attributedText = getCellAttributedText(task);
-            cell.accessoryView = (task.flagged) ?UIImageView(image: UIImage(named:"flagged")) : .none
+            if task.flagged {
+                let flagImageName = task.completed ? "flagged-faded" : "flagged"
+                let flagImage = UIImageView(image: UIImage(named: flagImageName))
+                cell.accessoryView = flagImage
+            } else {
+                cell.accessoryView = .none
+            }
         }
         return cell
     }

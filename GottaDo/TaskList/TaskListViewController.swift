@@ -202,10 +202,12 @@ class TaskListViewController: UIViewController {
     
     func startReorder() {
         tableView.isEditing = true
+        reorderButton.setImage(UIImage(named: "reorder-active"), for: .normal)
     }
     
     func stopReorder() {
         tableView.isEditing = false
+        reorderButton.setImage(UIImage(named: "reorder"), for: .normal)
     }
 }
 

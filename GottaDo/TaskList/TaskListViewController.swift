@@ -18,9 +18,11 @@ class TaskListViewController: UIViewController {
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
         self.view.addGestureRecognizer(longPressRecognizer)
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(self.appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
-    // Load/refresh data
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refresh()
@@ -28,6 +30,11 @@ class TaskListViewController: UIViewController {
     
     // Get out of reorder mode when switching away
     override func viewWillDisappear(_ animated: Bool) {
+        stopReorder()
+    }
+    
+    // Get out of reorder mode when moving app to background
+    @objc func appMovedToBackground() {
         stopReorder()
     }
     

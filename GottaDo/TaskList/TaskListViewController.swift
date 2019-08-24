@@ -14,7 +14,8 @@ class TaskListViewController: UIViewController {
         
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TaskCell")
-        tableView.rowHeight = 50.0
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
         
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
         self.view.addGestureRecognizer(longPressRecognizer)
@@ -233,6 +234,8 @@ extension TaskListViewController: UITableViewDataSource {
             cell.textLabel?.font = UIFont.init(name: "Helvetica", size: 20)
             cell.textLabel?.textColor = UIColor(white: task.completed ? 0.7 : 0.2, alpha: 1.0) // lighter gray once completed
             cell.textLabel?.attributedText = getCellAttributedText(task);
+            cell.textLabel?.numberOfLines = 0 // activate text wrapping
+            
             if task.flagged {
                 let flagImageName = task.completed ? "flagged-faded" : "flagged"
                 let flagImage = UIImageView(image: UIImage(named: flagImageName))

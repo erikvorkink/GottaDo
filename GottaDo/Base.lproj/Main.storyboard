@@ -108,6 +108,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addButton" destination="zI3-re-7aX" id="ymE-2N-nix"/>
                         <outlet property="clearButton" destination="exV-wZ-zP0" id="EGn-5P-Tq7"/>
                         <outlet property="reorderButton" destination="rJk-ng-OGZ" id="aun-IC-geb"/>
                         <outlet property="tableView" destination="9wK-sh-T3g" id="UuK-nc-T4s"/>
@@ -328,6 +329,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addButton" destination="0b6-2Q-kNv" id="pwT-s8-kDD"/>
                         <outlet property="clearButton" destination="1Fn-fa-oxW" id="XpV-eL-lqv"/>
                         <outlet property="reorderButton" destination="GJP-Yh-CW5" id="USS-35-mWI"/>
                         <outlet property="tableView" destination="rpI-M9-HJi" id="unc-eY-ThZ"/>
@@ -533,7 +535,7 @@
         <image name="reorder" width="60" height="60"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="CGl-om-11o"/>
-        <segue reference="sS1-qs-cqn"/>
+        <segue reference="KgT-q7-GiF"/>
+        <segue reference="5l0-Rv-k49"/>
     </inferredMetricsTieBreakers>
 </document>

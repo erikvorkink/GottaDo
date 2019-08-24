@@ -369,7 +369,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3Q-Wt-l4f" userLabel="White">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="100" width="320" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="62p-HF-Xjd"/>
@@ -453,7 +453,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI9-Vm-9OE" userLabel="White">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="22" translatesAutoresizingMaskIntoConstraints="NO" id="dd5-X1-pDI" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
+                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="dd5-X1-pDI" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="100" width="320" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="qwo-zH-kzS"/>

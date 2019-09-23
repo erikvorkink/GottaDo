@@ -22,6 +22,10 @@ class TaskListViewController: UIViewController {
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(self.appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskCreatedByModal"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskEditedByModal"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskDeletedByModal"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,7 +80,7 @@ class TaskListViewController: UIViewController {
         }
     }
     
-    func refresh() {
+    @objc func refresh() {
         refreshTasks()
         refreshBadge()
     }

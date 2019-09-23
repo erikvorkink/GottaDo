@@ -39,6 +39,7 @@ class TaskAddViewController: UIViewController {
     @objc
     func createTaskAndClose() {
         if createTask() {
+            NotificationCenter.default.post(name: NSNotification.Name("taskCreatedByModal"), object: nil)
             close()
         }
     }

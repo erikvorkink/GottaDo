@@ -24,6 +24,7 @@ class TaskEditViewController: UIViewController {
     func saveNameAndClose() {
         if saveName() {
             closeKeyboard()
+            NotificationCenter.default.post(name: NSNotification.Name("taskEditedByModal"), object: nil)
             close()
         }
     }
@@ -33,6 +34,7 @@ class TaskEditViewController: UIViewController {
         
         let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
             if self.remove() {
+                NotificationCenter.default.post(name: NSNotification.Name("taskDeletedByModal"), object: nil)
                 self.close()
             }
         })

@@ -3,6 +3,14 @@
 # GottaDo
 To-do list app made to suit my personal workflow
 
+## Motivation
+TODO
+
+## Tech Notes
+TODO
+
+## Screenshots
+
 ![Demo](Screenshots/demo.gif)
 
-<img src="Screenshots/01-loading.png" width="250" align="right">
+[More screenshots](Screenshots/)

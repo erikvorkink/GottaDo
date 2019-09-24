@@ -20,3 +20,6 @@ As of mid-2019, GottaDo is my day-to-day to-do list app. Mission accomplished. I
 [More screenshots](Screenshots/)
 
 ![Demo](Screenshots/demo.gif)
+
+## License
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)

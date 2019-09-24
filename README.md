@@ -1,17 +1,17 @@
 <img src="Screenshots/02-task-list.png" width="280" align="right">
 
-<img src="gottado-logo.png">
+<img src="gottado-logo.png" width="100">
 
 # GottaDo
 GottaDo is a simple to-do list app for iOS. Tasks appear within the Today list or the Backlog list. Tasks can be created, completed, reordered, moved between lists, renamed, flagged, and deleted.
 
-My preferred workflow: 
+#### My preferred workflow
 1. At the start of the day, review all Backlog tasks. Keep the Backlog prioritized or small enough to easily scan.
 2. Create today's plan by moving tasks out of the Backlog. Find that sweet spot of ambitious + realistic.
 3. As tasks are completed, swipe to cross them off. Admire all those completed tasks.
 4. At the end of the day, move incomplete tasks back to the Backlog (or leave them in Today to feel like a failure.)
 
-In other words, 1-day Sprints.
+_In other words, 1-day Sprints._
 
 ## Motivation
 1. I've been looking for a chance to learn and use Swift. 
@@ -25,9 +25,9 @@ As of mid-2019, GottaDo is my day-to-day to-do list app. Mission accomplished. I
 - Tested on iOS 12 and 13
 
 ## Screenshots
-[More screenshots](Screenshots/)
-
 ![Demo](Screenshots/demo.gif)
+
+[More screenshots](Screenshots/)
 
 ## License
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)

@@ -68,7 +68,7 @@ class TaskListViewController: UIViewController {
     
     @objc func handleReorderButtonLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
-            sortFlaggedFirst()
+            smartSortTasks()
             refreshTasks()
             stopReorder()
         }
@@ -206,11 +206,16 @@ class TaskListViewController: UIViewController {
         return true
     }
     
-    func sortFlaggedFirst() {
+    // Sort completed then flagged then unflagged
+    func smartSortTasks() {
+        var completedTasks = [NSManagedObject]()
         var flaggedTasks = [NSManagedObject]()
         var unflaggedTasks = [NSManagedObject]()
+        
         for task in tasks as! [Task] {
-            if task.flagged {
+            if task.completed {
+                completedTasks.append(task)
+            } else if task.flagged {
                 flaggedTasks.append(task)
             } else {
                 unflaggedTasks.append(task)
@@ -218,6 +223,10 @@ class TaskListViewController: UIViewController {
         }
         
         var nextPosition = 1
+        for task in completedTasks as! [Task] {
+            task.setPosition(nextPosition)
+            nextPosition += 1
+        }
         for task in flaggedTasks as! [Task] {
             task.setPosition(nextPosition)
             nextPosition += 1

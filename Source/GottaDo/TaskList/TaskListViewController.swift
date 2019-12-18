@@ -17,8 +17,11 @@ class TaskListViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50
         
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongPress))
-        self.view.addGestureRecognizer(longPressRecognizer)
+        let tableLongPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleTableLongPress))
+        self.tableView.addGestureRecognizer(tableLongPressRecognizer)
+        
+        let reorderButtonLongPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleReorderButtonLongPress))
+        self.reorderButton.addGestureRecognizer(reorderButtonLongPressRecognizer)
         
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(self.appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -49,18 +52,25 @@ class TaskListViewController: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    // Flag/unflag task upon long press
-    @objc
-    func handleLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+    @objc func handleTableLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
             let touchPoint = longPressGestureRecognizer.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                // Flag/unflag task
                 if let task = tasks[indexPath.row] as? Task {
                     if toggleTaskFlagged(task) {
                         refresh()
                     }
                 }
             }
+        }
+    }
+    
+    @objc func handleReorderButtonLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
+        if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
+            sortFlaggedFirst()
+            refreshTasks()
+            stopReorder()
         }
     }
     
@@ -194,6 +204,28 @@ class TaskListViewController: UIViewController {
             return false
         }
         return true
+    }
+    
+    func sortFlaggedFirst() {
+        var flaggedTasks = [NSManagedObject]()
+        var unflaggedTasks = [NSManagedObject]()
+        for task in tasks as! [Task] {
+            if task.flagged {
+                flaggedTasks.append(task)
+            } else {
+                unflaggedTasks.append(task)
+            }
+        }
+        
+        var nextPosition = 1
+        for task in flaggedTasks as! [Task] {
+            task.setPosition(nextPosition)
+            nextPosition += 1
+        }
+        for task in unflaggedTasks as! [Task] {
+            task.setPosition(nextPosition)
+            nextPosition += 1
+        }
     }
     
     func removeCompleted() -> Bool {

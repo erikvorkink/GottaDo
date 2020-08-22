@@ -7,7 +7,7 @@ class TaskEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        initEditor()
+        self.initEditor()
     }
     
     func alert(_ title: String) {
@@ -17,33 +17,24 @@ class TaskEditViewController: UIViewController {
     }
     
     @IBAction func close(_ sender: Any) {
-        saveNameAndClose()
+        self.saveNameAndClose()
     }
     
     @objc
     func saveNameAndClose() {
-        if saveName() {
-            closeKeyboard()
+        if self.saveName() {
+            self.closeKeyboard()
             NotificationCenter.default.post(name: NSNotification.Name("taskEditedByModal"), object: nil)
-            close()
+            self.close()
         }
     }
     
     @IBAction func remove(_ sender: Any) {
-        let dialogMessage = UIAlertController(title: "Delete Task", message: "This can't be undone.", preferredStyle: .alert)
-        
-        let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
-            if self.remove() {
-                NotificationCenter.default.post(name: NSNotification.Name("taskDeletedByModal"), object: nil)
-                self.close()
-            }
-        })
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in }
-        dialogMessage.addAction(delete)
-        dialogMessage.addAction(cancel)
-
-        self.closeKeyboard()
-        self.present(dialogMessage, animated: true, completion: nil)
+        if self.remove() {
+            NotificationCenter.default.post(name: NSNotification.Name("taskDeletedByModal"), object: nil)
+            self.closeKeyboard()
+            self.close()
+        }
     }
     
     func closeKeyboard() {

@@ -34,7 +34,7 @@ extension NSManagedObjectContext {
     func getCompletedTasks() -> Array<NSManagedObject> {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
         fetchRequest.predicate = NSPredicate(format: "completed = %@", NSNumber(value: true))
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "completedDate", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "completedDate", ascending: false)]
         return fetchTasks(fetchRequest)
     }
     

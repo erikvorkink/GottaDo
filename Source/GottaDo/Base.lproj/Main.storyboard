@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="49e-Tb-3d3">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +21,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TodayTaskCell" id="hLy-CZ-w9a">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hLy-CZ-w9a" id="fJJ-QW-ve1">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -126,7 +126,7 @@
                             <tableViewSection headerTitle="Actions" id="rd4-Uw-MQd">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="gLO-Qp-gmO" style="IBUITableViewCellStyleDefault" id="Lt4-r9-FgS">
-                                        <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Lt4-r9-FgS" id="iwM-qc-igI">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -143,7 +143,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="AJ9-b8-nOl" style="IBUITableViewCellStyleDefault" id="SLo-ZM-mA0">
-                                        <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="93.5" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SLo-ZM-mA0" id="MAL-XC-HO2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -234,7 +234,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="BacklogTaskCell" id="T67-De-4rx">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="24.5" width="375" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="T67-De-4rx" id="L4a-DI-9ar">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -361,21 +361,21 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3Q-Wt-l4f" userLabel="White">
                                 <rect key="frame" x="0.0" y="56" width="375" height="591"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="60"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="BWm-65-EA7" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
+                                        <rect key="frame" x="18" y="100" width="341" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="62p-HF-Xjd"/>
                                         </constraints>
                                         <color key="textColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="24"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes" keyboardType="alphabet" returnKeyType="done" smartDashesType="yes"/>
                                     </textField>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="BWm-65-EA7" firstAttribute="top" secondItem="z3Q-Wt-l4f" secondAttribute="top" constant="100" id="4BE-Xg-2ZE"/>
-                                    <constraint firstItem="BWm-65-EA7" firstAttribute="leading" secondItem="z3Q-Wt-l4f" secondAttribute="leading" id="4ZT-wS-dGF"/>
-                                    <constraint firstAttribute="trailing" secondItem="BWm-65-EA7" secondAttribute="trailing" id="srN-yJ-j8v"/>
+                                    <constraint firstItem="BWm-65-EA7" firstAttribute="leading" secondItem="z3Q-Wt-l4f" secondAttribute="leading" constant="30" id="4ZT-wS-dGF"/>
+                                    <constraint firstAttribute="trailing" secondItem="BWm-65-EA7" secondAttribute="trailing" constant="30" id="srN-yJ-j8v"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -397,7 +397,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zB7-Vg-txH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1884" y="412"/>
+            <point key="canvasLocation" x="1884" y="411.544227886057"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -445,13 +445,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oI9-Vm-9OE" userLabel="White">
                                 <rect key="frame" x="0.0" y="56" width="375" height="591"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="dd5-X1-pDI" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="100" width="375" height="60"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" placeholder="(task name)" textAlignment="center" minimumFontSize="18" translatesAutoresizingMaskIntoConstraints="NO" id="dd5-X1-pDI" customClass="TaskNameField" customModule="GottaDo" customModuleProvider="target">
+                                        <rect key="frame" x="16" y="100" width="340" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="qwo-zH-kzS"/>
                                         </constraints>
                                         <color key="textColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="22"/>
+                                        <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="24"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" spellCheckingType="yes" keyboardType="alphabet" returnKeyType="done" smartDashesType="yes"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CIg-Pz-j32">
@@ -485,8 +485,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="dd5-X1-pDI" firstAttribute="leading" secondItem="oI9-Vm-9OE" secondAttribute="leading" id="5mH-3e-4fG"/>
-                                    <constraint firstAttribute="trailing" secondItem="dd5-X1-pDI" secondAttribute="trailing" id="6tJ-EQ-6au"/>
+                                    <constraint firstItem="dd5-X1-pDI" firstAttribute="leading" secondItem="oI9-Vm-9OE" secondAttribute="leading" constant="30" id="5mH-3e-4fG"/>
+                                    <constraint firstAttribute="trailing" secondItem="dd5-X1-pDI" secondAttribute="trailing" constant="30" id="6tJ-EQ-6au"/>
                                     <constraint firstItem="MO9-kI-6ez" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CIg-Pz-j32" secondAttribute="trailing" symbolic="YES" id="7zL-jv-A7L"/>
                                     <constraint firstItem="MO9-kI-6ez" firstAttribute="baseline" secondItem="CIg-Pz-j32" secondAttribute="baseline" id="JMR-Yj-aIP"/>
                                     <constraint firstItem="dd5-X1-pDI" firstAttribute="top" secondItem="oI9-Vm-9OE" secondAttribute="top" constant="100" id="K3i-uJ-nVd"/>
@@ -516,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SSe-B7-ua0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1884" y="-386"/>
+            <point key="canvasLocation" x="1884" y="-386.35682158920542"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

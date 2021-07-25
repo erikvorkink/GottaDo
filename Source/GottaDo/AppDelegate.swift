@@ -1,6 +1,7 @@
 import UIKit
 import CoreData
 import UserNotifications
+import Intents
 
 @objc public enum TaskListIds: Int16 {
     case Today    = 1
@@ -15,7 +16,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         requestBadgeAuthorization()
+        donateIntent()
         return true
+    }
+    
+    func donateIntent() {
+        let intent = AddTaskIntent()
+        intent.suggestedInvocationPhrase = "Add task to GottaDo"
+        intent.task = "(task)"
+        let interaction = INInteraction(intent: intent, response: nil)
+
+        interaction.donate { (error) in
+            if error != nil {
+                if let error = error as NSError? {
+                    print("Interaction donation failed: \(error.description)")
+                } else {
+                    print("Successfully donated interaction")
+                }
+            }
+        }
     }
     
     func requestBadgeAuthorization() {

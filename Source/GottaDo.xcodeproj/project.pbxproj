@@ -12,6 +12,17 @@
 		033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B588B22A305F300A249EC /* DebugTableViewController.swift */; };
 		036BFEAD22C5C4BA001F73D2 /* TaskNameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BFEAC22C5C4BA001F73D2 /* TaskNameField.swift */; };
 		03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */; };
+		11366B4526AD098C00B5021B /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 11366B4426AD098C00B5021B /* Intents.intentdefinition */; };
+		11366B5026AD0C8400B5021B /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11366B4F26AD0C8400B5021B /* IntentHandler.swift */; };
+		11366B5826AD0C8400B5021B /* IntentsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11366B5726AD0C8400B5021B /* IntentsUI.framework */; };
+		11366B5B26AD0C8400B5021B /* IntentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11366B5A26AD0C8400B5021B /* IntentViewController.swift */; };
+		11366B5E26AD0C8400B5021B /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11366B5C26AD0C8400B5021B /* MainInterface.storyboard */; };
+		11366B6226AD0C8400B5021B /* GottaDoIntentsExtensionUI.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 11366B5626AD0C8400B5021B /* GottaDoIntentsExtensionUI.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		11366B6526AD0C8400B5021B /* GottaDoIntentsExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 11366B4A26AD0C8400B5021B /* GottaDoIntentsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		11366B6D26AD0F0F00B5021B /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11366B4C26AD0C8400B5021B /* Intents.framework */; };
+		11366B6E26AD0F0F00B5021B /* Intents.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11366B4C26AD0C8400B5021B /* Intents.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		11366B7026AD0FEB00B5021B /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 11366B4426AD098C00B5021B /* Intents.intentdefinition */; };
+		11366B7426AD124700B5021B /* AddTaskIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11366B7326AD124700B5021B /* AddTaskIntentHandler.swift */; };
 		B50A1D40227DFCA0009D9D65 /* TaskExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */; };
 		B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */; };
 		B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */; };
@@ -28,6 +39,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		11366B6026AD0C8400B5021B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5D781A722654D5800EA4D55 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 11366B5526AD0C8400B5021B;
+			remoteInfo = GottaDoIntentsExtensionUI;
+		};
+		11366B6326AD0C8400B5021B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5D781A722654D5800EA4D55 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 11366B4926AD0C8400B5021B;
+			remoteInfo = GottaDoIntentsExtension;
+		};
 		B5D781C622654D5A00EA4D55 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B5D781A722654D5800EA4D55 /* Project object */;
@@ -44,12 +69,50 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		11366B6C26AD0C8400B5021B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				11366B6226AD0C8400B5021B /* GottaDoIntentsExtensionUI.appex in Embed App Extensions */,
+				11366B6526AD0C8400B5021B /* GottaDoIntentsExtension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		11366B6F26AD0F0F00B5021B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				11366B6E26AD0F0F00B5021B /* Intents.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		033B5887229E1FEC00A249EC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		033B5889229E245500A249EC /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		033B588B22A305F300A249EC /* DebugTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTableViewController.swift; sourceTree = "<group>"; };
 		036BFEAC22C5C4BA001F73D2 /* TaskNameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNameField.swift; sourceTree = "<group>"; };
 		03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAddViewController.swift; sourceTree = "<group>"; };
+		11366B4426AD098C00B5021B /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		11366B4A26AD0C8400B5021B /* GottaDoIntentsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GottaDoIntentsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		11366B4C26AD0C8400B5021B /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		11366B4F26AD0C8400B5021B /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		11366B5126AD0C8400B5021B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11366B5626AD0C8400B5021B /* GottaDoIntentsExtensionUI.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GottaDoIntentsExtensionUI.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		11366B5726AD0C8400B5021B /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		11366B5A26AD0C8400B5021B /* IntentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentViewController.swift; sourceTree = "<group>"; };
+		11366B5D26AD0C8400B5021B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		11366B5F26AD0C8400B5021B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		11366B7226AD10E100B5021B /* GottaDo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GottaDo.entitlements; sourceTree = "<group>"; };
+		11366B7326AD124700B5021B /* AddTaskIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskIntentHandler.swift; sourceTree = "<group>"; };
 		B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExtension.swift; sourceTree = "<group>"; };
 		B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedContextExtension.swift; sourceTree = "<group>"; };
 		B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GottaDo.xcdatamodel; sourceTree = "<group>"; };
@@ -72,6 +135,22 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		11366B4726AD0C8400B5021B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11366B6D26AD0F0F00B5021B /* Intents.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		11366B5326AD0C8400B5021B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11366B5826AD0C8400B5021B /* IntentsUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5D781AC22654D5800EA4D55 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -135,12 +214,45 @@
 			path = TaskEdit;
 			sourceTree = "<group>";
 		};
+		11366B4B26AD0C8400B5021B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11366B4C26AD0C8400B5021B /* Intents.framework */,
+				11366B5726AD0C8400B5021B /* IntentsUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		11366B4E26AD0C8400B5021B /* GottaDoIntentsExtension */ = {
+			isa = PBXGroup;
+			children = (
+				11366B4F26AD0C8400B5021B /* IntentHandler.swift */,
+				11366B7326AD124700B5021B /* AddTaskIntentHandler.swift */,
+				11366B5126AD0C8400B5021B /* Info.plist */,
+			);
+			path = GottaDoIntentsExtension;
+			sourceTree = "<group>";
+		};
+		11366B5926AD0C8400B5021B /* GottaDoIntentsExtensionUI */ = {
+			isa = PBXGroup;
+			children = (
+				11366B5A26AD0C8400B5021B /* IntentViewController.swift */,
+				11366B5C26AD0C8400B5021B /* MainInterface.storyboard */,
+				11366B5F26AD0C8400B5021B /* Info.plist */,
+			);
+			path = GottaDoIntentsExtensionUI;
+			sourceTree = "<group>";
+		};
 		B5D781A622654D5800EA4D55 = {
 			isa = PBXGroup;
 			children = (
+				11366B4426AD098C00B5021B /* Intents.intentdefinition */,
 				B5D781B122654D5800EA4D55 /* GottaDo */,
 				B5D781C822654D5A00EA4D55 /* GottaDoTests */,
 				B5D781D322654D5A00EA4D55 /* GottaDoUITests */,
+				11366B4E26AD0C8400B5021B /* GottaDoIntentsExtension */,
+				11366B5926AD0C8400B5021B /* GottaDoIntentsExtensionUI */,
+				11366B4B26AD0C8400B5021B /* Frameworks */,
 				B5D781B022654D5800EA4D55 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -151,6 +263,8 @@
 				B5D781AF22654D5800EA4D55 /* GottaDo.app */,
 				B5D781C522654D5A00EA4D55 /* GottaDoTests.xctest */,
 				B5D781D022654D5A00EA4D55 /* GottaDoUITests.xctest */,
+				11366B4A26AD0C8400B5021B /* GottaDoIntentsExtension.appex */,
+				11366B5626AD0C8400B5021B /* GottaDoIntentsExtensionUI.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -158,6 +272,7 @@
 		B5D781B122654D5800EA4D55 /* GottaDo */ = {
 			isa = PBXGroup;
 			children = (
+				11366B7226AD10E100B5021B /* GottaDo.entitlements */,
 				B5D781B222654D5800EA4D55 /* AppDelegate.swift */,
 				033B5887229E1FEC00A249EC /* TabBarController.swift */,
 				03F72BFB22AC32DB00BEAB92 /* Debug */,
@@ -193,6 +308,41 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		11366B4926AD0C8400B5021B /* GottaDoIntentsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 11366B6926AD0C8400B5021B /* Build configuration list for PBXNativeTarget "GottaDoIntentsExtension" */;
+			buildPhases = (
+				11366B4626AD0C8400B5021B /* Sources */,
+				11366B4726AD0C8400B5021B /* Frameworks */,
+				11366B4826AD0C8400B5021B /* Resources */,
+				11366B6F26AD0F0F00B5021B /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GottaDoIntentsExtension;
+			productName = GottaDoIntentsExtension;
+			productReference = 11366B4A26AD0C8400B5021B /* GottaDoIntentsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		11366B5526AD0C8400B5021B /* GottaDoIntentsExtensionUI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 11366B6626AD0C8400B5021B /* Build configuration list for PBXNativeTarget "GottaDoIntentsExtensionUI" */;
+			buildPhases = (
+				11366B5226AD0C8400B5021B /* Sources */,
+				11366B5326AD0C8400B5021B /* Frameworks */,
+				11366B5426AD0C8400B5021B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GottaDoIntentsExtensionUI;
+			productName = GottaDoIntentsExtensionUI;
+			productReference = 11366B5626AD0C8400B5021B /* GottaDoIntentsExtensionUI.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		B5D781AE22654D5800EA4D55 /* GottaDo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5D781D922654D5A00EA4D55 /* Build configuration list for PBXNativeTarget "GottaDo" */;
@@ -200,10 +350,13 @@
 				B5D781AB22654D5800EA4D55 /* Sources */,
 				B5D781AC22654D5800EA4D55 /* Frameworks */,
 				B5D781AD22654D5800EA4D55 /* Resources */,
+				11366B6C26AD0C8400B5021B /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				11366B6126AD0C8400B5021B /* PBXTargetDependency */,
+				11366B6426AD0C8400B5021B /* PBXTargetDependency */,
 			);
 			name = GottaDo;
 			productName = GottaDo;
@@ -252,10 +405,16 @@
 		B5D781A722654D5800EA4D55 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Erik Vorkink";
 				TargetAttributes = {
+					11366B4926AD0C8400B5021B = {
+						CreatedOnToolsVersion = 12.5;
+					};
+					11366B5526AD0C8400B5021B = {
+						CreatedOnToolsVersion = 12.5;
+					};
 					B5D781AE22654D5800EA4D55 = {
 						CreatedOnToolsVersion = 10.2;
 					};
@@ -285,11 +444,28 @@
 				B5D781AE22654D5800EA4D55 /* GottaDo */,
 				B5D781C422654D5A00EA4D55 /* GottaDoTests */,
 				B5D781CF22654D5A00EA4D55 /* GottaDoUITests */,
+				11366B4926AD0C8400B5021B /* GottaDoIntentsExtension */,
+				11366B5526AD0C8400B5021B /* GottaDoIntentsExtensionUI */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		11366B4826AD0C8400B5021B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		11366B5426AD0C8400B5021B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11366B5E26AD0C8400B5021B /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5D781AD22654D5800EA4D55 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -317,10 +493,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		11366B4626AD0C8400B5021B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11366B7026AD0FEB00B5021B /* Intents.intentdefinition in Sources */,
+				11366B5026AD0C8400B5021B /* IntentHandler.swift in Sources */,
+				11366B7426AD124700B5021B /* AddTaskIntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		11366B5226AD0C8400B5021B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11366B5B26AD0C8400B5021B /* IntentViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B5D781AB22654D5800EA4D55 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11366B4526AD098C00B5021B /* Intents.intentdefinition in Sources */,
 				033B5888229E1FEC00A249EC /* TabBarController.swift in Sources */,
 				B50A1D40227DFCA0009D9D65 /* TaskExtension.swift in Sources */,
 				B5987D9422683230003044E1 /* TaskEditViewController.swift in Sources */,
@@ -356,6 +551,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		11366B6126AD0C8400B5021B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 11366B5526AD0C8400B5021B /* GottaDoIntentsExtensionUI */;
+			targetProxy = 11366B6026AD0C8400B5021B /* PBXContainerItemProxy */;
+		};
+		11366B6426AD0C8400B5021B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 11366B4926AD0C8400B5021B /* GottaDoIntentsExtension */;
+			targetProxy = 11366B6326AD0C8400B5021B /* PBXContainerItemProxy */;
+		};
 		B5D781C722654D5A00EA4D55 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = B5D781AE22654D5800EA4D55 /* GottaDo */;
@@ -369,6 +574,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		11366B5C26AD0C8400B5021B /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				11366B5D26AD0C8400B5021B /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		B5D781B822654D5800EA4D55 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -388,6 +601,90 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		11366B6726AD0C8400B5021B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6VMH3AZA3F;
+				INFOPLIST_FILE = GottaDoIntentsExtensionUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erikvorkink.GottaDoApp.GottaDoIntentsExtensionUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		11366B6826AD0C8400B5021B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6VMH3AZA3F;
+				INFOPLIST_FILE = GottaDoIntentsExtensionUI/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erikvorkink.GottaDoApp.GottaDoIntentsExtensionUI;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		11366B6A26AD0C8400B5021B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6VMH3AZA3F;
+				INFOPLIST_FILE = GottaDoIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erikvorkink.GottaDoApp.GottaDoIntentsExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		11366B6B26AD0C8400B5021B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 6VMH3AZA3F;
+				INFOPLIST_FILE = GottaDoIntentsExtension/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.erikvorkink.GottaDoApp.GottaDoIntentsExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		B5D781D722654D5A00EA4D55 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -440,7 +737,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -496,7 +793,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -509,7 +806,9 @@
 		B5D781DA22654D5A00EA4D55 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GottaDo/GottaDo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VMH3AZA3F;
@@ -530,7 +829,9 @@
 		B5D781DB22654D5A00EA4D55 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GottaDo/GottaDo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VMH3AZA3F;
@@ -629,6 +930,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		11366B6626AD0C8400B5021B /* Build configuration list for PBXNativeTarget "GottaDoIntentsExtensionUI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				11366B6726AD0C8400B5021B /* Debug */,
+				11366B6826AD0C8400B5021B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		11366B6926AD0C8400B5021B /* Build configuration list for PBXNativeTarget "GottaDoIntentsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				11366B6A26AD0C8400B5021B /* Debug */,
+				11366B6B26AD0C8400B5021B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B5D781AA22654D5800EA4D55 /* Build configuration list for PBXProject "GottaDo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

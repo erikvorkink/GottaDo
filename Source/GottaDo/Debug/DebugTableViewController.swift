@@ -90,31 +90,26 @@ class DebugTableViewController: UITableViewController {
     }
     
     func deleteOldCompletedTasks() {
-        let dialogMessage = UIAlertController(title: "Delete Old Completed Tasks", message: "This cannot be undone.", preferredStyle: .alert)
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
-        let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            appDelegate.getManagedContext().deleteOldCompletedTasks()
-            
-            let alert = UIAlertController(title: "Delete Old Completed Tasks", message: "Tasks have been deleted.", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-        })
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) -> Void in }
-        dialogMessage.addAction(delete)
-        dialogMessage.addAction(cancel)
-        
-        self.present(dialogMessage, animated: true, completion: nil)
+        let operation = appDelegate.getManagedContext().deleteOldCompletedTasks
+        deleteTasks(alertTitle: "Delete Old Completed Tasks", deleteOperation: operation)
     }
     
     func deleteAllTasks() {
-        let dialogMessage = UIAlertController(title: "Delete ALL Tasks", message: "This cannot be undone.", preferredStyle: .alert)
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         
+        let operation = appDelegate.getManagedContext().deleteAllTasks
+        deleteTasks(alertTitle: "Delete ALL Tasks", deleteOperation: operation)
+    }
+    
+    func deleteTasks(alertTitle: String, deleteOperation: @escaping () -> Void) {
+        let dialogMessage = UIAlertController(title: alertTitle, message: "This cannot be undone.", preferredStyle: .alert)
         let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-            appDelegate.getManagedContext().deleteAllTasks()
+
+            deleteOperation()
             
-            let alert = UIAlertController(title: "Delete ALL Tasks", message: "Tasks have been deleted.", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: alertTitle, message: "Tasks have been deleted.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         })

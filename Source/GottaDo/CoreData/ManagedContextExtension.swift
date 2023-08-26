@@ -72,6 +72,22 @@ extension NSManagedObjectContext {
         }
     }
     
+    func deleteOldCompletedTasks() {
+        let daysAgoConsideredOld = 90
+        let mostRecentDateToDelete = Calendar.current.date(byAdding: .day, value: -daysAgoConsideredOld, to: Date())
+            
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
+        fetchRequest.predicate = NSPredicate(format: "completed = %@ AND completedDate <= %@",
+                                             argumentArray: [NSNumber(value: true), mostRecentDateToDelete!])
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try self.execute(deleteRequest)
+        } catch let error as NSError {
+            print("Could not delete. \(error), \(error.userInfo)")
+        }
+    }
+    
     func deleteAllTasks() {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Task")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)

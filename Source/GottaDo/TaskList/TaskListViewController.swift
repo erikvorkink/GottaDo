@@ -29,6 +29,7 @@ class TaskListViewController: UIViewController {
         notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskCreatedByModal"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskEditedByModal"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskDeletedByModal"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("bulkTasksDeleted"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {

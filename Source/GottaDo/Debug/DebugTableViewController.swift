@@ -108,6 +108,7 @@ class DebugTableViewController: UITableViewController {
         let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
 
             deleteOperation()
+            NotificationCenter.default.post(name: NSNotification.Name("bulkTasksDeleted"), object: nil)
             
             let alert = UIAlertController(title: alertTitle, message: "Tasks have been deleted.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))

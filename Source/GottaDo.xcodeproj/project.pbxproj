@@ -25,6 +25,7 @@
 		B5D781BF22654D5A00EA4D55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5D781BD22654D5A00EA4D55 /* LaunchScreen.storyboard */; };
 		B5D781CA22654D5A00EA4D55 /* GottaDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781C922654D5A00EA4D55 /* GottaDoTests.swift */; };
 		B5D781D522654D5A00EA4D55 /* GottaDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781D422654D5A00EA4D55 /* GottaDoUITests.swift */; };
+		DBC985B52B001CF400370356 /* HapticHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC985B42B001CF400370356 /* HapticHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		B5D781D022654D5A00EA4D55 /* GottaDoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GottaDoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5D781D422654D5A00EA4D55 /* GottaDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GottaDoUITests.swift; sourceTree = "<group>"; };
 		B5D781D622654D5A00EA4D55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DBC985B42B001CF400370356 /* HapticHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +166,7 @@
 				03F72BFA22AC32CC00BEAB92 /* TaskList */,
 				03F72BFD22AC343500BEAB92 /* TaskEdit */,
 				03F72BFC22AC330500BEAB92 /* CoreData */,
+				DBC985B32B001CDA00370356 /* Helpers */,
 				B5D781BB22654D5A00EA4D55 /* Assets.xcassets */,
 				B5D781B822654D5800EA4D55 /* Main.storyboard */,
 				B5D781BD22654D5A00EA4D55 /* LaunchScreen.storyboard */,
@@ -188,6 +191,14 @@
 				B5D781D622654D5A00EA4D55 /* Info.plist */,
 			);
 			path = GottaDoUITests;
+			sourceTree = "<group>";
+		};
+		DBC985B32B001CDA00370356 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DBC985B42B001CF400370356 /* HapticHelper.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,6 +342,7 @@
 				033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */,
 				036BFEAD22C5C4BA001F73D2 /* TaskNameField.swift in Sources */,
 				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
+				DBC985B52B001CF400370356 /* HapticHelper.swift in Sources */,
 				03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */,
 				B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */,
 				033B588A229E245500A249EC /* DebugViewController.swift in Sources */,

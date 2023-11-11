@@ -18,9 +18,7 @@ class TabBarController: UITabBarController {
             let touchPoint = longPressGestureRecognizer.location(in: self.view)
             if self.touchedCloseToRightEdge(touchPoint) {
                 performSegue(withIdentifier: "debugSegue", sender: nil)
-                
-                let impactFeedbackGenerator = UIImpactFeedbackGenerator()
-                impactFeedbackGenerator.impactOccurred()
+                HapticHelper.generateSmallFeedback()
             }
         }
     }

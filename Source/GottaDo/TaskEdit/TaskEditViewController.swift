@@ -4,9 +4,7 @@ class TaskEditViewController: UIViewController {
 
     var task: Task?
     @IBOutlet weak var nameField: TaskNameField!
-    
-    let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initEditor()
@@ -26,7 +24,7 @@ class TaskEditViewController: UIViewController {
     func saveNameAndClose() {
         if self.saveName() {
             NotificationCenter.default.post(name: NSNotification.Name("taskEditedByModal"), object: nil)
-            generateBigHapticFeedback()
+            HapticHelper.generateBigFeedback()
             self.closeKeyboard()
             self.close()
         }
@@ -35,7 +33,7 @@ class TaskEditViewController: UIViewController {
     @IBAction func remove(_ sender: Any) {
         if self.remove() {
             NotificationCenter.default.post(name: NSNotification.Name("taskDeletedByModal"), object: nil)
-            generateBigHapticFeedback()
+            HapticHelper.generateBigFeedback()
             self.closeKeyboard()
             self.close()
         }
@@ -88,9 +86,5 @@ class TaskEditViewController: UIViewController {
     
     func close() {
         self.dismiss(animated: true, completion: nil)
-    }
-    
-    func generateBigHapticFeedback() {
-        notificationFeedbackGenerator.notificationOccurred(.success)
     }
 }

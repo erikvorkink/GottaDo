@@ -69,6 +69,7 @@ class TaskListViewController: UIViewController {
     
     @objc func handleReorderButtonLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
+            HapticHelper.generateSmallFeedback()
             smartSortTasks()
             refreshTasks()
             stopReorder()

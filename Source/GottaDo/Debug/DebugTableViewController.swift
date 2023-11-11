@@ -3,6 +3,8 @@ import CoreData
 
 class DebugTableViewController: UITableViewController {
 
+    let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -32,6 +34,8 @@ class DebugTableViewController: UITableViewController {
         }
         
         UIPasteboard.general.string = formattedTaskList
+        
+        generateBigHapticFeedback()
         
         let alert = UIAlertController(title: "Copy Tasks", message: "Tasks have been copied to the clipboard.", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -94,6 +98,7 @@ class DebugTableViewController: UITableViewController {
         
         let operation = appDelegate.getManagedContext().deleteOldCompletedTasks
         deleteTasks(alertTitle: "Delete Old Completed Tasks", deleteOperation: operation)
+        generateBigHapticFeedback()
     }
     
     func deleteAllTasks() {
@@ -101,6 +106,7 @@ class DebugTableViewController: UITableViewController {
         
         let operation = appDelegate.getManagedContext().deleteAllTasks
         deleteTasks(alertTitle: "Delete ALL Tasks", deleteOperation: operation)
+        generateBigHapticFeedback()
     }
     
     func deleteTasks(alertTitle: String, deleteOperation: @escaping () -> Void) {
@@ -119,5 +125,9 @@ class DebugTableViewController: UITableViewController {
         dialogMessage.addAction(cancel)
         
         self.present(dialogMessage, animated: true, completion: nil)
+    }
+    
+    func generateBigHapticFeedback() {
+        notificationFeedbackGenerator.notificationOccurred(.success)
     }
 }

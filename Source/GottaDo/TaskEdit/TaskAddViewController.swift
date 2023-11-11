@@ -9,6 +9,8 @@ class TaskAddViewController: UIViewController {
     @IBOutlet weak var todayButton: UIButton!
     @IBOutlet weak var backlogButton: UIButton!
     
+    let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initEditor()
@@ -40,6 +42,7 @@ class TaskAddViewController: UIViewController {
     func createTaskAndClose() {
         if createTask() {
             NotificationCenter.default.post(name: NSNotification.Name("taskCreatedByModal"), object: nil)
+            generateBigHapticFeedback()
             close()
         }
     }
@@ -109,5 +112,9 @@ class TaskAddViewController: UIViewController {
     
     func close() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    func generateBigHapticFeedback() {
+        notificationFeedbackGenerator.notificationOccurred(.success)
     }
 }

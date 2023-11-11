@@ -8,6 +8,8 @@ class TaskListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var currentTaskListId = TaskListIds.Today
     var tasks: [NSManagedObject] = []
+    let notificationFeedbackGenerator = UINotificationFeedbackGenerator()
+    let impactFeedbackGenerator = UIImpactFeedbackGenerator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,12 +80,14 @@ class TaskListViewController: UIViewController {
     // Remove completed tasks from list
     @IBAction func clear(_ sender: Any) {
         if removeCompleted() {
+            generateSmallHapticFeedback()
             refreshTasks()
         }
     }
     
     // Toggle reorder mode
     @IBAction func toggleReorder(_ sender: Any) {
+        generateSmallHapticFeedback()
         if tableView.isEditing {
             stopReorder()
         } else {
@@ -164,6 +168,7 @@ class TaskListViewController: UIViewController {
             alert("Unable to move task")
             return false
         }
+        generateSmallHapticFeedback()
         return true
     }
     
@@ -187,6 +192,7 @@ class TaskListViewController: UIViewController {
             alert("Unable to toggle flagged")
             return false
         }
+        generateSmallHapticFeedback()
         return true
     }
     
@@ -204,6 +210,7 @@ class TaskListViewController: UIViewController {
             alert("Unable to toggle completed")
             return false
         }
+        generateBigHapticFeedback()
         return true
     }
     
@@ -251,6 +258,7 @@ class TaskListViewController: UIViewController {
             alert("Unable to remove completed tasks")
             return false
         }
+        generateBigHapticFeedback()
         return true
     }
     
@@ -340,6 +348,14 @@ extension TaskListViewController: UITableViewDataSource {
             task.setPosition(nextPosition)
             nextPosition += 1
         }
+    }
+    
+    func generateSmallHapticFeedback() {
+        impactFeedbackGenerator.impactOccurred()
+    }
+    
+    func generateBigHapticFeedback() {
+        notificationFeedbackGenerator.notificationOccurred(.success)
     }
 }
 

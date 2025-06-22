@@ -12,13 +12,59 @@ class DebugTableViewController: UITableViewController {
 
         switch indexPath.row {
         case 0:
-            copyTasksToClipboard()
+            backupTasks()
         case 1:
-            deleteOldCompletedTasks()
+            copyTasksToClipboard()
         case 2:
+            deleteOldCompletedTasks()
+        case 3:
             deleteAllTasks()
         default:
             break
+        }
+    }
+    
+    func backupTasks() {
+        let formattedTaskList = getFormattedTaskList()
+        
+        let filename = getBackupFilename()
+        if createiCloudBackupFile(filename: filename, content: formattedTaskList) {
+            let alert = UIAlertController(title: "Backup Tasks", message: "Tasks have been backed up to iCloud.", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Unable to Backup Tasks", message: "", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+    }
+    
+    func getBackupFilename() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
+        let timestamp = formatter.string(from: Date())
+
+        let filename = "gottado-backup-\(timestamp).txt"
+        return filename
+    }
+    
+    func createiCloudBackupFile(filename: String, content: String) -> Bool {
+        guard let iCloudURL = FileManager.default.url(forUbiquityContainerIdentifier: "iCloud.com.erikvorkink.GottaDoContainer")?
+            .appendingPathComponent("Documents") else {
+            print("iCloud is not available")
+            return false
+        }
+        
+        let fileURL = iCloudURL.appendingPathComponent(filename)
+        
+        do {
+            try content.write(to: fileURL, atomically: true, encoding: .utf8)
+            print("Backup saved to iCloud at \(fileURL.path)")
+            return true
+        } catch {
+            print("Error saving to iCloud: \(error)")
+            return false
         }
     }
     

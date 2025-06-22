@@ -71,6 +71,7 @@
 		B5D781D422654D5A00EA4D55 /* GottaDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GottaDoUITests.swift; sourceTree = "<group>"; };
 		B5D781D622654D5A00EA4D55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBC985B42B001CF400370356 /* HapticHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticHelper.swift; sourceTree = "<group>"; };
+		DBD5FB2B2E0795DC008FEA62 /* GottaDo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GottaDo.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +161,7 @@
 		B5D781B122654D5800EA4D55 /* GottaDo */ = {
 			isa = PBXGroup;
 			children = (
+				DBD5FB2B2E0795DC008FEA62 /* GottaDo.entitlements */,
 				B5D781B222654D5800EA4D55 /* AppDelegate.swift */,
 				033B5887229E1FEC00A249EC /* TabBarController.swift */,
 				03F72BFB22AC32DB00BEAB92 /* Debug */,
@@ -525,10 +527,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GottaDo/GottaDo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VMH3AZA3F;
 				INFOPLIST_FILE = GottaDo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -546,10 +550,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GottaDo/GottaDo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6VMH3AZA3F;
 				INFOPLIST_FILE = GottaDo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

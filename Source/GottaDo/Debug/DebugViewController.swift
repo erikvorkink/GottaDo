@@ -1,29 +1,23 @@
 import UIKit
 
 class DebugViewController: UIViewController {
-    private lazy var headerStyler = LegacyModalHeaderStyler(viewController: self)
-
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateTopNavigationBarLayout()
+        configureNavigation()
     }
 
     @IBAction func close(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 
-    private func updateTopNavigationBarLayout() {
-        headerStyler.update(
-            left: LegacyModalHeaderButtonConfiguration(
-                content: .title("Close"),
-                action: #selector(close(_:)),
-                accessibilityLabel: "Close"
-            ),
-            right: nil
+    private func configureNavigation() {
+        ModalNavigationStyler.apply(to: navigationController)
+        title = "Debug"
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Close",
+            style: .plain,
+            target: self,
+            action: #selector(close(_:))
         )
     }
 }

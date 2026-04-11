@@ -4,7 +4,6 @@ import CoreData
 class TaskAddViewController: UIViewController {
     
     var newTaskTaskListId: TaskListIds?
-    private lazy var headerStyler = LegacyModalHeaderStyler(viewController: self)
     
     @IBOutlet weak var nameField: TaskNameField!
     @IBOutlet weak var todayButton: UIButton!
@@ -12,13 +11,9 @@ class TaskAddViewController: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigation()
         initEditor()
         setStatesOfTaskListChoiceButtons()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateTopNavigationBarLayout()
     }
     
     func alert(_ title: String) {
@@ -60,14 +55,13 @@ class TaskAddViewController: UIViewController {
         nameField.addTarget(self, action: #selector(createTaskAndClose), for: .editingDidEndOnExit)
     }
 
-    private func updateTopNavigationBarLayout() {
-        headerStyler.update(
-            left: LegacyModalHeaderButtonConfiguration(
-                content: .title("Cancel"),
-                action: #selector(cancel(_:)),
-                accessibilityLabel: "Cancel"
-            ),
-            right: nil
+    private func configureNavigation() {
+        ModalNavigationStyler.apply(to: navigationController)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Cancel",
+            style: .plain,
+            target: self,
+            action: #selector(cancel(_:))
         )
     }
     

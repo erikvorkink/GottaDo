@@ -3,17 +3,12 @@ import UIKit
 class TaskEditViewController: UIViewController {
 
     var task: Task?
-    private lazy var headerStyler = LegacyModalHeaderStyler(viewController: self)
     @IBOutlet weak var nameField: TaskNameField!
         
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureNavigation()
         self.initEditor()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        updateTopNavigationBarLayout()
     }
     
     func alert(_ title: String) {
@@ -57,18 +52,18 @@ class TaskEditViewController: UIViewController {
         nameField.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
     }
 
-    private func updateTopNavigationBarLayout() {
-        headerStyler.update(
-            left: LegacyModalHeaderButtonConfiguration(
-                content: .title("Close"),
-                action: #selector(close(_:)),
-                accessibilityLabel: "Close"
-            ),
-            right: LegacyModalHeaderButtonConfiguration(
-                content: .systemImage("trash"),
-                action: #selector(remove(_:)),
-                accessibilityLabel: "Delete task"
-            )
+    private func configureNavigation() {
+        ModalNavigationStyler.apply(to: navigationController)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "Close",
+            style: .plain,
+            target: self,
+            action: #selector(close(_:))
+        )
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .trash,
+            target: self,
+            action: #selector(remove(_:))
         )
     }
     

@@ -441,16 +441,40 @@ extension TaskListViewController: UITableViewDelegate {
         switch segue.identifier {
         case "taskAddSegue":
             // Pass context needed by a new task
-            if let viewController = segue.destination as? TaskAddViewController {
+            if let viewController = taskAddViewController(for: segue.destination) {
                 viewController.newTaskTaskListId = currentTaskListId
             }
         case "taskEditSegue":
             // Pass the task to edit
-            if let viewController = segue.destination as? TaskEditViewController, let taskToSend = sender as? Task {
+            if let viewController = taskEditViewController(for: segue.destination), let taskToSend = sender as? Task {
                 viewController.task = taskToSend
             }
         default:
             break;
         }
+    }
+
+    private func taskAddViewController(for destination: UIViewController) -> TaskAddViewController? {
+        if let viewController = destination as? TaskAddViewController {
+            return viewController
+        }
+
+        if let navigationController = destination as? UINavigationController {
+            return navigationController.topViewController as? TaskAddViewController
+        }
+
+        return nil
+    }
+
+    private func taskEditViewController(for destination: UIViewController) -> TaskEditViewController? {
+        if let viewController = destination as? TaskEditViewController {
+            return viewController
+        }
+
+        if let navigationController = destination as? UINavigationController {
+            return navigationController.topViewController as? TaskEditViewController
+        }
+
+        return nil
     }
 }

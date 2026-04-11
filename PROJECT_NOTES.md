@@ -46,7 +46,7 @@ Within each group, existing order is preserved because the code rewrites `positi
 
 ### Hidden debug functionality
 
-There is a hidden debug screen that opens when the user long-presses near the right edge of the tab bar.
+There is a hidden debug screen that opens when the user long-presses near the right edge of the bottom bar.
 
 It currently provides:
 
@@ -61,7 +61,8 @@ It currently provides:
 - UIKit
 - Storyboards
 - `UITabBarController` root
-- modal add/edit flows
+- modal add/edit/debug flows presented inside `UINavigationController`
+- custom bottom bar overlay on top of the system tab bar for spacing / appearance control
 
 This is not a SwiftUI app.
 
@@ -95,9 +96,17 @@ This is not a SwiftUI app.
 
 - `Source/GottaDo/TaskEdit/TaskAddViewController.swift`
   - create task flow
+  - configures modal navigation items
 
 - `Source/GottaDo/TaskEdit/TaskEditViewController.swift`
   - rename and remove task flow
+  - configures modal navigation items
+
+- `Source/GottaDo/Debug/DebugViewController.swift`
+  - configures debug modal navigation items
+
+- `Source/GottaDo/Helpers/ModalNavigationStyler.swift`
+  - shared appearance setup for modal navigation bars
 
 - `Source/GottaDo/CoreData/ManagedContextExtension.swift`
   - fetch helpers
@@ -108,6 +117,7 @@ This is not a SwiftUI app.
   - task mutation helpers
 
 - `Source/GottaDo/TabBarController.swift`
+  - custom bottom bar layout
   - hidden debug gesture
 
 - `Source/GottaDo/Debug/DebugTableViewController.swift`
@@ -141,7 +151,7 @@ Important fields:
 ## Project Configuration Snapshot
 
 - Swift 5.0
-- iOS deployment target: 12.2
+- iOS deployment target: 15.0
 - UIKit + storyboard app
 - Supports iPhone and iPad target families
 - Light mode forced in `Info.plist`
@@ -163,8 +173,20 @@ The project includes unit and UI test targets, but the current test files are pl
 ### Technical limitations
 
 - Older UIKit/storyboard architecture
+- custom bottom bar still replaces part of native `UITabBar` behavior
 - Very limited automated test coverage
 - Core Data access is tightly coupled to `UIApplication.shared.delegate`
+
+## Recent Modernization Notes
+
+During April 2026 cleanup work, the app was modernized in a few targeted ways without changing the overall UIKit architecture:
+
+- deployment target raised from iOS 12.2 to iOS 15.0
+- modal add/edit/debug flows moved from fake embedded navigation bars to real modal navigation controllers
+- shared modal navigation styling moved into `ModalNavigationStyler`
+- bottom bar appearance is now controlled by a custom overlay rather than default modern `UITabBar` spacing
+
+This was intentionally a targeted UIKit modernization, not a SwiftUI migration.
 
 ## Environment Notes
 

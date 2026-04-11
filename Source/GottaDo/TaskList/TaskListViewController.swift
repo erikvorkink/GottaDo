@@ -2,6 +2,7 @@ import UIKit
 import CoreData
 
 class TaskListViewController: UIViewController {
+    private let oldTaskBadgeText = "💀"
     
     @IBOutlet weak var clearButton: UIButton!
     @IBOutlet weak var reorderButton: UIButton!
@@ -306,7 +307,26 @@ extension TaskListViewController: UITableViewDataSource {
         if task.completed {
             attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
         }
+        if isOldTask(task) {
+            let spacerAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont(name: "Helvetica", size: 20) ?? UIFont.systemFont(ofSize: 20)
+            ]
+            let badgeAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 16),
+                .baselineOffset: 1
+            ]
+            attributeString.append(NSAttributedString(string: "  ", attributes: spacerAttributes))
+            attributeString.append(NSAttributedString(string: oldTaskBadgeText, attributes: badgeAttributes))
+        }
         return attributeString
+    }
+    
+    func isOldTask(_ task: Task) -> Bool {
+        guard let createdDate = task.createdDate,
+              let sixMonthsAgo = Calendar.current.date(byAdding: .month, value: -6, to: Date()) else {
+            return false
+        }
+        return createdDate < sixMonthsAgo
     }
     
     // No delete icon when reordering

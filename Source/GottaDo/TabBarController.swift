@@ -6,10 +6,12 @@ final class TabBarController: UITabBarController {
     private let barBackgroundColor = UIColor(red: 0.3235799670, green: 0.1942589879, blue: 0.3807701170, alpha: 1.0)
     private let selectedColor = UIColor(white: 0.8941, alpha: 1.0)
     private let unselectedColor = UIColor(white: 0.75, alpha: 1.0)
+    private let tabButtonWidth: CGFloat = 96
+    private let tabButtonVerticalOffset: CGFloat = -12
 
     private let customBarView = UIView()
+    private let customButtonContainer = UIView()
     private var customButtons: [UIControl] = []
-    private var customButtonCenterConstraints: [NSLayoutConstraint] = []
     private var customBarHeightConstraint: NSLayoutConstraint?
 
     override func viewDidLoad() {
@@ -69,23 +71,32 @@ final class TabBarController: UITabBarController {
         customBarView.isUserInteractionEnabled = true
         view.addSubview(customBarView)
 
+        customButtonContainer.translatesAutoresizingMaskIntoConstraints = false
+        customBarView.addSubview(customButtonContainer)
+
         customBarHeightConstraint = customBarView.heightAnchor.constraint(equalToConstant: tabBar.frame.height)
 
         NSLayoutConstraint.activate([
             customBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             customBarView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             customBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            customBarHeightConstraint!
+            customBarHeightConstraint!,
+            customButtonContainer.leadingAnchor.constraint(equalTo: customBarView.leadingAnchor),
+            customButtonContainer.trailingAnchor.constraint(equalTo: customBarView.trailingAnchor),
+            customButtonContainer.topAnchor.constraint(equalTo: customBarView.topAnchor),
+            customButtonContainer.bottomAnchor.constraint(equalTo: customBarView.bottomAnchor)
         ])
 
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         customBarView.addGestureRecognizer(longPressRecognizer)
 
-        customButtons = (tabBar.items ?? []).enumerated().map { index, item in
+        customButtons = (tabBar.items ?? []).prefix(2).enumerated().map { index, item in
             let control = makeTabControl(title: item.title ?? "", image: item.image, index: index)
-            customBarView.addSubview(control)
+            customButtonContainer.addSubview(control)
             return control
         }
+
+        installCustomButtonConstraints()
     }
 
     private func layoutCustomBar() {
@@ -93,27 +104,38 @@ final class TabBarController: UITabBarController {
 
         customBarHeightConstraint?.constant = tabBar.frame.height
         view.bringSubviewToFront(customBarView)
-
-        layoutCustomButtons()
     }
 
-    private func layoutCustomButtons() {
+    private func installCustomButtonConstraints() {
         guard customButtons.count == 2 else { return }
-
-        NSLayoutConstraint.deactivate(customButtonCenterConstraints)
-        customButtonCenterConstraints.removeAll()
 
         let leftButton = customButtons[0]
         let rightButton = customButtons[1]
-        let verticalOffset: CGFloat = -10
 
-        customButtonCenterConstraints = [
-            leftButton.centerXAnchor.constraint(equalTo: customBarView.leadingAnchor, constant: customBarView.bounds.width * 0.25),
-            rightButton.centerXAnchor.constraint(equalTo: customBarView.leadingAnchor, constant: customBarView.bounds.width * 0.75),
-            leftButton.centerYAnchor.constraint(equalTo: customBarView.centerYAnchor, constant: verticalOffset),
-            rightButton.centerYAnchor.constraint(equalTo: customBarView.centerYAnchor, constant: verticalOffset)
-        ]
-        NSLayoutConstraint.activate(customButtonCenterConstraints)
+        let leftSpacer = UILayoutGuide()
+        let centerSpacer = UILayoutGuide()
+        let rightSpacer = UILayoutGuide()
+
+        customButtonContainer.addLayoutGuide(leftSpacer)
+        customButtonContainer.addLayoutGuide(centerSpacer)
+        customButtonContainer.addLayoutGuide(rightSpacer)
+
+        NSLayoutConstraint.activate([
+            leftSpacer.leadingAnchor.constraint(equalTo: customButtonContainer.leadingAnchor),
+            leftButton.leadingAnchor.constraint(equalTo: leftSpacer.trailingAnchor),
+            centerSpacer.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor),
+            rightButton.leadingAnchor.constraint(equalTo: centerSpacer.trailingAnchor),
+            rightSpacer.leadingAnchor.constraint(equalTo: rightButton.trailingAnchor),
+            rightSpacer.trailingAnchor.constraint(equalTo: customButtonContainer.trailingAnchor),
+
+            leftSpacer.widthAnchor.constraint(equalTo: rightSpacer.widthAnchor),
+            centerSpacer.widthAnchor.constraint(equalTo: leftSpacer.widthAnchor, multiplier: 1.6),
+
+            leftButton.widthAnchor.constraint(equalToConstant: tabButtonWidth),
+            rightButton.widthAnchor.constraint(equalToConstant: tabButtonWidth),
+            leftButton.centerYAnchor.constraint(equalTo: customButtonContainer.centerYAnchor, constant: tabButtonVerticalOffset),
+            rightButton.centerYAnchor.constraint(equalTo: customButtonContainer.centerYAnchor, constant: tabButtonVerticalOffset)
+        ])
     }
 
     private func makeTabControl(title: String, image: UIImage?, index: Int) -> UIControl {
@@ -149,14 +171,11 @@ final class TabBarController: UITabBarController {
             stack.leadingAnchor.constraint(equalTo: control.leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: control.trailingAnchor),
             stack.topAnchor.constraint(equalTo: control.topAnchor),
-            stack.bottomAnchor.constraint(equalTo: control.bottomAnchor),
-            control.widthAnchor.constraint(equalToConstant: 96)
+            stack.bottomAnchor.constraint(equalTo: control.bottomAnchor)
         ])
 
         control.accessibilityLabel = title
-        control.accessibilityTraits = .button
-        control.layer.cornerRadius = 0
-        control.layer.masksToBounds = false
+        control.accessibilityHint = "Switch tabs"
 
         return control
     }
@@ -170,6 +189,9 @@ final class TabBarController: UITabBarController {
         for (index, control) in customButtons.enumerated() {
             let isSelected = index == selectedIndex
             let color = isSelected ? selectedColor : unselectedColor
+
+            control.accessibilityTraits = isSelected ? [.button, .selected] : [.button]
+            control.accessibilityValue = isSelected ? "Selected" : nil
 
             if let stack = control.subviews.first as? UIStackView {
                 for arrangedSubview in stack.arrangedSubviews {

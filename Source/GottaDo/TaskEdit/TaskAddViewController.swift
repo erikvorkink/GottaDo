@@ -4,6 +4,9 @@ import CoreData
 class TaskAddViewController: UIViewController {
     
     var newTaskTaskListId: TaskListIds?
+    private weak var topNavigationBar: UINavigationBar?
+    private var topNavigationBarHeightConstraint: NSLayoutConstraint?
+    private var cancelButton: UIButton?
     
     @IBOutlet weak var nameField: TaskNameField!
     @IBOutlet weak var todayButton: UIButton!
@@ -13,6 +16,11 @@ class TaskAddViewController: UIViewController {
         super.viewDidLoad()
         initEditor()
         setStatesOfTaskListChoiceButtons()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateTopNavigationBarLayout()
     }
     
     func alert(_ title: String) {
@@ -52,6 +60,42 @@ class TaskAddViewController: UIViewController {
     func initEditor() {
         nameField.becomeFirstResponder()
         nameField.addTarget(self, action: #selector(createTaskAndClose), for: .editingDidEndOnExit)
+    }
+
+    private func updateTopNavigationBarLayout() {
+        if topNavigationBar == nil {
+            topNavigationBar = view.subviews.first(where: { $0 is UINavigationBar }) as? UINavigationBar
+        }
+
+        guard let navigationBar = topNavigationBar else { return }
+
+        if cancelButton == nil {
+            navigationBar.items?.forEach { $0.leftBarButtonItem = nil }
+
+            let button = UIButton(type: .system)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitle("Cancel", for: .normal)
+            button.setTitleColor(.white, for: .normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+            button.addTarget(self, action: #selector(cancel(_:)), for: .touchUpInside)
+            view.addSubview(button)
+
+            NSLayoutConstraint.activate([
+                button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+                button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8)
+            ])
+
+            cancelButton = button
+        }
+
+        let targetHeight = max(56, view.safeAreaInsets.top + 44)
+        if topNavigationBarHeightConstraint == nil {
+            let heightConstraint = navigationBar.heightAnchor.constraint(equalToConstant: targetHeight)
+            heightConstraint.isActive = true
+            topNavigationBarHeightConstraint = heightConstraint
+        } else {
+            topNavigationBarHeightConstraint?.constant = targetHeight
+        }
     }
     
     func setStatesOfTaskListChoiceButtons() {

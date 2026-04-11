@@ -518,12 +518,12 @@
                         <viewLayoutGuide key="safeArea" id="iU1-d5-Kid"/>
                         <color key="backgroundColor" red="0.39557057620000002" green="0.27706223730000001" blue="0.44796305889999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="leading" secondItem="iU1-d5-Kid" secondAttribute="leading" id="4WI-MZ-U4r"/>
+                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="leading" secondItem="sEY-X4-ImK" secondAttribute="leading" id="4WI-MZ-U4r"/>
                             <constraint firstItem="oI9-Vm-9OE" firstAttribute="leading" secondItem="sEY-X4-ImK" secondAttribute="leading" id="8I2-lL-ADr"/>
                             <constraint firstItem="oI9-Vm-9OE" firstAttribute="top" secondItem="1SZ-dr-WNI" secondAttribute="bottom" id="BsW-XD-MxT"/>
                             <constraint firstItem="oI9-Vm-9OE" firstAttribute="bottom" secondItem="iU1-d5-Kid" secondAttribute="bottom" id="Usd-k8-t21"/>
-                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="trailing" secondItem="iU1-d5-Kid" secondAttribute="trailing" id="Xe7-de-IgD"/>
-                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="top" secondItem="iU1-d5-Kid" secondAttribute="top" id="eyz-dM-Ne5"/>
+                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="trailing" secondItem="sEY-X4-ImK" secondAttribute="trailing" id="Xe7-de-IgD"/>
+                            <constraint firstItem="1SZ-dr-WNI" firstAttribute="top" secondItem="sEY-X4-ImK" secondAttribute="top" id="eyz-dM-Ne5"/>
                             <constraint firstItem="oI9-Vm-9OE" firstAttribute="trailing" secondItem="iU1-d5-Kid" secondAttribute="trailing" id="o4f-kJ-Ohu"/>
                         </constraints>
                     </view>

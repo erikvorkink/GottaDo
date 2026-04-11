@@ -3,11 +3,20 @@ import UIKit
 class TaskEditViewController: UIViewController {
 
     var task: Task?
+    private weak var topNavigationBar: UINavigationBar?
+    private var topNavigationBarHeightConstraint: NSLayoutConstraint?
+    private var closeButton: UIButton?
+    private var removeButton: UIButton?
     @IBOutlet weak var nameField: TaskNameField!
         
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initEditor()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updateTopNavigationBarLayout()
     }
     
     func alert(_ title: String) {
@@ -49,6 +58,56 @@ class TaskEditViewController: UIViewController {
         nameField.text = task.name
         nameField.becomeFirstResponder()
         nameField.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
+    }
+
+    private func updateTopNavigationBarLayout() {
+        if topNavigationBar == nil {
+            topNavigationBar = view.subviews.first(where: { $0 is UINavigationBar }) as? UINavigationBar
+        }
+
+        guard let navigationBar = topNavigationBar else { return }
+
+        if closeButton == nil || removeButton == nil {
+            navigationBar.items?.forEach {
+                $0.leftBarButtonItem = nil
+                $0.rightBarButtonItem = nil
+            }
+
+            let close = UIButton(type: .system)
+            close.translatesAutoresizingMaskIntoConstraints = false
+            close.setTitle("Close", for: .normal)
+            close.setTitleColor(.white, for: .normal)
+            close.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .regular)
+            close.addTarget(self, action: #selector(close(_:)), for: .touchUpInside)
+            view.addSubview(close)
+
+            let remove = UIButton(type: .system)
+            remove.translatesAutoresizingMaskIntoConstraints = false
+            let image = UIImage(systemName: "trash")?.withRenderingMode(.alwaysTemplate)
+            remove.setImage(image, for: .normal)
+            remove.tintColor = .white
+            remove.addTarget(self, action: #selector(remove(_:)), for: .touchUpInside)
+            view.addSubview(remove)
+
+            NSLayoutConstraint.activate([
+                close.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+                close.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+                remove.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+                remove.centerYAnchor.constraint(equalTo: close.centerYAnchor)
+            ])
+
+            closeButton = close
+            removeButton = remove
+        }
+
+        let targetHeight = max(56, view.safeAreaInsets.top + 44)
+        if topNavigationBarHeightConstraint == nil {
+            let heightConstraint = navigationBar.heightAnchor.constraint(equalToConstant: targetHeight)
+            heightConstraint.isActive = true
+            topNavigationBarHeightConstraint = heightConstraint
+        } else {
+            topNavigationBarHeightConstraint?.constant = targetHeight
+        }
     }
     
     func saveName() -> Bool {

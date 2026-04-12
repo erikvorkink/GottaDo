@@ -1,51 +1,50 @@
 import UIKit
 
-class TaskEditViewController: UIViewController {
+class TaskEditViewController: TaskEditorViewController {
 
     var task: Task?
-    @IBOutlet weak var nameField: TaskNameField!
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
-        self.initEditor()
+        initEditor()
     }
-    
+
     func alert(_ title: String) {
         let alert = UIAlertController(title: title, message: "", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil)
     }
-    
+
     @IBAction func close(_ sender: Any) {
-        self.saveNameAndClose()
+        saveNameAndClose()
     }
-    
+
     @objc
     func saveNameAndClose() {
-        if self.saveName() {
+        if saveName() {
             NotificationCenter.default.post(name: NSNotification.Name("taskEditedByModal"), object: nil)
             HapticHelper.generateBigFeedback()
-            self.closeKeyboard()
-            self.close()
+            closeKeyboard()
+            close()
         }
     }
-    
+
     @IBAction func remove(_ sender: Any) {
-        if self.remove() {
+        if remove() {
             NotificationCenter.default.post(name: NSNotification.Name("taskDeletedByModal"), object: nil)
             HapticHelper.generateBigFeedback()
-            self.closeKeyboard()
-            self.close()
+            closeKeyboard()
+            close()
         }
     }
-    
+
     func closeKeyboard() {
-        self.nameField.resignFirstResponder() // closes faster than it might by exiting the view
+        nameField.resignFirstResponder()
     }
-    
+
     func initEditor() {
-        guard let task = task as Task? else { return }
+        guard let task else { return }
 
         nameField.text = task.name
         nameField.becomeFirstResponder()
@@ -54,6 +53,7 @@ class TaskEditViewController: UIViewController {
 
     private func configureNavigation() {
         ModalNavigationStyler.apply(to: navigationController)
+        navigationItem.title = "Edit Task"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "Close",
             style: .plain,
@@ -66,21 +66,21 @@ class TaskEditViewController: UIViewController {
             action: #selector(remove(_:))
         )
     }
-    
+
     func saveName() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        guard let task = task as Task? else { return false }
-        
+        guard let task else { return false }
+
         if !nameField.isValidText() {
-            self.alert("Invalid task name")
+            alert("Invalid task name")
             return false
         }
-        
+
         task.setName(nameField.getTrimmedText())
         do {
             try appDelegate.saveContext()
         } catch {
-            self.alert("Unable to rename task")
+            alert("Unable to rename task")
             return false
         }
         return true
@@ -88,8 +88,8 @@ class TaskEditViewController: UIViewController {
 
     func remove() -> Bool {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        guard let task = task as Task? else { return false }
-        
+        guard let task else { return false }
+
         task.remove()
         do {
             try appDelegate.saveContext()
@@ -99,8 +99,8 @@ class TaskEditViewController: UIViewController {
         }
         return true
     }
-    
+
     func close() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 }

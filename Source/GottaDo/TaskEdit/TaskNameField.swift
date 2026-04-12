@@ -3,26 +3,32 @@ import UIKit
 class TaskNameField: UITextField {
     
     var maxLength: Int?
-
-    override func awakeFromNib() {
-        delegate = self
-    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
+        commonInit()
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        commonInit()
+    }
+
+    private func commonInit() {
+        delegate = self
+        maxLength = 75
         initAppearance()
-        self.maxLength = 75
     }
     
     func initAppearance() {
         self.attributedPlaceholder = NSAttributedString(string: "I've gotta...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        
-        self.selectedTextRange = self.textRange(from: self.endOfDocument, to: self.endOfDocument)
-        
+
         // Extra padding since the field goes to the edges
         let paddingView: UIView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 20))
         self.leftView = paddingView
         self.leftViewMode = .always
+        self.rightView = paddingView
+        self.rightViewMode = .always
     }
     
     func getTrimmedText() -> String {

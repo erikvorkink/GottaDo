@@ -86,6 +86,10 @@ This is not a SwiftUI app.
 - `Source/GottaDo/Helpers/TaskNotifications.swift`
   - typed task-list notification names
 
+- `Source/GottaDo/Helpers/TaskModalFactory.swift`
+  - centralizes storyboard-based add/edit modal creation
+  - wires modal dependencies before presentation
+
 - `Source/GottaDo/TaskList/TaskListViewController.swift`
   - shared task-list behavior
   - swipe actions
@@ -209,6 +213,7 @@ During April 2026 cleanup work, the app was modernized in a few targeted ways wi
 - task-list mutation logic was split out of `TaskListViewController` into `TaskListService`
 - task edit/list/debug controllers now use an `AppContext` abstraction instead of direct `AppDelegate` persistence access
 - stringly-typed task notifications were replaced with typed `Notification.Name` constants
+- storyboard-based add/edit modal composition was centralized into `TaskModalFactory`
 
 This was intentionally a targeted UIKit modernization, not a SwiftUI migration.
 

@@ -2,11 +2,6 @@ import UIKit
 import CoreData
 
 class TaskListViewController: UIViewController {
-    private enum StoryboardIdentifier {
-        static let taskAddNavigationController = "TaskAddNavigationController"
-        static let taskEditNavigationController = "TaskEditNavigationController"
-    }
-
     private let titleColor = UIColor(red: 0.3510695994, green: 0.2219223082, blue: 0.4083004892, alpha: 1.0)
     private let utilityButtonTintColor = UIColor(red: 0.3955705762, green: 0.2770622373, blue: 0.4479630589, alpha: 1.0)
     private let floatingButtonShadowColor = UIColor.black.withAlphaComponent(0.14)
@@ -79,6 +74,12 @@ class TaskListViewController: UIViewController {
         self.appContext = appContext
         guard let appContext else { return nil }
         return TaskListService(managedContext: appContext.managedContext, saveContext: appContext.saveContext)
+    }()
+
+    private lazy var taskModalFactory: TaskModalFactory = {
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        return TaskModalFactory(appContext: appContext)
     }()
     
     override func viewDidLoad() {
@@ -187,14 +188,9 @@ class TaskListViewController: UIViewController {
     }
 
     @objc private func showTaskAddModal() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let navigationController = storyboard.instantiateViewController(withIdentifier: StoryboardIdentifier.taskAddNavigationController) as? UINavigationController else {
+        guard let navigationController = taskModalFactory.makeTaskAddNavigationController(for: currentTaskListId) else {
             alert("Unable to open add task")
             return
-        }
-
-        if let viewController = navigationController.topViewController as? TaskAddViewController {
-            viewController.newTaskTaskListId = currentTaskListId
         }
 
         present(navigationController, animated: true)
@@ -501,14 +497,9 @@ extension TaskListViewController: UITableViewDelegate {
     }
     
     private func showTaskEditModal(for task: Task) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let navigationController = storyboard.instantiateViewController(withIdentifier: StoryboardIdentifier.taskEditNavigationController) as? UINavigationController else {
+        guard let navigationController = taskModalFactory.makeTaskEditNavigationController(for: task) else {
             alert("Unable to open task")
             return
-        }
-
-        if let viewController = navigationController.topViewController as? TaskEditViewController {
-            viewController.task = task
         }
 
         present(navigationController, animated: true)

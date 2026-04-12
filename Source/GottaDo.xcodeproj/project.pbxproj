@@ -31,6 +31,7 @@
 		DBC985B52B001CF400370356 /* HapticHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC985B42B001CF400370356 /* HapticHelper.swift */; };
 		E1831F9D2FEA6E6D006F85CC /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1831F9B2FEA6E6D006F85CC /* AppContext.swift */; };
 		E1831F9E2FEA6E6D006F85CC /* TaskNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1831F9C2FEA6E6D006F85CC /* TaskNotifications.swift */; };
+		E1831FA02FEA7E1D006F85CC /* TaskModalFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1831F9F2FEA7E1D006F85CC /* TaskModalFactory.swift */; };
 		DBC985B72B0020B900370356 /* ModalNavigationStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC985B62B0020B900370356 /* ModalNavigationStyler.swift */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +83,7 @@
 		DBC985B42B001CF400370356 /* HapticHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticHelper.swift; sourceTree = "<group>"; };
 		E1831F9B2FEA6E6D006F85CC /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
 		E1831F9C2FEA6E6D006F85CC /* TaskNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNotifications.swift; sourceTree = "<group>"; };
+		E1831F9F2FEA7E1D006F85CC /* TaskModalFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModalFactory.swift; sourceTree = "<group>"; };
 		DBC985B62B0020B900370356 /* ModalNavigationStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavigationStyler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +216,7 @@
 				E1831F9B2FEA6E6D006F85CC /* AppContext.swift */,
 				DBC985B42B001CF400370356 /* HapticHelper.swift */,
 				DBC985B62B0020B900370356 /* ModalNavigationStyler.swift */,
+				E1831F9F2FEA7E1D006F85CC /* TaskModalFactory.swift */,
 				E1831F9C2FEA6E6D006F85CC /* TaskNotifications.swift */,
 			);
 			path = Helpers;
@@ -366,6 +369,7 @@
 				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
 				DBC985B52B001CF400370356 /* HapticHelper.swift in Sources */,
 				E1831F9D2FEA6E6D006F85CC /* AppContext.swift in Sources */,
+				E1831FA02FEA7E1D006F85CC /* TaskModalFactory.swift in Sources */,
 				E1831F9E2FEA6E6D006F85CC /* TaskNotifications.swift in Sources */,
 				DBC985B72B0020B900370356 /* ModalNavigationStyler.swift in Sources */,
 				03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */,

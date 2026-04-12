@@ -2,8 +2,6 @@ import UIKit
 import CoreData
 
 class TaskListViewController: UIViewController {
-    private let oldTaskBadgeText = "💀"
-
     private enum StoryboardIdentifier {
         static let taskAddNavigationController = "TaskAddNavigationController"
         static let taskEditNavigationController = "TaskEditNavigationController"
@@ -18,7 +16,7 @@ class TaskListViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     var currentTaskListId = TaskListIds.Today
-    var tasks: [NSManagedObject] = []
+    private var tasks: [Task] = []
 
     var listTitle: String {
         return "Tasks"
@@ -73,6 +71,11 @@ class TaskListViewController: UIViewController {
         stackView.alignment = .center
         stackView.spacing = 8
         return stackView
+    }()
+
+    private lazy var taskListService: TaskListService? = {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        return TaskListService(managedContext: appDelegate.getManagedContext(), saveContext: appDelegate.saveContext)
     }()
     
     override func viewDidLoad() {
@@ -151,7 +154,7 @@ class TaskListViewController: UIViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TaskCell")
+        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: TaskTableViewCell.reuseIdentifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50
         tableView.contentInsetAdjustmentBehavior = .never
@@ -205,10 +208,9 @@ class TaskListViewController: UIViewController {
             let touchPoint = longPressGestureRecognizer.location(in: tableView)
             if let indexPath = tableView.indexPathForRow(at: touchPoint) {
                 // Flag/unflag task
-                if let task = tasks[indexPath.row] as? Task {
-                    if toggleTaskFlagged(task) {
-                        refresh()
-                    }
+                let task = tasks[indexPath.row]
+                if toggleTaskFlagged(task) {
+                    refresh()
                 }
             }
         }
@@ -217,9 +219,10 @@ class TaskListViewController: UIViewController {
     @objc func handleReorderButtonLongPress(_ longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizer.State.began {
             HapticHelper.generateSmallFeedback()
-            smartSortTasks()
-            refreshTasks()
-            stopReorder()
+            if smartSortTasks() {
+                refreshTasks()
+                stopReorder()
+            }
         }
     }
     
@@ -247,13 +250,12 @@ class TaskListViewController: UIViewController {
     }
     
     func refreshTasks() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        tasks.removeAll()
-        tasks = appDelegate.getManagedContext().getVisibleTasks(in: currentTaskListId)
+        guard let taskListService else { return }
+
+        tasks = taskListService.visibleTasks(in: currentTaskListId)
         tableView.reloadData()
 
-        if tasks.count > 0 {
+        if !tasks.isEmpty {
             handlePopulatedTaskList()
         } else {
             handleEmptyTaskList()
@@ -273,43 +275,21 @@ class TaskListViewController: UIViewController {
     }
     
     func listContainsCompletedTasks() -> Bool {
-        for task in tasks as! [Task] {
-            if task.completed {
-                return true
-            }
-        }
-        return false
+        return tasks.contains { $0.completed }
     }
     
     func refreshBadge() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        appDelegate.setBadgeNumber(getOutstandingTodayTaskCount())
-    }
-    
-    func getOutstandingTodayTaskCount() -> Int {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return 0 }
-        return appDelegate.getManagedContext().getOutstandingVisibleTaskCount(in: TaskListIds.Today)
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+              let taskListService else { return }
+        appDelegate.setBadgeNumber(taskListService.outstandingVisibleTaskCount(in: .Today))
     }
     
     // Move from Today <--> Backlog
     func moveTask(_ task: Task) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        
-        let moveToTaskListId = currentTaskListId.rawValue == TaskListIds.Backlog.rawValue ? TaskListIds.Today : TaskListIds.Backlog
-        
-        if moveToTaskListId == TaskListIds.Today {
-            // Backlog -> Today = bottom of list
-            task.setPosition(1 + appDelegate.getManagedContext().getHighestVisibleTaskPosition(in: moveToTaskListId))
-        } else {
-            // Today -> Backlog = top of list
-            incrementPositionOfVisibleTasksInGivenList(moveToTaskListId)
-            task.setPosition(1)
-        }
-        
-        task.setTaskListId(moveToTaskListId) // wait until position has been determined
-        
+        guard let taskListService else { return false }
+
         do {
-            try appDelegate.saveContext()
+            try taskListService.move(task, from: currentTaskListId)
         } catch {
             alert("Unable to move task")
             return false
@@ -318,22 +298,11 @@ class TaskListViewController: UIViewController {
         return true
     }
     
-    // Used to insert a Today -> Backlog task at the top of the list
-    func incrementPositionOfVisibleTasksInGivenList(_ taskListId: TaskListIds) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
-        let tasks = appDelegate.getManagedContext().getVisibleTasks(in: taskListId)
-        for task in tasks as! [Task] {
-            task.setPosition(1 + Int(task.position))
-        }
-    }
-    
     func toggleTaskFlagged(_ task: Task) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        
-        task.toggleFlagged()
+        guard let taskListService else { return false }
+
         do {
-            try appDelegate.saveContext()
+            try taskListService.toggleFlagged(task)
         } catch {
             alert("Unable to toggle flagged")
             return false
@@ -343,15 +312,10 @@ class TaskListViewController: UIViewController {
     }
     
     func toggleTaskComplete(_ task: Task) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        guard let taskListService else { return false }
 
-        if task.completed {
-            task.uncomplete()
-        } else {
-            task.complete()
-        }
         do {
-            try appDelegate.saveContext()
+            try taskListService.toggleCompleted(task)
         } catch {
             alert("Unable to toggle completed")
             return false
@@ -361,45 +325,23 @@ class TaskListViewController: UIViewController {
     }
     
     // Sort completed then flagged then unflagged
-    func smartSortTasks() {
-        var completedTasks = [NSManagedObject]()
-        var flaggedTasks = [NSManagedObject]()
-        var unflaggedTasks = [NSManagedObject]()
-        
-        for task in tasks as! [Task] {
-            if task.completed {
-                completedTasks.append(task)
-            } else if task.flagged {
-                flaggedTasks.append(task)
-            } else {
-                unflaggedTasks.append(task)
-            }
-        }
-        
-        var nextPosition = 1
-        for task in completedTasks as! [Task] {
-            task.setPosition(nextPosition)
-            nextPosition += 1
-        }
-        for task in flaggedTasks as! [Task] {
-            task.setPosition(nextPosition)
-            nextPosition += 1
-        }
-        for task in unflaggedTasks as! [Task] {
-            task.setPosition(nextPosition)
-            nextPosition += 1
+    func smartSortTasks() -> Bool {
+        guard let taskListService else { return false }
+
+        do {
+            try taskListService.smartSort(tasks)
+            return true
+        } catch {
+            alert("Unable to sort tasks")
+            return false
         }
     }
     
     func removeCompleted() -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
-        
-        let tasksToRemove = appDelegate.getManagedContext().getCompletedVisibleTasks(in: currentTaskListId)
-        for task in tasksToRemove as! [Task] {
-            task.remove()
-        }
+        guard let taskListService else { return false }
+
         do {
-            try appDelegate.saveContext()
+            try taskListService.removeCompleted(in: currentTaskListId)
         } catch {
             alert("Unable to remove completed tasks")
             return false
@@ -445,42 +387,13 @@ extension TaskListViewController: UITableViewDataSource {
     
     // Render task row
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
-        if let task = tasks[indexPath.row] as? Task {
-            cell.textLabel?.font = UIFont.init(name: "Helvetica", size: 20)
-            cell.textLabel?.textColor = UIColor(white: task.completed ? 0.7 : 0.2, alpha: 1.0) // lighter gray once completed
-            cell.textLabel?.attributedText = getCellAttributedText(task);
-            cell.textLabel?.numberOfLines = 0 // activate text wrapping
-            
-            if task.flagged {
-                let flagImageName = task.completed ? "flagged-faded" : "flagged"
-                let flagImage = UIImageView(image: UIImage(named: flagImageName))
-                cell.accessoryView = flagImage
-            } else {
-                cell.accessoryView = .none
-            }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: TaskTableViewCell.reuseIdentifier, for: indexPath) as? TaskTableViewCell else {
+            return UITableViewCell()
         }
+
+        let task = tasks[indexPath.row]
+        cell.configure(with: task, isOldTask: isOldTask(task))
         return cell
-    }
-    
-    func getCellAttributedText(_ task: Task) -> NSMutableAttributedString {
-        let name = task.name ?? ""
-        let attributeString: NSMutableAttributedString = NSMutableAttributedString(string: name)
-        if task.completed {
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-        }
-        if isOldTask(task) {
-            let spacerAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont(name: "Helvetica", size: 20) ?? UIFont.systemFont(ofSize: 20)
-            ]
-            let badgeAttributes: [NSAttributedString.Key: Any] = [
-                .font: UIFont.systemFont(ofSize: 16),
-                .baselineOffset: 1
-            ]
-            attributeString.append(NSAttributedString(string: "  ", attributes: spacerAttributes))
-            attributeString.append(NSAttributedString(string: oldTaskBadgeText, attributes: badgeAttributes))
-        }
-        return attributeString
     }
     
     func isOldTask(_ task: Task) -> Bool {
@@ -508,26 +421,16 @@ extension TaskListViewController: UITableViewDataSource {
     
     // Persist a reordered task
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-        
+        guard let taskListService else { return }
+
         let taskToReorder = tasks[sourceIndexPath.row]
         tasks.remove(at: sourceIndexPath.row)
         tasks.insert(taskToReorder, at: destinationIndexPath.row)
         
-        syncTaskPositionsToOrderInArray()
         do {
-            try appDelegate.saveContext()
+            try taskListService.persistOrder(for: tasks)
         } catch {
             alert("Unable to save new order")
-        }
-    }
-    
-    // Set the position value of each task so that it matches the current position in the tasks array
-    func syncTaskPositionsToOrderInArray() {
-        var nextPosition = 1
-        for task in tasks as! [Task] {
-            task.setPosition(nextPosition)
-            nextPosition += 1
         }
     }
 }
@@ -560,43 +463,37 @@ extension TaskListViewController: UITableViewDelegate {
     
     // Selecting task opens up the edit view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let task = tasks[indexPath.row] as? Task {
-            showTaskEditModal(for: task)
-        }
+        showTaskEditModal(for: tasks[indexPath.row])
     }
     
     // Swipe right to complete/uncomplete
     func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if let task = self.tasks[indexPath.row] as? Task {
-            let title = (task.completed) ? "Restore" : "Complete"
-            let action = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
-                if self.toggleTaskComplete(task) {
-                    self.refresh()
-                }
+        let task = self.tasks[indexPath.row]
+        let title = (task.completed) ? "Restore" : "Complete"
+        let action = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
+            if self.toggleTaskComplete(task) {
+                self.refresh()
             }
-            action.backgroundColor = UIColor(red: 0.25, green: 0.38, blue: 0.25, alpha: 1.0)
-            let configuration = UISwipeActionsConfiguration(actions: [action])
-            configuration.performsFirstActionWithFullSwipe = true
-            return configuration
         }
-        return UISwipeActionsConfiguration()
+        action.backgroundColor = UIColor(red: 0.25, green: 0.38, blue: 0.25, alpha: 1.0)
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
     }
     
     // Swipe left to move between Today and Backlog
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if let task = self.tasks[indexPath.row] as? Task {
-            let title = (currentTaskListId == TaskListIds.Today) ? "Backlog" : "Today"
-            let moveTaskAction = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
-                if self.moveTask(task) {
-                    self.refresh()
-                }
+        let task = self.tasks[indexPath.row]
+        let title = (currentTaskListId == TaskListIds.Today) ? "Backlog" : "Today"
+        let moveTaskAction = UIContextualAction(style: .normal, title: title) { (action, view, handler) in
+            if self.moveTask(task) {
+                self.refresh()
             }
-            moveTaskAction.backgroundColor = UIColor(red: 0.33, green: 0.19, blue: 0.38, alpha: 1.0)
-            let configuration = UISwipeActionsConfiguration(actions: [moveTaskAction])
-            configuration.performsFirstActionWithFullSwipe = true
-            return configuration
         }
-        return UISwipeActionsConfiguration()
+        moveTaskAction.backgroundColor = UIColor(red: 0.33, green: 0.19, blue: 0.38, alpha: 1.0)
+        let configuration = UISwipeActionsConfiguration(actions: [moveTaskAction])
+        configuration.performsFirstActionWithFullSwipe = true
+        return configuration
     }
     
     private func showTaskEditModal(for task: Task) {

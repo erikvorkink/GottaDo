@@ -81,12 +81,24 @@ This is not a SwiftUI app.
 
 - `Source/GottaDo/TaskList/TaskListViewController.swift`
   - shared task-list behavior
-  - task fetching
   - swipe actions
-  - reorder behavior
-  - flagging
-  - clearing completed tasks
+  - blank-state and control visibility
+  - modal presentation
   - badge refresh
+
+- `Source/GottaDo/TaskList/TaskListService.swift`
+  - task fetching
+  - reorder persistence
+  - move between lists
+  - flagging and completion toggles
+  - clearing completed tasks
+  - smart sort behavior
+
+- `Source/GottaDo/TaskList/TaskTableViewCell.swift`
+  - custom task-row layout
+  - completion styling
+  - old-task badge display
+  - flagged accessory display
 
 - `Source/GottaDo/TaskList/TodayViewController.swift`
   - Today-specific list setup
@@ -186,6 +198,8 @@ During April 2026 cleanup work, the app was modernized in a few targeted ways wi
 - shared modal navigation styling moved into `ModalNavigationStyler`
 - bottom bar returned to the native `UITabBar` with custom appearance and tuned spacing
 - debug access moved from a hidden gesture to a subtle utility button in the tab bar
+- task-list row rendering moved from the stock `UITableViewCell` to a custom cell
+- task-list mutation logic was split out of `TaskListViewController` into `TaskListService`
 
 This was intentionally a targeted UIKit modernization, not a SwiftUI migration.
 

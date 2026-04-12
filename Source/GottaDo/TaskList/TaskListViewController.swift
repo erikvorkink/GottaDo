@@ -17,6 +17,7 @@ class TaskListViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var currentTaskListId = TaskListIds.Today
     private var tasks: [Task] = []
+    var appContext: AppContext?
 
     var listTitle: String {
         return "Tasks"
@@ -74,8 +75,10 @@ class TaskListViewController: UIViewController {
     }()
 
     private lazy var taskListService: TaskListService? = {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
-        return TaskListService(managedContext: appDelegate.getManagedContext(), saveContext: appDelegate.saveContext)
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return nil }
+        return TaskListService(managedContext: appContext.managedContext, saveContext: appContext.saveContext)
     }()
     
     override func viewDidLoad() {
@@ -172,10 +175,10 @@ class TaskListViewController: UIViewController {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(self.appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
-        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskCreatedByModal"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskEditedByModal"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskDeletedByModal"), object: nil)
-        notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("bulkTasksDeleted"), object: nil)
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: .taskCreated, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: .taskEdited, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: .taskDeleted, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(refresh), name: .bulkTasksDeleted, object: nil)
     }
     
     // Get out of reorder mode when moving app to background
@@ -279,9 +282,10 @@ class TaskListViewController: UIViewController {
     }
     
     func refreshBadge() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate,
+        guard let appContext = appContext ?? UIApplication.shared.appContext,
               let taskListService else { return }
-        appDelegate.setBadgeNumber(taskListService.outstandingVisibleTaskCount(in: .Today))
+        self.appContext = appContext
+        appContext.setBadgeNumber(taskListService.outstandingVisibleTaskCount(in: .Today))
     }
     
     // Move from Today <--> Backlog

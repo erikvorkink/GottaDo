@@ -2,6 +2,7 @@ import UIKit
 import CoreData
 
 class DebugTableViewController: UITableViewController {
+    var appContext: AppContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,8 +55,10 @@ class DebugTableViewController: UITableViewController {
      - sixth
      */
     func getFormattedTaskList() -> String {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return "" }
-        let managedContext = appDelegate.getManagedContext()
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return "" }
+        let managedContext = appContext.managedContext
 
         let todayTasks = managedContext.getOustandingVisibleTasks(in: TaskListIds.Today)
         let backlogTasks = managedContext.getOustandingVisibleTasks(in: TaskListIds.Backlog)
@@ -92,17 +95,21 @@ class DebugTableViewController: UITableViewController {
     }
     
     func deleteOldCompletedTasks() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return }
         
-        let operation = appDelegate.getManagedContext().deleteOldCompletedTasks
+        let operation = appContext.managedContext.deleteOldCompletedTasks
         deleteTasks(alertTitle: "Delete Old Completed Tasks", deleteOperation: operation)
         HapticHelper.generateBigFeedback()
     }
     
     func deleteAllTasks() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return }
         
-        let operation = appDelegate.getManagedContext().deleteAllTasks
+        let operation = appContext.managedContext.deleteAllTasks
         deleteTasks(alertTitle: "Delete ALL Tasks", deleteOperation: operation)
         HapticHelper.generateBigFeedback()
     }
@@ -112,7 +119,7 @@ class DebugTableViewController: UITableViewController {
         let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
 
             deleteOperation()
-            NotificationCenter.default.post(name: NSNotification.Name("bulkTasksDeleted"), object: nil)
+            NotificationCenter.default.post(name: .bulkTasksDeleted, object: nil)
             
             let alert = UIAlertController(title: alertTitle, message: "Tasks have been deleted.", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))

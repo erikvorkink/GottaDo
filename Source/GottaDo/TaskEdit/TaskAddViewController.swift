@@ -4,6 +4,7 @@ import CoreData
 class TaskAddViewController: TaskEditorViewController {
 
     var newTaskTaskListId: TaskListIds?
+    var appContext: AppContext?
 
     override var showsTaskListPicker: Bool {
         return true
@@ -37,7 +38,7 @@ class TaskAddViewController: TaskEditorViewController {
     @objc
     func createTaskAndClose() {
         if createTask() {
-            NotificationCenter.default.post(name: NSNotification.Name("taskCreatedByModal"), object: nil)
+            NotificationCenter.default.post(name: .taskCreated, object: nil)
             HapticHelper.generateBigFeedback()
             close()
         }
@@ -64,7 +65,9 @@ class TaskAddViewController: TaskEditorViewController {
     }
 
     func createTask() -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return false }
         let newTaskPosition = getNewTaskPosition()
         if newTaskTaskListId == nil || newTaskPosition == nil {
             alert("Missing context for new task")
@@ -75,12 +78,12 @@ class TaskAddViewController: TaskEditorViewController {
             return false
         }
 
-        let managedContext = appDelegate.getManagedContext()
+        let managedContext = appContext.managedContext
         let entity = NSEntityDescription.entity(forEntityName: "Task", in: managedContext)!
         if let task = NSManagedObject(entity: entity, insertInto: managedContext) as? Task {
             task.setNewRecordValues(taskListId: newTaskTaskListId!, position: newTaskPosition!, name: nameField.getTrimmedText())
             do {
-                try appDelegate.saveContext()
+                try appContext.saveContext()
             } catch {
                 alert("Unable to save new task")
                 return false
@@ -93,10 +96,12 @@ class TaskAddViewController: TaskEditorViewController {
     }
 
     func getNewTaskPosition() -> Int? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return nil }
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return nil }
         guard let newTaskTaskListId else { return nil }
 
-        return 1 + appDelegate.getManagedContext().getHighestVisibleTaskPosition(in: newTaskTaskListId)
+        return 1 + appContext.managedContext.getHighestVisibleTaskPosition(in: newTaskTaskListId)
     }
 
     func close() {

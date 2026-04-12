@@ -79,6 +79,13 @@ This is not a SwiftUI app.
   - Core Data stack
   - badge permission and badge updates
 
+- `Source/GottaDo/Helpers/AppContext.swift`
+  - lightweight app-wide persistence and badge interface
+  - keeps controllers off the concrete `AppDelegate` type
+
+- `Source/GottaDo/Helpers/TaskNotifications.swift`
+  - typed task-list notification names
+
 - `Source/GottaDo/TaskList/TaskListViewController.swift`
   - shared task-list behavior
   - swipe actions
@@ -187,7 +194,7 @@ The project includes unit and UI test targets, but the current test files are pl
 - Older UIKit/storyboard architecture
 - task list screens still carry older layout assumptions in storyboard constraints and floating controls
 - Very limited automated test coverage
-- Core Data access is tightly coupled to `UIApplication.shared.delegate`
+- persistence access still defaults through `UIApplication.shared`, but now goes through a lightweight `AppContext` abstraction instead of direct `AppDelegate` reach-through
 
 ## Recent Modernization Notes
 
@@ -200,6 +207,8 @@ During April 2026 cleanup work, the app was modernized in a few targeted ways wi
 - debug access moved from a hidden gesture to a subtle utility button in the tab bar
 - task-list row rendering moved from the stock `UITableViewCell` to a custom cell
 - task-list mutation logic was split out of `TaskListViewController` into `TaskListService`
+- task edit/list/debug controllers now use an `AppContext` abstraction instead of direct `AppDelegate` persistence access
+- stringly-typed task notifications were replaced with typed `Notification.Name` constants
 
 This was intentionally a targeted UIKit modernization, not a SwiftUI migration.
 

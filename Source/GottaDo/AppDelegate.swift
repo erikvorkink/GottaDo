@@ -8,7 +8,7 @@ import UserNotifications
 }
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, AppContext {
 
     var window: UIWindow?
     var hasBadgeAuthorization = false
@@ -60,6 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - Core Data stack
     
+    var managedContext: NSManagedObjectContext {
+        return persistentContainer.viewContext
+    }
+
     func getManagedContext() -> NSManagedObjectContext {
         return self.persistentContainer.viewContext
     }

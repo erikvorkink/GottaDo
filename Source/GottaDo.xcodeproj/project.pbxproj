@@ -29,6 +29,8 @@
 		B5D781CA22654D5A00EA4D55 /* GottaDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781C922654D5A00EA4D55 /* GottaDoTests.swift */; };
 		B5D781D522654D5A00EA4D55 /* GottaDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D781D422654D5A00EA4D55 /* GottaDoUITests.swift */; };
 		DBC985B52B001CF400370356 /* HapticHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC985B42B001CF400370356 /* HapticHelper.swift */; };
+		E1831F9D2FEA6E6D006F85CC /* AppContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1831F9B2FEA6E6D006F85CC /* AppContext.swift */; };
+		E1831F9E2FEA6E6D006F85CC /* TaskNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1831F9C2FEA6E6D006F85CC /* TaskNotifications.swift */; };
 		DBC985B72B0020B900370356 /* ModalNavigationStyler.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC985B62B0020B900370356 /* ModalNavigationStyler.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +80,8 @@
 		B5D781D422654D5A00EA4D55 /* GottaDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GottaDoUITests.swift; sourceTree = "<group>"; };
 		B5D781D622654D5A00EA4D55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBC985B42B001CF400370356 /* HapticHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticHelper.swift; sourceTree = "<group>"; };
+		E1831F9B2FEA6E6D006F85CC /* AppContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContext.swift; sourceTree = "<group>"; };
+		E1831F9C2FEA6E6D006F85CC /* TaskNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNotifications.swift; sourceTree = "<group>"; };
 		DBC985B62B0020B900370356 /* ModalNavigationStyler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalNavigationStyler.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,8 +211,10 @@
 		DBC985B32B001CDA00370356 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				E1831F9B2FEA6E6D006F85CC /* AppContext.swift */,
 				DBC985B42B001CF400370356 /* HapticHelper.swift */,
 				DBC985B62B0020B900370356 /* ModalNavigationStyler.swift */,
+				E1831F9C2FEA6E6D006F85CC /* TaskNotifications.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -359,6 +365,8 @@
 				036BFEAF22C5C4BA001F73D2 /* TaskEditorViewController.swift in Sources */,
 				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
 				DBC985B52B001CF400370356 /* HapticHelper.swift in Sources */,
+				E1831F9D2FEA6E6D006F85CC /* AppContext.swift in Sources */,
+				E1831F9E2FEA6E6D006F85CC /* TaskNotifications.swift in Sources */,
 				DBC985B72B0020B900370356 /* ModalNavigationStyler.swift in Sources */,
 				03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */,
 				B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */,

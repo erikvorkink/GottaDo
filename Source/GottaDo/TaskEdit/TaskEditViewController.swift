@@ -3,6 +3,7 @@ import UIKit
 class TaskEditViewController: TaskEditorViewController {
 
     var task: Task?
+    var appContext: AppContext?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +24,7 @@ class TaskEditViewController: TaskEditorViewController {
     @objc
     func saveNameAndClose() {
         if saveName() {
-            NotificationCenter.default.post(name: NSNotification.Name("taskEditedByModal"), object: nil)
+            NotificationCenter.default.post(name: .taskEdited, object: nil)
             HapticHelper.generateBigFeedback()
             closeKeyboard()
             close()
@@ -32,7 +33,7 @@ class TaskEditViewController: TaskEditorViewController {
 
     @IBAction func remove(_ sender: Any) {
         if remove() {
-            NotificationCenter.default.post(name: NSNotification.Name("taskDeletedByModal"), object: nil)
+            NotificationCenter.default.post(name: .taskDeleted, object: nil)
             HapticHelper.generateBigFeedback()
             closeKeyboard()
             close()
@@ -68,7 +69,9 @@ class TaskEditViewController: TaskEditorViewController {
     }
 
     func saveName() -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return false }
         guard let task else { return false }
 
         if !nameField.isValidText() {
@@ -78,7 +81,7 @@ class TaskEditViewController: TaskEditorViewController {
 
         task.setName(nameField.getTrimmedText())
         do {
-            try appDelegate.saveContext()
+            try appContext.saveContext()
         } catch {
             alert("Unable to rename task")
             return false
@@ -87,12 +90,14 @@ class TaskEditViewController: TaskEditorViewController {
     }
 
     func remove() -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return false }
         guard let task else { return false }
 
         task.remove()
         do {
-            try appDelegate.saveContext()
+            try appContext.saveContext()
         } catch {
             alert("Unable to remove task")
             return false

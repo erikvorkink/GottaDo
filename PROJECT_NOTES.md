@@ -3,152 +3,151 @@
 ## Overview
 
 GottaDo is a native iOS to-do list app built with UIKit, storyboards, and Core Data.
-It is intentionally simple and organized around a "1-day sprint" workflow with two task lists:
+It is intentionally simple and centered on a two-list workflow:
 
 - Today
 - Backlog
 
+The app is designed for lightweight daily planning rather than a full project-management system.
+
+## Current Product Behavior
+
 Users can:
 
-- create tasks
+- create tasks in Today or Backlog
 - rename tasks
+- soft-delete tasks
 - complete and restore tasks
 - move tasks between Today and Backlog
 - reorder tasks manually
 - smart-sort tasks
 - flag and unflag tasks
-- clear completed tasks from a list
-- delete tasks
+- clear completed tasks from the current list
 
-The app also sets the app icon badge to the count of outstanding Today tasks.
+The app icon badge shows the count of outstanding visible tasks in Today.
 
-## Product Behavior
+### Task interactions
 
-### Core interaction model
-
-- Swipe right on a task to complete or restore it.
-- Swipe left on a task to move it between Today and Backlog.
+- Tap a task row to open the edit modal.
+- Swipe right to complete or restore a task.
+- Swipe left to move a task between Today and Backlog.
 - Long-press a task row to flag or unflag it.
-- Tap a task to open the edit modal.
-- Use the add modal to create a task in Today or Backlog.
-- Use reorder mode to drag tasks into a new order.
-- Long-press the reorder button to run a "smart sort".
+- Tap the add button to create a new task.
+- Tap the reorder button to enter drag-reorder mode.
+- Long-press the reorder button to run smart sort.
+- Tap the clear button to soft-delete completed tasks in the current list.
+
+### List behavior
+
+- New tasks are appended to the end of the selected list.
+- Moving a task from Backlog to Today appends it to the end of Today.
+- Moving a task from Today to Backlog inserts it at the top of Backlog and shifts existing Backlog items down.
+- Reordering persists by rewriting each task's `position`.
+- The reorder button is hidden when a list has fewer than two visible tasks.
+- The clear button is hidden unless the current list contains completed tasks.
+- Empty lists show a "Nothing to do" blank state.
 
 ### Smart sort behavior
 
-The current implementation sorts tasks in this order:
+Smart sort groups tasks in this order:
 
 1. completed
-2. flagged
-3. unflagged
+2. flagged and not completed
+3. unflagged and not completed
 
-Within each group, existing order is preserved because the code rewrites `position` in array order.
+Within each group, relative order is preserved.
 
-### Debug functionality
+### Row presentation
 
-There is a subtle debug utility button at the left edge of the tab bar.
+- Completed tasks remain visible until cleared.
+- Flagged tasks show a visual flagged state in the custom table cell.
+- Tasks older than six months are marked as old tasks in the row UI.
 
-It currently provides:
+### Debug tools
 
-- copy all tasks to clipboard in a formatted text layout
-- delete old completed tasks
-- delete all tasks
+A subtle debug button is installed at the left edge of the tab bar.
+
+The debug screen currently provides:
+
+- copy tasks to the clipboard in a formatted Today / Backlog / Completed layout
+- delete completed tasks older than 90 days with a batch delete
+- delete all tasks with a batch delete
 
 ## Architecture
 
 ### UI stack
 
 - UIKit
-- Storyboards
+- storyboards
 - `UITabBarController` root
-- modal add/edit/debug flows presented inside `UINavigationController`
-- native `UITabBar` with custom appearance and tuned spacing
+- modal add, edit, and debug flows presented in `UINavigationController`
+- custom list-screen layout built in code inside storyboard-backed controllers
 
 This is not a SwiftUI app.
+
+### Main app structure
+
+- `Source/GottaDo/AppDelegate.swift`
+  - app entry point
+  - Core Data stack
+  - badge authorization and badge updates
+
+- `Source/GottaDo/Helpers/AppContext.swift`
+  - app-wide interface for persistence and badge updates
+  - keeps most controllers off the concrete `AppDelegate` type
+
+- `Source/GottaDo/Helpers/TaskModalFactory.swift`
+  - centralizes storyboard-based modal creation
+  - injects dependencies before presentation
+
+- `Source/GottaDo/Helpers/TaskNotifications.swift`
+  - typed notification names for list refreshes
+
+- `Source/GottaDo/Helpers/ModalNavigationStyler.swift`
+  - shared modal navigation bar styling
+
+- `Source/GottaDo/TabBarController.swift`
+  - tab bar appearance and spacing
+  - debug button installation
+
+- `Source/GottaDo/TaskList/TaskListViewController.swift`
+  - shared list behavior
+  - layout, blank state, swipe actions, modal presentation, reorder mode, badge refresh
+
+- `Source/GottaDo/TaskList/TaskListService.swift`
+  - task-list mutations and ordering rules
+
+- `Source/GottaDo/TaskList/TaskTableViewCell.swift`
+  - custom task row rendering
+
+- `Source/GottaDo/TaskList/TodayViewController.swift`
+  - Today-specific configuration
+
+- `Source/GottaDo/TaskList/BacklogViewController.swift`
+  - Backlog-specific configuration
+
+- `Source/GottaDo/TaskEdit/TaskAddViewController.swift`
+  - add-task flow
+
+- `Source/GottaDo/TaskEdit/TaskEditViewController.swift`
+  - rename and remove flow
+
+- `Source/GottaDo/Debug/DebugViewController.swift`
+  - debug modal container
+
+- `Source/GottaDo/Debug/DebugTableViewController.swift`
+  - debug actions
 
 ### Persistence
 
 - Core Data via `NSPersistentContainer`
 - local on-device database
-- no sync layer currently visible
-
-### Main files
-
-- `Source/GottaDo/AppDelegate.swift`
-  - app startup
-  - Core Data stack
-  - badge permission and badge updates
-
-- `Source/GottaDo/Helpers/AppContext.swift`
-  - lightweight app-wide persistence and badge interface
-  - keeps controllers off the concrete `AppDelegate` type
-
-- `Source/GottaDo/Helpers/TaskNotifications.swift`
-  - typed task-list notification names
-
-- `Source/GottaDo/Helpers/TaskModalFactory.swift`
-  - centralizes storyboard-based add/edit modal creation
-  - wires modal dependencies before presentation
-
-- `Source/GottaDo/TaskList/TaskListViewController.swift`
-  - shared task-list behavior
-  - swipe actions
-  - blank-state and control visibility
-  - modal presentation
-  - badge refresh
-
-- `Source/GottaDo/TaskList/TaskListService.swift`
-  - task fetching
-  - reorder persistence
-  - move between lists
-  - flagging and completion toggles
-  - clearing completed tasks
-  - smart sort behavior
-
-- `Source/GottaDo/TaskList/TaskTableViewCell.swift`
-  - custom task-row layout
-  - completion styling
-  - old-task badge display
-  - flagged accessory display
-
-- `Source/GottaDo/TaskList/TodayViewController.swift`
-  - Today-specific list setup
-
-- `Source/GottaDo/TaskList/BacklogViewController.swift`
-  - Backlog-specific list setup
-
-- `Source/GottaDo/TaskEdit/TaskAddViewController.swift`
-  - create task flow
-  - configures modal navigation items
-
-- `Source/GottaDo/TaskEdit/TaskEditViewController.swift`
-  - rename and remove task flow
-  - configures modal navigation items
-
-- `Source/GottaDo/Debug/DebugViewController.swift`
-  - configures debug modal navigation items
-
-- `Source/GottaDo/Helpers/ModalNavigationStyler.swift`
-  - shared appearance setup for modal navigation bars
-
-- `Source/GottaDo/CoreData/ManagedContextExtension.swift`
-  - fetch helpers
-  - counts
-  - delete operations
-
-- `Source/GottaDo/CoreData/TaskExtension.swift`
-  - task mutation helpers
-
-- `Source/GottaDo/TabBarController.swift`
-  - tab bar appearance and spacing
-  - debug utility button
-
-- `Source/GottaDo/Debug/DebugTableViewController.swift`
-  - debug actions
+- no sync layer
+- no networking layer in the app target
 
 ## Data Model
 
-The Core Data model has one visible entity: `Task`.
+The main persisted entity is `Task`.
 
 Important fields:
 
@@ -163,65 +162,43 @@ Important fields:
 - `position`
 - `taskListId`
 
-### Notes about the model
+### Model notes
 
-- `details` exists in the schema but is not currently exposed in the UI.
-- Normal task deletion appears to be soft delete via `removed = true`.
-- Bulk debug deletion uses batch delete.
+- `details` exists in the schema but is not exposed in the current UI.
+- Normal task deletion is a soft delete via `removed = true` and `removedDate`.
+- Completed-task clearing also uses soft delete.
+- Debug bulk deletion uses `NSBatchDeleteRequest`.
 - List membership is encoded with `taskListId`.
 - Ordering is encoded with `position`.
 
-## Project Configuration Snapshot
+## Project Configuration
 
-- Swift 5.0
+- Swift 5
 - iOS deployment target: 15.0
-- UIKit + storyboard app
-- Supports iPhone and iPad target families
-- Light mode forced in `Info.plist`
-- Portrait-only on iPhone
-- No third-party dependency manager is present
+- bundle identifier: `com.erikvorkink.GottaDoApp`
+- marketing version: `1.0.1`
+- supports iPhone and iPad target families
+- portrait-only on iPhone
+- light mode forced in `Info.plist`
+- no third-party dependency manager is present
 
-## Testing Status
+## Tests And Validation
 
-The project includes unit and UI test targets, but the current test files are placeholder scaffolds and do not provide meaningful coverage.
+The project has both unit and UI test targets.
 
-## Observed Constraints And Risks
+Current test coverage is still light, but it is no longer just placeholder scaffolding:
 
-### Codebase shape
+- `Source/GottaDoTests/GottaDoTests.swift` covers `TaskListService`
+- covered behaviors include move ordering, smart sort grouping, and completed-task removal
+- `Source/GottaDoUITests/GottaDoUITests.swift` is still a minimal launch-style smoke test
 
-- The app is small and understandable.
-- Most behavior is concentrated in a few view controllers.
-- That makes small changes easy, but larger changes may increase coupling if added directly to existing controllers.
+## Constraints And Risks
 
-### Technical limitations
-
-- Older UIKit/storyboard architecture
-- task list screens still carry older layout assumptions in storyboard constraints and floating controls
-- Very limited automated test coverage
-- persistence access still defaults through `UIApplication.shared`, but now goes through a lightweight `AppContext` abstraction instead of direct `AppDelegate` reach-through
-
-## Recent Modernization Notes
-
-During April 2026 cleanup work, the app was modernized in a few targeted ways without changing the overall UIKit architecture:
-
-- deployment target raised from iOS 12.2 to iOS 15.0
-- modal add/edit/debug flows moved from fake embedded navigation bars to real modal navigation controllers
-- shared modal navigation styling moved into `ModalNavigationStyler`
-- bottom bar returned to the native `UITabBar` with custom appearance and tuned spacing
-- debug access moved from a hidden gesture to a subtle utility button in the tab bar
-- task-list row rendering moved from the stock `UITableViewCell` to a custom cell
-- task-list mutation logic was split out of `TaskListViewController` into `TaskListService`
-- task edit/list/debug controllers now use an `AppContext` abstraction instead of direct `AppDelegate` persistence access
-- stringly-typed task notifications were replaced with typed `Notification.Name` constants
-- storyboard-based add/edit modal composition was centralized into `TaskModalFactory`
-
-This was intentionally a targeted UIKit modernization, not a SwiftUI migration.
-
-## Environment Notes
-
-During inspection on April 11, 2026, command-line device builds were verified successfully with `xcodebuild`.
-
-Simulator runtime installation or verification may still be unreliable on this machine and should be treated as a separate local environment issue rather than a project-specific problem.
+- The app is small and understandable, but key behavior is still concentrated in a few view controllers.
+- The architecture is intentionally UIKit-and-storyboard based, so changes should preserve that direction unless there is an explicit migration decision.
+- Automated coverage exists but is still narrow relative to the amount of UI behavior.
+- Persistence helpers still use KVC-style field mutation on `Task`, which keeps the code compact but is easier to break during model changes.
+- There is no sync, account system, or server-backed recovery path.
 
 ## Useful Repo Contents
 
@@ -229,14 +206,16 @@ Simulator runtime installation or verification may still be unreliable on this m
   - user-facing app summary
 
 - `Screenshots/`
-  - current product visuals
+  - product visuals
 
-## Suggested Usage Of This Document
+- `Artwork/`
+  - app icon, logo, and custom control assets
 
-Use this file as the shared snapshot for future enhancement threads.
+## What To Keep Updated
 
-When a major feature is added or a design decision is made, update:
+When the app changes in meaningful ways, update this file with:
 
-- current behavior
-- constraints
-- any architectural decisions worth preserving
+- current user-visible behavior
+- architecture decisions worth preserving
+- data-model or persistence changes
+- testing reality and known risks

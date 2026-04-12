@@ -60,8 +60,8 @@ class DebugTableViewController: UITableViewController {
         guard let appContext else { return "" }
         let managedContext = appContext.managedContext
 
-        let todayTasks = managedContext.getOustandingVisibleTasks(in: TaskListIds.Today)
-        let backlogTasks = managedContext.getOustandingVisibleTasks(in: TaskListIds.Backlog)
+        let todayTasks = managedContext.getOutstandingVisibleTasks(in: TaskListIds.Today)
+        let backlogTasks = managedContext.getOutstandingVisibleTasks(in: TaskListIds.Backlog)
         let completedTasks = managedContext.getCompletedTasks()
 
         let todayList = outstandingTasksToFormattedList(todayTasks)
@@ -73,11 +73,11 @@ class DebugTableViewController: UITableViewController {
         return formatted
     }
     
-    func outstandingTasksToFormattedList(_ tasks: Array<NSManagedObject>) -> String {
+    func outstandingTasksToFormattedList(_ tasks: [NSManagedObject]) -> String {
         return tasks.map { "\n- \($0.value(forKey: "name") ?? "")" }.joined()
     }
-    
-    func completedTasksToFormattedList(_ tasks: Array<NSManagedObject>) -> String {
+
+    func completedTasksToFormattedList(_ tasks: [NSManagedObject]) -> String {
         return tasks.map { "\n- \($0.value(forKey: "name") ?? "") (\(taskCompletedDateFormatted($0)))" }.joined()
     }
     

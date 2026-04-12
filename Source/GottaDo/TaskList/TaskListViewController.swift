@@ -3,51 +3,197 @@ import CoreData
 
 class TaskListViewController: UIViewController {
     private let oldTaskBadgeText = "💀"
-    
-    @IBOutlet weak var clearButton: UIButton!
-    @IBOutlet weak var reorderButton: UIButton!
+
+    private enum StoryboardIdentifier {
+        static let taskAddNavigationController = "TaskAddNavigationController"
+        static let taskEditNavigationController = "TaskEditNavigationController"
+    }
+
+    private let titleColor = UIColor(red: 0.3510695994, green: 0.2219223082, blue: 0.4083004892, alpha: 1.0)
+    private let utilityButtonTintColor = UIColor(red: 0.3955705762, green: 0.2770622373, blue: 0.4479630589, alpha: 1.0)
+    private let floatingButtonShadowColor = UIColor.black.withAlphaComponent(0.14)
+    private let headerTopPadding: CGFloat = 14
+    private let headerBottomPadding: CGFloat = 10
+    private let tableBottomInset: CGFloat = 92
+
     @IBOutlet weak var tableView: UITableView!
     var currentTaskListId = TaskListIds.Today
     var tasks: [NSManagedObject] = []
+
+    var listTitle: String {
+        return "Tasks"
+    }
+
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textColor = titleColor
+        label.font = UIFont(name: "HelveticaNeue-Bold", size: 30) ?? UIFont.boldSystemFont(ofSize: 30)
+        label.adjustsFontForContentSizeCategory = true
+        label.text = listTitle
+        return label
+    }()
+
+    private lazy var clearButton: UIButton = makeUtilityButton(
+        imageName: "clear",
+        accessibilityLabel: "Clear completed tasks",
+        action: #selector(clear(_:))
+    )
+
+    private lazy var reorderButton: UIButton = makeUtilityButton(
+        imageName: "reorder",
+        accessibilityLabel: "Reorder tasks",
+        action: #selector(toggleReorder(_:))
+    )
+
+    private lazy var addButton: UIButton = {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: "add"), for: .normal)
+        button.addTarget(self, action: #selector(showTaskAddModal), for: .touchUpInside)
+        button.accessibilityLabel = "Add task"
+        button.layer.shadowColor = floatingButtonShadowColor.cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 10
+        button.layer.shadowOffset = CGSize(width: 0, height: 5)
+        return button
+    }()
+
+    private lazy var headerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+
+    private lazy var actionsStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [clearButton, reorderButton])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.spacing = 8
+        return stackView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        configureLayout()
+        configureTableView()
+        configureGestureRecognizers()
+        configureObservers()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        addButton.layer.shadowPath = UIBezierPath(ovalIn: addButton.bounds).cgPath
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refresh()
+    }
+
+    // Get out of reorder mode when switching away
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopReorder()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    private func configureLayout() {
+        view.backgroundColor = .white
+        titleLabel.text = listTitle
+
+        view.addSubview(headerView)
+        headerView.addSubview(titleLabel)
+        headerView.addSubview(actionsStackView)
+        view.addSubview(addButton)
+
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+            titleLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            titleLabel.topAnchor.constraint(equalTo: headerView.topAnchor, constant: headerTopPadding),
+            titleLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -headerBottomPadding),
+
+            actionsStackView.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor),
+            actionsStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -12),
+            actionsStackView.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 12),
+
+            addButton.widthAnchor.constraint(equalToConstant: 60),
+            addButton.heightAnchor.constraint(equalToConstant: 60),
+            addButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -14),
+            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
+        ])
+
+        let tableConstraints = view.constraints.filter { constraint in
+            constraint.firstItem as AnyObject? === tableView || constraint.secondItem as AnyObject? === tableView
+        }
+        NSLayoutConstraint.deactivate(tableConstraints)
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+
+        tableView.contentInset.bottom = tableBottomInset
+        tableView.verticalScrollIndicatorInsets.bottom = tableBottomInset
+    }
+
+    private func configureTableView() {
         tableView.delegate = self
+        tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "TaskCell")
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 50
-        
+        tableView.contentInsetAdjustmentBehavior = .never
+    }
+
+    private func configureGestureRecognizers() {
         let tableLongPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleTableLongPress))
         self.tableView.addGestureRecognizer(tableLongPressRecognizer)
-        
+
         let reorderButtonLongPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.handleReorderButtonLongPress))
         self.reorderButton.addGestureRecognizer(reorderButtonLongPressRecognizer)
-        
+    }
+
+    private func configureObservers() {
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(self.appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        
+
         notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskCreatedByModal"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskEditedByModal"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("taskDeletedByModal"), object: nil)
         notificationCenter.addObserver(self, selector: #selector(refresh), name: NSNotification.Name("bulkTasksDeleted"), object: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refresh()
-    }
-    
-    // Get out of reorder mode when switching away
-    override func viewWillDisappear(_ animated: Bool) {
-        stopReorder()
-    }
-    
     // Get out of reorder mode when moving app to background
     @objc func appMovedToBackground() {
         stopReorder()
     }
-    
+
+    @objc private func showTaskAddModal() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let navigationController = storyboard.instantiateViewController(withIdentifier: StoryboardIdentifier.taskAddNavigationController) as? UINavigationController else {
+            alert("Unable to open add task")
+            return
+        }
+
+        if let viewController = navigationController.topViewController as? TaskAddViewController {
+            viewController.newTaskTaskListId = currentTaskListId
+        }
+
+        present(navigationController, animated: true)
+    }
+
     func alert(_ title: String) {
         let alert = UIAlertController(title: title, message: "", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -106,7 +252,7 @@ class TaskListViewController: UIViewController {
         tasks.removeAll()
         tasks = appDelegate.getManagedContext().getVisibleTasks(in: currentTaskListId)
         tableView.reloadData()
-        
+
         if tasks.count > 0 {
             handlePopulatedTaskList()
         } else {
@@ -265,11 +411,27 @@ class TaskListViewController: UIViewController {
     func startReorder() {
         tableView.isEditing = true
         reorderButton.setImage(UIImage(named: "reorder-active"), for: .normal)
+        addButton.isHidden = true
     }
     
     func stopReorder() {
         tableView.isEditing = false
         reorderButton.setImage(UIImage(named: "reorder"), for: .normal)
+        addButton.isHidden = false
+    }
+
+    private func makeUtilityButton(imageName: String, accessibilityLabel: String, action: Selector) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setImage(UIImage(named: imageName), for: .normal)
+        button.tintColor = utilityButtonTintColor
+        button.accessibilityLabel = accessibilityLabel
+        button.addTarget(self, action: action, for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            button.widthAnchor.constraint(equalToConstant: 40),
+            button.heightAnchor.constraint(equalToConstant: 40)
+        ])
+        return button
     }
 }
 
@@ -374,7 +536,7 @@ extension TaskListViewController: UITableViewDataSource {
 extension TaskListViewController: UITableViewDelegate {
     
     func showBlankState(_ message: String) {
-        let emptyView = UIView(frame: CGRect(x: tableView.center.x, y: tableView.center.y, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+        let emptyView = UIView(frame: tableView.bounds)
         let messageLabel = UILabel()
         messageLabel.translatesAutoresizingMaskIntoConstraints = false
         messageLabel.textColor = UIColor.lightGray
@@ -399,7 +561,7 @@ extension TaskListViewController: UITableViewDelegate {
     // Selecting task opens up the edit view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let task = tasks[indexPath.row] as? Task {
-            self.performSegue(withIdentifier: "taskEditSegue", sender: task)
+            showTaskEditModal(for: task)
         }
     }
     
@@ -437,44 +599,17 @@ extension TaskListViewController: UITableViewDelegate {
         return UISwipeActionsConfiguration()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "taskAddSegue":
-            // Pass context needed by a new task
-            if let viewController = taskAddViewController(for: segue.destination) {
-                viewController.newTaskTaskListId = currentTaskListId
-            }
-        case "taskEditSegue":
-            // Pass the task to edit
-            if let viewController = taskEditViewController(for: segue.destination), let taskToSend = sender as? Task {
-                viewController.task = taskToSend
-            }
-        default:
-            break;
-        }
-    }
-
-    private func taskAddViewController(for destination: UIViewController) -> TaskAddViewController? {
-        if let viewController = destination as? TaskAddViewController {
-            return viewController
+    private func showTaskEditModal(for task: Task) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let navigationController = storyboard.instantiateViewController(withIdentifier: StoryboardIdentifier.taskEditNavigationController) as? UINavigationController else {
+            alert("Unable to open task")
+            return
         }
 
-        if let navigationController = destination as? UINavigationController {
-            return navigationController.topViewController as? TaskAddViewController
+        if let viewController = navigationController.topViewController as? TaskEditViewController {
+            viewController.task = task
         }
 
-        return nil
-    }
-
-    private func taskEditViewController(for destination: UIViewController) -> TaskEditViewController? {
-        if let viewController = destination as? TaskEditViewController {
-            return viewController
-        }
-
-        if let navigationController = destination as? UINavigationController {
-            return navigationController.topViewController as? TaskEditViewController
-        }
-
-        return nil
+        present(navigationController, animated: true)
     }
 }

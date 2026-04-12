@@ -44,9 +44,9 @@ The current implementation sorts tasks in this order:
 
 Within each group, existing order is preserved because the code rewrites `position` in array order.
 
-### Hidden debug functionality
+### Debug functionality
 
-There is a hidden debug screen that opens when the user long-presses near the right edge of the bottom bar.
+There is a subtle debug utility button at the left edge of the tab bar.
 
 It currently provides:
 
@@ -62,7 +62,7 @@ It currently provides:
 - Storyboards
 - `UITabBarController` root
 - modal add/edit/debug flows presented inside `UINavigationController`
-- custom bottom bar overlay on top of the system tab bar for spacing / appearance control
+- native `UITabBar` with custom appearance and tuned spacing
 
 This is not a SwiftUI app.
 
@@ -117,8 +117,8 @@ This is not a SwiftUI app.
   - task mutation helpers
 
 - `Source/GottaDo/TabBarController.swift`
-  - custom bottom bar layout
-  - hidden debug gesture
+  - tab bar appearance and spacing
+  - debug utility button
 
 - `Source/GottaDo/Debug/DebugTableViewController.swift`
   - debug actions
@@ -173,7 +173,7 @@ The project includes unit and UI test targets, but the current test files are pl
 ### Technical limitations
 
 - Older UIKit/storyboard architecture
-- custom bottom bar still replaces part of native `UITabBar` behavior
+- task list screens still carry older layout assumptions in storyboard constraints and floating controls
 - Very limited automated test coverage
 - Core Data access is tightly coupled to `UIApplication.shared.delegate`
 
@@ -184,7 +184,8 @@ During April 2026 cleanup work, the app was modernized in a few targeted ways wi
 - deployment target raised from iOS 12.2 to iOS 15.0
 - modal add/edit/debug flows moved from fake embedded navigation bars to real modal navigation controllers
 - shared modal navigation styling moved into `ModalNavigationStyler`
-- bottom bar appearance is now controlled by a custom overlay rather than default modern `UITabBar` spacing
+- bottom bar returned to the native `UITabBar` with custom appearance and tuned spacing
+- debug access moved from a hidden gesture to a subtle utility button in the tab bar
 
 This was intentionally a targeted UIKit modernization, not a SwiftUI migration.
 

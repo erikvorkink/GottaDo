@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class DebugTableViewController: UITableViewController {
+class MaintenanceTableViewController: UITableViewController {
     var appContext: AppContext?
     
     override func viewDidLoad() {

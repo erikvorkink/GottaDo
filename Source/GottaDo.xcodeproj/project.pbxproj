@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		033B5888229E1FEC00A249EC /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B5887229E1FEC00A249EC /* TabBarController.swift */; };
-		033B588A229E245500A249EC /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B5889229E245500A249EC /* DebugViewController.swift */; };
-		033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B588B22A305F300A249EC /* DebugTableViewController.swift */; };
+		033B588A229E245500A249EC /* MaintenanceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B5889229E245500A249EC /* MaintenanceViewController.swift */; };
+		033B588C22A305F300A249EC /* MaintenanceTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033B588B22A305F300A249EC /* MaintenanceTableViewController.swift */; };
 		036BFEAD22C5C4BA001F73D2 /* TaskNameField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BFEAC22C5C4BA001F73D2 /* TaskNameField.swift */; };
 		036BFEAF22C5C4BA001F73D2 /* TaskEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036BFEAE22C5C4BA001F73D2 /* TaskEditorViewController.swift */; };
 		03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */; };
@@ -54,8 +54,8 @@
 
 /* Begin PBXFileReference section */
 		033B5887229E1FEC00A249EC /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		033B5889229E245500A249EC /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
-		033B588B22A305F300A249EC /* DebugTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTableViewController.swift; sourceTree = "<group>"; };
+		033B5889229E245500A249EC /* MaintenanceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceViewController.swift; sourceTree = "<group>"; };
+		033B588B22A305F300A249EC /* MaintenanceTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceTableViewController.swift; sourceTree = "<group>"; };
 		036BFEAC22C5C4BA001F73D2 /* TaskNameField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskNameField.swift; sourceTree = "<group>"; };
 		036BFEAE22C5C4BA001F73D2 /* TaskEditorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditorViewController.swift; sourceTree = "<group>"; };
 		03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAddViewController.swift; sourceTree = "<group>"; };
@@ -124,13 +124,13 @@
 			path = TaskList;
 			sourceTree = "<group>";
 		};
-		03F72BFB22AC32DB00BEAB92 /* Debug */ = {
+		03F72BFB22AC32DB00BEAB92 /* Maintenance */ = {
 			isa = PBXGroup;
 			children = (
-				033B5889229E245500A249EC /* DebugViewController.swift */,
-				033B588B22A305F300A249EC /* DebugTableViewController.swift */,
+				033B5889229E245500A249EC /* MaintenanceViewController.swift */,
+				033B588B22A305F300A249EC /* MaintenanceTableViewController.swift */,
 			);
-			path = Debug;
+			path = Maintenance;
 			sourceTree = "<group>";
 		};
 		03F72BFC22AC330500BEAB92 /* CoreData */ = {
@@ -179,7 +179,7 @@
 			children = (
 				B5D781B222654D5800EA4D55 /* AppDelegate.swift */,
 				033B5887229E1FEC00A249EC /* TabBarController.swift */,
-				03F72BFB22AC32DB00BEAB92 /* Debug */,
+				03F72BFB22AC32DB00BEAB92 /* Maintenance */,
 				03F72BFA22AC32CC00BEAB92 /* TaskList */,
 				03F72BFD22AC343500BEAB92 /* TaskEdit */,
 				03F72BFC22AC330500BEAB92 /* CoreData */,
@@ -363,7 +363,7 @@
 				B597C020227AA57D00E2C86F /* TodayViewController.swift in Sources */,
 				B5D781B322654D5800EA4D55 /* AppDelegate.swift in Sources */,
 				B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */,
-				033B588C22A305F300A249EC /* DebugTableViewController.swift in Sources */,
+				033B588C22A305F300A249EC /* MaintenanceTableViewController.swift in Sources */,
 				036BFEAD22C5C4BA001F73D2 /* TaskNameField.swift in Sources */,
 				036BFEAF22C5C4BA001F73D2 /* TaskEditorViewController.swift in Sources */,
 				B597C01E227AA41E00E2C86F /* TaskListViewController.swift in Sources */,
@@ -374,7 +374,7 @@
 				DBC985B72B0020B900370356 /* ModalNavigationStyler.swift in Sources */,
 				03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */,
 				B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */,
-				033B588A229E245500A249EC /* DebugViewController.swift in Sources */,
+				033B588A229E245500A249EC /* MaintenanceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

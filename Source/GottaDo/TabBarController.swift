@@ -9,17 +9,17 @@ final class TabBarController: UITabBarController {
     private let minimumItemSpacing: CGFloat = 56
     private let maximumItemSpacing: CGFloat = 120
     private let preferredCenterGapMultiplier: CGFloat = 1.6
-    private let debugButtonSize: CGFloat = 24
-    private let debugButtonLeadingInset: CGFloat = 12
-    private let debugButtonBottomInset: CGFloat = 12
+    private let maintenanceButtonSize: CGFloat = 24
+    private let maintenanceButtonLeadingInset: CGFloat = 12
+    private let maintenanceButtonBottomInset: CGFloat = 12
 
-    private let debugButton = UIButton(type: .system)
+    private let maintenanceButton = UIButton(type: .system)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureTabBarAppearance()
-        installDebugButton()
+        installMaintenanceButton()
         updateTabBarLayoutMetrics()
     }
 
@@ -62,27 +62,27 @@ final class TabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = unselectedColor
     }
 
-    private func installDebugButton() {
-        guard debugButton.superview == nil else { return }
+    private func installMaintenanceButton() {
+        guard maintenanceButton.superview == nil else { return }
 
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold)
-        debugButton.translatesAutoresizingMaskIntoConstraints = false
-        debugButton.setImage(UIImage(systemName: "ellipsis.circle", withConfiguration: imageConfig), for: .normal)
-        debugButton.tintColor = selectedColor.withAlphaComponent(0.65)
-        debugButton.backgroundColor = .clear
-        debugButton.layer.cornerRadius = 0
-        debugButton.layer.borderWidth = 0
-        debugButton.addTarget(self, action: #selector(showDebugModal), for: .touchUpInside)
-        debugButton.accessibilityLabel = "Debug"
-        debugButton.accessibilityHint = "Open debug tools"
+        maintenanceButton.translatesAutoresizingMaskIntoConstraints = false
+        maintenanceButton.setImage(UIImage(systemName: "ellipsis.circle", withConfiguration: imageConfig), for: .normal)
+        maintenanceButton.tintColor = selectedColor.withAlphaComponent(0.65)
+        maintenanceButton.backgroundColor = .clear
+        maintenanceButton.layer.cornerRadius = 0
+        maintenanceButton.layer.borderWidth = 0
+        maintenanceButton.addTarget(self, action: #selector(showMaintenanceModal), for: .touchUpInside)
+        maintenanceButton.accessibilityLabel = "Maintenance"
+        maintenanceButton.accessibilityHint = "Open maintenance tools"
 
-        tabBar.addSubview(debugButton)
+        tabBar.addSubview(maintenanceButton)
 
         NSLayoutConstraint.activate([
-            debugButton.widthAnchor.constraint(equalToConstant: debugButtonSize),
-            debugButton.heightAnchor.constraint(equalToConstant: debugButtonSize),
-            debugButton.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor, constant: debugButtonLeadingInset),
-            debugButton.bottomAnchor.constraint(equalTo: tabBar.safeAreaLayoutGuide.bottomAnchor, constant: -debugButtonBottomInset)
+            maintenanceButton.widthAnchor.constraint(equalToConstant: maintenanceButtonSize),
+            maintenanceButton.heightAnchor.constraint(equalToConstant: maintenanceButtonSize),
+            maintenanceButton.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor, constant: maintenanceButtonLeadingInset),
+            maintenanceButton.bottomAnchor.constraint(equalTo: tabBar.safeAreaLayoutGuide.bottomAnchor, constant: -maintenanceButtonBottomInset)
         ])
     }
 
@@ -102,8 +102,8 @@ final class TabBarController: UITabBarController {
     }
 
     @objc
-    private func showDebugModal() {
-        performSegue(withIdentifier: "debugSegue", sender: nil)
+    private func showMaintenanceModal() {
+        performSegue(withIdentifier: "maintenanceSegue", sender: nil)
         HapticHelper.generateSmallFeedback()
     }
 }

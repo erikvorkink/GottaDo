@@ -55,10 +55,10 @@
             </objects>
             <point key="canvasLocation" x="750" y="-386"/>
         </scene>
-        <!--Debug Table View Controller-->
+        <!--Maintenance Table View Controller-->
         <scene sceneID="llT-uw-RmH">
             <objects>
-                <tableViewController title="Debug Table View Controller" id="QEN-Uu-kQo" customClass="DebugTableViewController" customModule="GottaDo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Maintenance Table View Controller" id="QEN-Uu-kQo" customClass="MaintenanceTableViewController" customModule="GottaDo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" sectionIndexMinimumDisplayRowCount="2" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="fym-hU-JuF">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="591"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -130,10 +130,10 @@
             </objects>
             <point key="canvasLocation" x="-2" y="1538"/>
         </scene>
-        <!--Debug View Controller-->
+        <!--Maintenance View Controller-->
         <scene sceneID="rdt-qB-fk0">
             <objects>
-                <viewController id="O7y-T9-V8C" customClass="DebugViewController" customModule="GottaDo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="O7y-T9-V8C" customClass="MaintenanceViewController" customModule="GottaDo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="62W-XC-oD0">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -235,7 +235,7 @@
                     <connections>
                         <segue destination="yPV-io-gKH" kind="relationship" relationship="viewControllers" id="8Vu-Vr-Be2"/>
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="8Vu-Vr-Bea"/>
-                        <segue destination="Hc8-mj-YWy" kind="presentation" identifier="debugSegue" id="ZFL-Fx-ma7"/>
+                        <segue destination="Hc8-mj-YWy" kind="presentation" identifier="maintenanceSegue" id="ZFL-Fx-ma7"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
@@ -272,7 +272,7 @@
             </objects>
             <point key="canvasLocation" x="2521" y="412"/>
         </scene>
-        <!--Debug Navigation Controller-->
+        <!--Maintenance Navigation Controller-->
         <scene sceneID="1nW-9h-uMV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hc8-mj-YWy" sceneMemberID="viewController">

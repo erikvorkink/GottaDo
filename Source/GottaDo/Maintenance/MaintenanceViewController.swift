@@ -1,6 +1,6 @@
 import UIKit
 
-class DebugViewController: UIViewController {
+class MaintenanceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigation()
@@ -12,7 +12,7 @@ class DebugViewController: UIViewController {
 
     private func configureNavigation() {
         ModalNavigationStyler.apply(to: navigationController)
-        title = "Debug"
+        title = "Maintenance"
         navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: "Close",
             style: .plain,

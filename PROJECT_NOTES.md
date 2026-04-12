@@ -64,11 +64,11 @@ Within each group, relative order is preserved.
 - Flagged tasks show a visual flagged state in the custom table cell.
 - Tasks older than six months are marked as old tasks in the row UI.
 
-### Debug tools
+### Maintenance tools
 
-A subtle debug button is installed at the left edge of the tab bar.
+A subtle maintenance button is installed at the left edge of the tab bar.
 
-The debug screen currently provides:
+The maintenance screen currently provides:
 
 - copy tasks to the clipboard in a formatted Today / Backlog / Completed layout
 - delete completed tasks older than 90 days with a batch delete
@@ -81,7 +81,7 @@ The debug screen currently provides:
 - UIKit
 - storyboards
 - `UITabBarController` root
-- modal add, edit, and debug flows presented in `UINavigationController`
+- modal add, edit, and maintenance flows presented in `UINavigationController`
 - custom list-screen layout built in code inside storyboard-backed controllers
 
 This is not a SwiftUI app.
@@ -133,11 +133,11 @@ This is not a SwiftUI app.
 - `Source/GottaDo/TaskEdit/TaskEditViewController.swift`
   - rename and remove flow
 
-- `Source/GottaDo/Debug/DebugViewController.swift`
-  - debug modal container
+- `Source/GottaDo/Maintenance/MaintenanceViewController.swift`
+  - maintenance modal container
 
-- `Source/GottaDo/Debug/DebugTableViewController.swift`
-  - debug actions
+- `Source/GottaDo/Maintenance/MaintenanceTableViewController.swift`
+  - maintenance actions
 
 ### Persistence
 
@@ -168,7 +168,7 @@ Important fields:
 - `details` exists in the schema but is not exposed in the current UI.
 - Normal task deletion is a soft delete via `removed = true` and `removedDate`.
 - Completed-task clearing also uses soft delete.
-- Debug bulk deletion uses `NSBatchDeleteRequest`.
+- Maintenance bulk deletion uses `NSBatchDeleteRequest`.
 - List membership is encoded with `taskListId`.
 - Ordering is encoded with `position`.
 

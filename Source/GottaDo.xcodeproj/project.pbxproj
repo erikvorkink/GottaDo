@@ -15,6 +15,7 @@
 		03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */; };
 		537723FE2FEA001100B972A1 /* TaskListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537723FC2FEA001100B972A1 /* TaskListService.swift */; };
 		537723FF2FEA001100B972A1 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 537723FD2FEA001100B972A1 /* TaskTableViewCell.swift */; };
+		8E194ABB2FFCFD1000A1A1A1 /* TaskModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E194ABA2FFCFD1000A1A1A1 /* TaskModalPresentationController.swift */; };
 		B50A1D40227DFCA0009D9D65 /* TaskExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */; };
 		B50A1D42227E0137009D9D65 /* ManagedContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */; };
 		B536407222658B2F00CFFF41 /* GottaDo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B536407022658B2F00CFFF41 /* GottaDo.xcdatamodeld */; };
@@ -61,6 +62,7 @@
 		03F72BFE22AC94A600BEAB92 /* TaskAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAddViewController.swift; sourceTree = "<group>"; };
 		537723FC2FEA001100B972A1 /* TaskListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListService.swift; sourceTree = "<group>"; };
 		537723FD2FEA001100B972A1 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
+		8E194ABA2FFCFD1000A1A1A1 /* TaskModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskModalPresentationController.swift; sourceTree = "<group>"; };
 		B50A1D3F227DFCA0009D9D65 /* TaskExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskExtension.swift; sourceTree = "<group>"; };
 		B50A1D41227E0137009D9D65 /* ManagedContextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagedContextExtension.swift; sourceTree = "<group>"; };
 		B536407122658B2F00CFFF41 /* GottaDo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GottaDo.xcdatamodel; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				DBC985B42B001CF400370356 /* HapticHelper.swift */,
 				DBC985B62B0020B900370356 /* ModalNavigationStyler.swift */,
 				E1831F9F2FEA7E1D006F85CC /* TaskModalFactory.swift */,
+				8E194ABA2FFCFD1000A1A1A1 /* TaskModalPresentationController.swift */,
 				E1831F9C2FEA6E6D006F85CC /* TaskNotifications.swift */,
 			);
 			path = Helpers;
@@ -370,6 +373,7 @@
 				DBC985B52B001CF400370356 /* HapticHelper.swift in Sources */,
 				E1831F9D2FEA6E6D006F85CC /* AppContext.swift in Sources */,
 				E1831FA02FEA7E1D006F85CC /* TaskModalFactory.swift in Sources */,
+				8E194ABB2FFCFD1000A1A1A1 /* TaskModalPresentationController.swift in Sources */,
 				E1831F9E2FEA6E6D006F85CC /* TaskNotifications.swift in Sources */,
 				DBC985B72B0020B900370356 /* ModalNavigationStyler.swift in Sources */,
 				03F72BFF22AC94A600BEAB92 /* TaskAddViewController.swift in Sources */,

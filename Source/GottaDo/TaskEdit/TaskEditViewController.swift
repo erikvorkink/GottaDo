@@ -48,20 +48,17 @@ class TaskEditViewController: TaskEditorViewController {
         guard let task else { return }
 
         nameField.text = task.name
-        nameField.becomeFirstResponder()
         nameField.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
     }
 
     private func configureNavigation() {
         ModalNavigationStyler.apply(to: navigationController)
         navigationItem.title = ""
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
+        navigationItem.leftBarButtonItem = ModalNavigationStyler.makeSecondaryActionButton(
             title: "Close",
-            style: .plain,
             target: self,
             action: #selector(close(_:))
         )
-        ModalNavigationStyler.applySecondaryActionStyle(to: navigationItem.leftBarButtonItem)
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .trash,
             target: self,

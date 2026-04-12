@@ -6,10 +6,6 @@ final class TaskModalFactory {
         static let taskEditNavigationController = "TaskEditNavigationController"
     }
 
-    private enum SheetDetentIdentifier {
-        static let taskModal = UISheetPresentationController.Detent.Identifier("taskModal")
-    }
-
     private let storyboard: UIStoryboard
     private let appContext: AppContext?
 
@@ -49,21 +45,7 @@ final class TaskModalFactory {
     }
 
     private func configureSheetPresentation(for navigationController: UINavigationController) {
-        navigationController.modalPresentationStyle = .pageSheet
-
-        guard let sheetPresentationController = navigationController.sheetPresentationController else { return }
-
-        if #available(iOS 16.0, *) {
-            let taskDetent = UISheetPresentationController.Detent.custom(identifier: SheetDetentIdentifier.taskModal) { context in
-                context.maximumDetentValue * 0.75
-            }
-            sheetPresentationController.detents = [taskDetent]
-            sheetPresentationController.selectedDetentIdentifier = SheetDetentIdentifier.taskModal
-        } else {
-            sheetPresentationController.detents = [.large()]
-        }
-
-        sheetPresentationController.prefersGrabberVisible = true
-        sheetPresentationController.preferredCornerRadius = 24
+        navigationController.modalPresentationStyle = .custom
+        navigationController.transitioningDelegate = TaskModalTransitioningDelegate.shared
     }
 }

@@ -3,8 +3,8 @@ import UIKit
 final class TabBarController: UITabBarController {
 
     private let barBackgroundColor = UIColor(red: 0.3235799670, green: 0.1942589879, blue: 0.3807701170, alpha: 1.0)
-    private let selectedColor = UIColor(white: 0.8941, alpha: 1.0)
-    private let unselectedColor = UIColor(white: 0.75, alpha: 1.0)
+    private let selectedColor = UIColor(white: 0.97, alpha: 1.0)
+    private let unselectedColor = UIColor(white: 0.86, alpha: 1.0)
     private let preferredItemWidth: CGFloat = 96
     private let minimumItemSpacing: CGFloat = 56
     private let maximumItemSpacing: CGFloat = 120
@@ -68,7 +68,7 @@ final class TabBarController: UITabBarController {
         let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold)
         maintenanceButton.translatesAutoresizingMaskIntoConstraints = false
         maintenanceButton.setImage(UIImage(systemName: "ellipsis.circle", withConfiguration: imageConfig), for: .normal)
-        maintenanceButton.tintColor = selectedColor.withAlphaComponent(0.65)
+        maintenanceButton.tintColor = unselectedColor
         maintenanceButton.backgroundColor = .clear
         maintenanceButton.layer.cornerRadius = 0
         maintenanceButton.layer.borderWidth = 0

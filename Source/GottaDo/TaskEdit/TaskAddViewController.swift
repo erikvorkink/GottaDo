@@ -49,20 +49,17 @@ class TaskAddViewController: TaskEditorViewController {
     }
 
     func initEditor() {
-        nameField.becomeFirstResponder()
         nameField.addTarget(self, action: #selector(createTaskAndClose), for: .editingDidEndOnExit)
     }
 
     private func configureNavigation() {
         ModalNavigationStyler.apply(to: navigationController)
         navigationItem.title = ""
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
+        navigationItem.leftBarButtonItem = ModalNavigationStyler.makeSecondaryActionButton(
             title: "Cancel",
-            style: .plain,
             target: self,
             action: #selector(cancel(_:))
         )
-        ModalNavigationStyler.applySecondaryActionStyle(to: navigationItem.leftBarButtonItem)
     }
 
     func createTask() -> Bool {

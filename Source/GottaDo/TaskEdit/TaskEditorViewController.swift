@@ -27,8 +27,18 @@ class TaskEditorViewController: UIViewController {
         applyContent()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        focusNameFieldIfNeeded()
+    }
+
     func didChangeSelectedTaskList(_ taskListId: TaskListIds) {
         // Subclasses override when they need picker updates.
+    }
+
+    func focusNameFieldIfNeeded() {
+        // Subclasses can override if they don't want immediate focus on appearance.
+        nameField.becomeFirstResponder()
     }
 
     private func configureView() {
@@ -79,7 +89,7 @@ class TaskEditorViewController: UIViewController {
 
     private func configureLayout() {
         NSLayoutConstraint.activate([
-            contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 100),
+            contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             contentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
         ])

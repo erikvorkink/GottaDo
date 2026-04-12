@@ -19,5 +19,6 @@ class MaintenanceViewController: UIViewController {
             target: self,
             action: #selector(close(_:))
         )
+        ModalNavigationStyler.applySecondaryActionStyle(to: navigationItem.leftBarButtonItem)
     }
 }

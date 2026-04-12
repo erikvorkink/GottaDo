@@ -19,6 +19,7 @@ final class TaskTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16)
         label.text = "💀"
+        label.alpha = 0.8
         label.isHidden = true
         return label
     }()

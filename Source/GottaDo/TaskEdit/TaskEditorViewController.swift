@@ -72,6 +72,7 @@ class TaskEditorViewController: UIViewController {
         contentStackView.addArrangedSubview(nameField)
 
         if showsTaskListPicker {
+            contentStackView.setCustomSpacing(28, after: nameField)
             contentStackView.addArrangedSubview(taskListPicker)
         }
     }

@@ -71,6 +71,7 @@ A subtle maintenance button is installed at the left edge of the tab bar.
 The maintenance screen currently provides:
 
 - copy tasks to the clipboard in a formatted Today / Backlog / Completed layout
+- show a read-only `Recently Cleared` list of the 30 most recently cleared completed items
 - delete completed tasks older than 90 days with a batch delete
 - delete all tasks with a batch delete
 
@@ -109,7 +110,7 @@ This is not a SwiftUI app.
 
 - `Source/GottaDo/TabBarController.swift`
   - tab bar appearance and spacing
-  - debug button installation
+  - maintenance button installation
 
 - `Source/GottaDo/TaskList/TaskListViewController.swift`
   - shared list behavior
@@ -138,6 +139,7 @@ This is not a SwiftUI app.
 
 - `Source/GottaDo/Maintenance/MaintenanceTableViewController.swift`
   - maintenance actions
+  - recently cleared history list
 
 ### Persistence
 
@@ -168,6 +170,7 @@ Important fields:
 - `details` exists in the schema but is not exposed in the current UI.
 - Normal task deletion is a soft delete via `removed = true` and `removedDate`.
 - Completed-task clearing also uses soft delete.
+- The maintenance `Recently Cleared` list is powered by `removedDate`, sorted most recent first.
 - Maintenance bulk deletion uses `NSBatchDeleteRequest`.
 - List membership is encoded with `taskListId`.
 - Ordering is encoded with `position`.

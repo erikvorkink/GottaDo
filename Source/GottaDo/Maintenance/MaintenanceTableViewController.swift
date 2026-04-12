@@ -2,14 +2,30 @@ import UIKit
 import CoreData
 
 class MaintenanceTableViewController: UITableViewController {
+    private let recentClearedLimit = 30
+    private let actionItems = [
+        "Copy tasks to clipboard",
+        "Delete old completed tasks",
+        "Delete ALL tasks"
+    ]
+
     var appContext: AppContext?
+    private var recentlyClearedTasks: [Task] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "MaintenanceActionCell")
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshRecentlyClearedTasks()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        guard indexPath.section == 0 else { return }
 
         switch indexPath.row {
         case 0:
@@ -21,6 +37,65 @@ class MaintenanceTableViewController: UITableViewController {
         default:
             break
         }
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return actionItems.count
+        }
+
+        return max(recentlyClearedTasks.count, 1)
+    }
+
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        section == 0 ? "Actions" : "Recently Cleared"
+    }
+
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        indexPath.section == 0
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MaintenanceActionCell", for: indexPath)
+            cell.textLabel?.attributedText = nil
+            cell.textLabel?.text = actionItems[indexPath.row]
+            cell.textLabel?.textColor = indexPath.row == 2 ? .red : UIColor(white: 0.1, alpha: 1.0)
+            cell.textLabel?.numberOfLines = 0
+            cell.selectionStyle = .default
+            return cell
+        }
+
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "RecentlyClearedCell")
+        cell.textLabel?.numberOfLines = 0
+        cell.selectionStyle = .none
+
+        if recentlyClearedTasks.isEmpty {
+            cell.textLabel?.text = "No recently cleared items"
+            cell.textLabel?.textColor = .lightGray
+            cell.textLabel?.attributedText = nil
+            return cell
+        }
+
+        let task = recentlyClearedTasks[indexPath.row]
+        cell.textLabel?.attributedText = recentlyClearedAttributedText(for: task)
+        cell.textLabel?.textColor = UIColor(white: 0.55, alpha: 1.0)
+        return cell
+    }
+
+    private func refreshRecentlyClearedTasks() {
+        let appContext = self.appContext ?? UIApplication.shared.appContext
+        self.appContext = appContext
+        guard let appContext else { return }
+
+        recentlyClearedTasks = appContext.managedContext
+            .getRecentlyRemovedCompletedTasks(limit: recentClearedLimit)
+            .compactMap { $0 as? Task }
+        tableView.reloadData()
     }
     
     func copyTasksToClipboard() {
@@ -82,16 +157,27 @@ class MaintenanceTableViewController: UITableViewController {
     }
     
     func taskCompletedDateFormatted(_ task: NSManagedObject) -> String {
-        var completedDateFormatted = ""
         let completedDate = task.value(forKeyPath: "completedDate") as? Date
-        if let completedDate = completedDate {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .short
-            dateFormatter.timeStyle = .short
-            dateFormatter.locale = Locale(identifier: "en_US")
-            completedDateFormatted = dateFormatter.string(from: completedDate)
-        }
-        return completedDateFormatted
+        return taskDateFormatted(completedDate)
+    }
+
+    func taskDateFormatted(_ date: Date?) -> String {
+        guard let date = date else { return "recently" }
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        dateFormatter.locale = Locale(identifier: "en_US")
+        return dateFormatter.string(from: date)
+    }
+
+    func recentlyClearedAttributedText(for task: Task) -> NSAttributedString {
+        let name = task.name ?? ""
+        let attributes: [NSAttributedString.Key: Any] = [
+            .foregroundColor: UIColor(white: 0.55, alpha: 1.0),
+            .strikethroughStyle: NSUnderlineStyle.single.rawValue
+        ]
+        return NSAttributedString(string: name, attributes: attributes)
     }
     
     func deleteOldCompletedTasks() {
@@ -119,6 +205,7 @@ class MaintenanceTableViewController: UITableViewController {
         let delete = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) -> Void in
 
             deleteOperation()
+            self.refreshRecentlyClearedTasks()
             NotificationCenter.default.post(name: .bulkTasksDeleted, object: nil)
             
             let alert = UIAlertController(title: alertTitle, message: "Tasks have been deleted.", preferredStyle: UIAlertController.Style.alert)

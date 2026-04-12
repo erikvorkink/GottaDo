@@ -38,6 +38,16 @@ extension NSManagedObjectContext {
         return fetchTasks(fetchRequest)
     }
 
+    func getRecentlyRemovedCompletedTasks(limit: Int) -> [NSManagedObject] {
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
+        fetchRequest.predicate = NSPredicate(format: "completed = %@ AND removed = %@",
+                                             NSNumber(value: true),
+                                             NSNumber(value: true))
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "removedDate", ascending: false)]
+        fetchRequest.fetchLimit = limit
+        return fetchTasks(fetchRequest)
+    }
+
     func getOutstandingVisibleTasks(in taskListId: TaskListIds) -> [NSManagedObject] {
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Task")
         fetchRequest.predicate = NSPredicate(format: "taskListId = %@ AND completed = %@ AND removed = %@",

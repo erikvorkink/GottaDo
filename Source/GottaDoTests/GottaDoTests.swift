@@ -63,6 +63,46 @@ final class GottaDoTests: XCTestCase {
         XCTAssertEqual(saveCallCount, 1)
     }
 
+    func testCreateTaskInTodayAppendsToEnd() throws {
+        _ = makeTask(name: "Today 1", listId: .Today, position: 1)
+        _ = makeTask(name: "Today 2", listId: .Today, position: 2)
+        try managedContext.save()
+
+        let viewController = TaskAddViewController()
+        viewController.appContext = TestAppContext(managedContext: managedContext)
+        viewController.newTaskTaskListId = .Today
+        viewController.nameField.text = "New Today"
+
+        XCTAssertTrue(viewController.createTask())
+
+        let todayTasks = managedContext.getVisibleTasks(in: .Today).compactMap { $0 as? Task }
+        let newTask = try XCTUnwrap(todayTasks.last)
+        XCTAssertEqual(todayTasks.count, 3)
+        XCTAssertEqual(newTask.name, "New Today")
+        XCTAssertEqual(newTask.position, 3)
+    }
+
+    func testCreateTaskInBacklogInsertsAtTopAndShiftsExistingTasks() throws {
+        let backlogFirst = makeTask(name: "Backlog 1", listId: .Backlog, position: 1)
+        let backlogSecond = makeTask(name: "Backlog 2", listId: .Backlog, position: 2)
+        try managedContext.save()
+
+        let viewController = TaskAddViewController()
+        viewController.appContext = TestAppContext(managedContext: managedContext)
+        viewController.newTaskTaskListId = .Backlog
+        viewController.nameField.text = "New Backlog"
+
+        XCTAssertTrue(viewController.createTask())
+
+        let backlogTasks = managedContext.getVisibleTasks(in: .Backlog).compactMap { $0 as? Task }
+        let newTask = try XCTUnwrap(backlogTasks.first)
+        XCTAssertEqual(backlogTasks.count, 3)
+        XCTAssertEqual(newTask.name, "New Backlog")
+        XCTAssertEqual(newTask.position, 1)
+        XCTAssertEqual(backlogFirst.position, 2)
+        XCTAssertEqual(backlogSecond.position, 3)
+    }
+
     func testSmartSortGroupsCompletedThenFlaggedThenUnflaggedWhileKeepingRelativeOrder() throws {
         let flaggedFirst = makeTask(name: "Flagged 1", listId: .Today, position: 1, flagged: true)
         let unflaggedFirst = makeTask(name: "Unflagged 1", listId: .Today, position: 2)
@@ -151,4 +191,20 @@ final class GottaDoTests: XCTestCase {
         task.removedDate = removed ? Date() : nil
         return task
     }
+}
+
+private final class TestAppContext: AppContext {
+    let managedContext: NSManagedObjectContext
+
+    init(managedContext: NSManagedObjectContext) {
+        self.managedContext = managedContext
+    }
+
+    func saveContext() throws {
+        if managedContext.hasChanges {
+            try managedContext.save()
+        }
+    }
+
+    func setBadgeNumber(_ number: Int) {}
 }

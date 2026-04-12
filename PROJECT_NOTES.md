@@ -39,7 +39,8 @@ The app icon badge shows the count of outstanding visible tasks in Today.
 
 ### List behavior
 
-- New tasks are appended to the end of the selected list.
+- New tasks created in Today are appended to the end of Today.
+- New tasks created in Backlog are inserted at the top of Backlog and shift existing Backlog items down.
 - Moving a task from Backlog to Today appends it to the end of Today.
 - Moving a task from Today to Backlog inserts it at the top of Backlog and shifts existing Backlog items down.
 - Reordering persists by rewriting each task's `position`.

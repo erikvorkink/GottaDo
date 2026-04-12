@@ -101,7 +101,19 @@ class TaskAddViewController: TaskEditorViewController {
         guard let appContext else { return nil }
         guard let newTaskTaskListId else { return nil }
 
+        if newTaskTaskListId == .Backlog {
+            shiftVisibleTasksDown(in: .Backlog, managedContext: appContext.managedContext)
+            return 1
+        }
+
         return 1 + appContext.managedContext.getHighestVisibleTaskPosition(in: newTaskTaskListId)
+    }
+
+    private func shiftVisibleTasksDown(in taskListId: TaskListIds, managedContext: NSManagedObjectContext) {
+        let tasks = managedContext.getVisibleTasks(in: taskListId).compactMap { $0 as? Task }
+        for task in tasks {
+            task.setPosition(Int(task.position) + 1)
+        }
     }
 
     func close() {

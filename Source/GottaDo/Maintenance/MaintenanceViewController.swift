@@ -13,8 +13,8 @@ class MaintenanceViewController: UIViewController {
     private func configureNavigation() {
         ModalNavigationStyler.apply(to: navigationController)
         title = "Maintenance"
-        navigationItem.leftBarButtonItem = ModalNavigationStyler.makeSecondaryActionButton(
-            title: "Close",
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .close,
             target: self,
             action: #selector(close(_:))
         )

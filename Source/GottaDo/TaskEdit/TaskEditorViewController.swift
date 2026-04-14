@@ -8,6 +8,7 @@ class TaskEditorViewController: UIViewController {
 
     private let contentStackView = UIStackView()
     private let taskListPicker = UISegmentedControl(items: ["Today", "Backlog"])
+    private let taskListPickerSpacer = UIView()
 
     var showsTaskListPicker: Bool {
         return false
@@ -75,15 +76,24 @@ class TaskEditorViewController: UIViewController {
     private func buildHierarchy() {
         contentStackView.translatesAutoresizingMaskIntoConstraints = false
         contentStackView.axis = .vertical
-        contentStackView.spacing = 18
+        contentStackView.spacing = 0
         contentStackView.alignment = .fill
 
         view.addSubview(contentStackView)
         contentStackView.addArrangedSubview(nameField)
 
         if showsTaskListPicker {
-            contentStackView.setCustomSpacing(28, after: nameField)
+            taskListPickerSpacer.translatesAutoresizingMaskIntoConstraints = false
+            contentStackView.addArrangedSubview(taskListPickerSpacer)
             contentStackView.addArrangedSubview(taskListPicker)
+
+            NSLayoutConstraint.activate([
+                taskListPickerSpacer.heightAnchor.constraint(greaterThanOrEqualToConstant: 44),
+                taskListPickerSpacer.heightAnchor.constraint(lessThanOrEqualToConstant: 120)
+            ])
+
+            taskListPicker.setContentHuggingPriority(.required, for: .vertical)
+            taskListPicker.setContentCompressionResistancePriority(.required, for: .vertical)
         }
     }
 
@@ -91,7 +101,8 @@ class TaskEditorViewController: UIViewController {
         NSLayoutConstraint.activate([
             contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             contentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-            contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30)
+            contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.keyboardLayoutGuide.topAnchor, constant: -24)
         ])
     }
 

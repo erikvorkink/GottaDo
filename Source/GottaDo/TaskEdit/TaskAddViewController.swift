@@ -55,11 +55,6 @@ class TaskAddViewController: TaskEditorViewController {
     private func configureNavigation() {
         ModalNavigationStyler.apply(to: navigationController)
         navigationItem.title = ""
-        navigationItem.leftBarButtonItem = ModalNavigationStyler.makeSecondaryActionButton(
-            title: "Cancel",
-            target: self,
-            action: #selector(cancel(_:))
-        )
     }
 
     func createTask() -> Bool {

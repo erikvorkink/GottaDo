@@ -54,11 +54,6 @@ class TaskEditViewController: TaskEditorViewController {
     private func configureNavigation() {
         ModalNavigationStyler.apply(to: navigationController)
         navigationItem.title = ""
-        navigationItem.leftBarButtonItem = ModalNavigationStyler.makeSecondaryActionButton(
-            title: "Close",
-            target: self,
-            action: #selector(close(_:))
-        )
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .trash,
             target: self,

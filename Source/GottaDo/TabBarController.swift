@@ -9,23 +9,22 @@ final class TabBarController: UITabBarController {
     private let minimumItemSpacing: CGFloat = 56
     private let maximumItemSpacing: CGFloat = 120
     private let preferredCenterGapMultiplier: CGFloat = 1.6
-    private let maintenanceButtonSize: CGFloat = 24
-    private let maintenanceButtonLeadingInset: CGFloat = 12
-    private let maintenanceButtonBottomInset: CGFloat = 12
-
-    private let maintenanceButton = UIButton(type: .system)
+    private let maintenanceHotspotWidth: CGFloat = 44
+    private let maintenanceLongPressDuration: TimeInterval = 0.4
+    private let maintenanceHotspotView = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         configureTabBarAppearance()
-        installMaintenanceButton()
+        installMaintenanceHotspot()
         updateTabBarLayoutMetrics()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         updateTabBarLayoutMetrics()
+        view.bringSubviewToFront(maintenanceHotspotView)
     }
 
     private func configureTabBarAppearance() {
@@ -62,28 +61,30 @@ final class TabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = unselectedColor
     }
 
-    private func installMaintenanceButton() {
-        guard maintenanceButton.superview == nil else { return }
+    private func installMaintenanceHotspot() {
+        guard maintenanceHotspotView.superview == nil else { return }
 
-        let imageConfig = UIImage.SymbolConfiguration(pointSize: 13, weight: .semibold)
-        maintenanceButton.translatesAutoresizingMaskIntoConstraints = false
-        maintenanceButton.setImage(UIImage(systemName: "ellipsis.circle", withConfiguration: imageConfig), for: .normal)
-        maintenanceButton.tintColor = unselectedColor
-        maintenanceButton.backgroundColor = .clear
-        maintenanceButton.layer.cornerRadius = 0
-        maintenanceButton.layer.borderWidth = 0
-        maintenanceButton.addTarget(self, action: #selector(showMaintenanceModal), for: .touchUpInside)
-        maintenanceButton.accessibilityLabel = "Maintenance"
-        maintenanceButton.accessibilityHint = "Open maintenance tools"
-
-        tabBar.addSubview(maintenanceButton)
+        maintenanceHotspotView.translatesAutoresizingMaskIntoConstraints = false
+        maintenanceHotspotView.backgroundColor = .clear
+        maintenanceHotspotView.isUserInteractionEnabled = true
+        view.addSubview(maintenanceHotspotView)
 
         NSLayoutConstraint.activate([
-            maintenanceButton.widthAnchor.constraint(equalToConstant: maintenanceButtonSize),
-            maintenanceButton.heightAnchor.constraint(equalToConstant: maintenanceButtonSize),
-            maintenanceButton.leadingAnchor.constraint(equalTo: tabBar.leadingAnchor, constant: maintenanceButtonLeadingInset),
-            maintenanceButton.bottomAnchor.constraint(equalTo: tabBar.safeAreaLayoutGuide.bottomAnchor, constant: -maintenanceButtonBottomInset)
+            maintenanceHotspotView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            maintenanceHotspotView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            maintenanceHotspotView.widthAnchor.constraint(equalToConstant: maintenanceHotspotWidth),
+            maintenanceHotspotView.heightAnchor.constraint(equalTo: tabBar.heightAnchor)
         ])
+
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleMaintenanceLongPress(_:)))
+        longPressRecognizer.minimumPressDuration = maintenanceLongPressDuration
+        maintenanceHotspotView.addGestureRecognizer(longPressRecognizer)
+    }
+
+    @objc
+    private func handleMaintenanceLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        guard gestureRecognizer.state == .began else { return }
+        showMaintenanceModal()
     }
 
     private func updateTabBarLayoutMetrics() {

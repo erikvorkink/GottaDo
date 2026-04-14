@@ -48,7 +48,10 @@ class TaskEditViewController: TaskEditorViewController {
         guard let task else { return }
 
         nameField.text = task.name
-        nameField.addTarget(self, action: #selector(saveNameAndClose), for: .editingDidEndOnExit)
+        nameField.enablesReturnKeyAutomatically = true
+        nameField.onSubmit = { [weak self] in
+            self?.saveNameAndClose()
+        }
     }
 
     private func configureNavigation() {

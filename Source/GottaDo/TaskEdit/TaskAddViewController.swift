@@ -49,7 +49,10 @@ class TaskAddViewController: TaskEditorViewController {
     }
 
     func initEditor() {
-        nameField.addTarget(self, action: #selector(createTaskAndClose), for: .editingDidEndOnExit)
+        nameField.enablesReturnKeyAutomatically = true
+        nameField.onSubmit = { [weak self] in
+            self?.createTaskAndClose()
+        }
     }
 
     private func configureNavigation() {

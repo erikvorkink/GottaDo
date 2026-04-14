@@ -48,13 +48,14 @@ class TaskEditorViewController: UIViewController {
 
     private func configureNameField() {
         nameField.translatesAutoresizingMaskIntoConstraints = false
+        nameField.isScrollEnabled = true
         nameField.textAlignment = .center
         nameField.textColor = accentColor
         nameField.font = UIFont(name: "Helvetica-Bold", size: 24) ?? UIFont.boldSystemFont(ofSize: 24)
-        nameField.clearButtonMode = .whileEditing
+        nameField.returnKeyType = .default
 
         NSLayoutConstraint.activate([
-            nameField.heightAnchor.constraint(equalToConstant: 60)
+            nameField.heightAnchor.constraint(equalToConstant: 140)
         ])
     }
 
@@ -99,7 +100,7 @@ class TaskEditorViewController: UIViewController {
 
     private func configureLayout() {
         NSLayoutConstraint.activate([
-            contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            contentStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 17),
             contentStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             contentStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.keyboardLayoutGuide.topAnchor, constant: -24)

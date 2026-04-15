@@ -101,6 +101,14 @@ class TaskListViewController: UIViewController {
         refresh()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let selectedIndexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: selectedIndexPath, animated: true)
+        }
+    }
+
     // Get out of reorder mode when switching away
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -464,6 +472,7 @@ extension TaskListViewController: UITableViewDelegate {
     // Selecting task opens up the edit view
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showTaskEditModal(for: tasks[indexPath.row])
+        tableView.deselectRow(at: indexPath, animated: false)
     }
     
     // Swipe right to complete/uncomplete

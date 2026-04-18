@@ -29,10 +29,12 @@ The app icon badge shows the count of outstanding visible tasks in Today.
 ### Task interactions
 
 - Tap a task row to open the edit modal.
+- Tapping outside the edit modal saves changes and closes it.
 - Swipe right to complete or restore a task.
 - Swipe left to move a task between Today and Backlog.
 - Long-press a task row to flag or unflag it.
 - Tap the add button to create a new task.
+- In the add modal, tapping Today or Backlog with a populated task name creates the task in that selected list.
 - Tap the reorder button to enter drag-reorder mode.
 - Long-press the reorder button to run smart sort.
 - Tap the clear button to soft-delete completed tasks in the current list.

@@ -103,6 +103,42 @@ final class GottaDoTests: XCTestCase {
         XCTAssertEqual(backlogSecond.position, 3)
     }
 
+    func testTappingSelectedTaskListWithNameTriggersQuickCreateInToday() {
+        let viewController = SpyTaskAddViewController()
+        viewController.newTaskTaskListId = .Backlog
+        viewController.nameField.text = "Quick Add"
+
+        viewController.didTapSelectedTaskList(.Today)
+
+        XCTAssertEqual(viewController.newTaskTaskListId, .Today)
+        XCTAssertEqual(viewController.createTaskAndCloseCallCount, 1)
+        XCTAssertEqual(viewController.taskListIdAtCreateTime, .Today)
+    }
+
+    func testTappingSelectedTaskListWithNameTriggersQuickCreateInBacklog() {
+        let viewController = SpyTaskAddViewController()
+        viewController.newTaskTaskListId = .Today
+        viewController.nameField.text = "Quick Add"
+
+        viewController.didTapSelectedTaskList(.Backlog)
+
+        XCTAssertEqual(viewController.newTaskTaskListId, .Backlog)
+        XCTAssertEqual(viewController.createTaskAndCloseCallCount, 1)
+        XCTAssertEqual(viewController.taskListIdAtCreateTime, .Backlog)
+    }
+
+    func testTappingSelectedTaskListWithEmptyNameDoesNotQuickCreate() {
+        let viewController = SpyTaskAddViewController()
+        viewController.newTaskTaskListId = .Today
+        viewController.nameField.text = "   "
+
+        viewController.didTapSelectedTaskList(.Backlog)
+
+        XCTAssertEqual(viewController.newTaskTaskListId, .Today)
+        XCTAssertEqual(viewController.createTaskAndCloseCallCount, 0)
+        XCTAssertNil(viewController.taskListIdAtCreateTime)
+    }
+
     func testSmartSortGroupsCompletedThenFlaggedThenUnflaggedWhileKeepingRelativeOrder() throws {
         let flaggedFirst = makeTask(name: "Flagged 1", listId: .Today, position: 1, flagged: true)
         let unflaggedFirst = makeTask(name: "Unflagged 1", listId: .Today, position: 2)
@@ -207,4 +243,14 @@ private final class TestAppContext: AppContext {
     }
 
     func setBadgeNumber(_ number: Int) {}
+}
+
+private final class SpyTaskAddViewController: TaskAddViewController {
+    var createTaskAndCloseCallCount = 0
+    var taskListIdAtCreateTime: TaskListIds?
+
+    override func createTaskAndClose() {
+        createTaskAndCloseCallCount += 1
+        taskListIdAtCreateTime = newTaskTaskListId
+    }
 }

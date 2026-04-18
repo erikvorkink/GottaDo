@@ -3,6 +3,8 @@ import UIKit
 class TaskEditorViewController: UIViewController {
 
     private let accentColor = UIColor(red: 0.3955705762, green: 0.2770622373, blue: 0.4479630589, alpha: 1.0)
+    private let taskListPickerSpacerMinHeight: CGFloat = 28
+    private let taskListPickerSpacerMaxHeight: CGFloat = 104
 
     let nameField = TaskNameField(frame: .zero)
 
@@ -35,6 +37,10 @@ class TaskEditorViewController: UIViewController {
 
     func didChangeSelectedTaskList(_ taskListId: TaskListIds) {
         // Subclasses override when they need picker updates.
+    }
+
+    func didTapSelectedTaskList(_ taskListId: TaskListIds) {
+        // Subclasses override when they want tap-specific picker behavior.
     }
 
     func focusNameFieldIfNeeded() {
@@ -71,6 +77,9 @@ class TaskEditorViewController: UIViewController {
             .font: UIFont.systemFont(ofSize: 16, weight: .semibold)
         ], for: .selected)
         taskListPicker.addTarget(self, action: #selector(handleTaskListPickerChanged), for: .valueChanged)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTaskListPickerTapped(_:)))
+        tapRecognizer.cancelsTouchesInView = false
+        taskListPicker.addGestureRecognizer(tapRecognizer)
         taskListPicker.isHidden = !showsTaskListPicker
     }
 
@@ -89,8 +98,8 @@ class TaskEditorViewController: UIViewController {
             contentStackView.addArrangedSubview(taskListPicker)
 
             NSLayoutConstraint.activate([
-                taskListPickerSpacer.heightAnchor.constraint(greaterThanOrEqualToConstant: 44),
-                taskListPickerSpacer.heightAnchor.constraint(lessThanOrEqualToConstant: 120)
+                taskListPickerSpacer.heightAnchor.constraint(greaterThanOrEqualToConstant: taskListPickerSpacerMinHeight),
+                taskListPickerSpacer.heightAnchor.constraint(lessThanOrEqualToConstant: taskListPickerSpacerMaxHeight)
             ])
 
             taskListPicker.setContentHuggingPriority(.required, for: .vertical)
@@ -119,5 +128,17 @@ class TaskEditorViewController: UIViewController {
     private func handleTaskListPickerChanged() {
         let taskListId: TaskListIds = taskListPicker.selectedSegmentIndex == 0 ? .Today : .Backlog
         didChangeSelectedTaskList(taskListId)
+    }
+
+    @objc
+    private func handleTaskListPickerTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        guard gestureRecognizer.state == .ended else { return }
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            guard taskListPicker.selectedSegmentIndex != UISegmentedControl.noSegment else { return }
+
+            let taskListId: TaskListIds = taskListPicker.selectedSegmentIndex == 0 ? .Today : .Backlog
+            didTapSelectedTaskList(taskListId)
+        }
     }
 }

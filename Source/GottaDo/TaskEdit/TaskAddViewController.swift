@@ -35,6 +35,13 @@ class TaskAddViewController: TaskEditorViewController {
         newTaskTaskListId = taskListId
     }
 
+    override func didTapSelectedTaskList(_ taskListId: TaskListIds) {
+        guard nameField.isValidText() else { return }
+
+        newTaskTaskListId = taskListId
+        createTaskAndClose()
+    }
+
     @objc
     func createTaskAndClose() {
         if createTask() {

@@ -105,3 +105,9 @@ class TaskEditViewController: TaskEditorViewController {
         dismiss(animated: true, completion: nil)
     }
 }
+
+extension TaskEditViewController: TaskModalBackgroundTapHandling {
+    func handleBackgroundTap() {
+        saveNameAndClose()
+    }
+}

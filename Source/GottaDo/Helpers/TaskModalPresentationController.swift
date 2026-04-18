@@ -1,5 +1,9 @@
 import UIKit
 
+protocol TaskModalBackgroundTapHandling: AnyObject {
+    func handleBackgroundTap()
+}
+
 final class TaskModalPresentationController: UIPresentationController {
     private let dimmingView = UIView()
 
@@ -63,6 +67,17 @@ final class TaskModalPresentationController: UIPresentationController {
 
     @objc
     private func handleDimmingViewTapped() {
+        if let navigationController = presentedViewController as? UINavigationController,
+           let backgroundTapHandler = navigationController.topViewController as? TaskModalBackgroundTapHandling {
+            backgroundTapHandler.handleBackgroundTap()
+            return
+        }
+
+        if let backgroundTapHandler = presentedViewController as? TaskModalBackgroundTapHandling {
+            backgroundTapHandler.handleBackgroundTap()
+            return
+        }
+
         presentedViewController.dismiss(animated: true)
     }
 }
